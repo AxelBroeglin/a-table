@@ -11,4 +11,12 @@ fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=pizza&app_id=${app_id
 
 function useApiResponse(response){
 	console.log(response);
+	cardsDisplay.innerHTML = `
+	<div>
+	<img src="${response.hits[0].recipe.images.THUMBNAIL.url}" alt="">
+	<div>
+	  <h3>${response.hits[0].recipe.label}</h3>
+	</div>
+  </div>
+	`
 }
