@@ -12,6 +12,10 @@ searchButton.addEventListener('click', ()=>{
 	return foodSearch;
 })
 
+searchInput.addEventListener('focus', ()=>{
+	searchInput.classList.remove('input-red')
+})
+
 fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=soup&app_id=${app_id}&app_key=${api_key}`)
 	.then(response => response.json())
 	.then(response => useApiResponse(response))
