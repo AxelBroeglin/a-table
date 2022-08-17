@@ -8,7 +8,7 @@ let foodSearch = '';
 searchButton.addEventListener('click', ()=>{
 	event.preventDefault();
 	foodSearch = searchInput.value;
-	console.log(foodSearch);
+	foodSearch == '' ? searchInput.classList.add('input-red') : console.log(foodSearch);
 	return foodSearch;
 })
 
