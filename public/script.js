@@ -5,8 +5,8 @@ const app_id = '1ab55c64';
 const api_key = 'c86872049aff2debad57830e690d77c8';
 let foodSearch = '';
 
-searchButton.addEventListener('click', ()=>{
-	event.preventDefault();
+searchButton.addEventListener('click', (e)=>{
+	e.preventDefault();
 	foodSearch = searchInput.value;
 	foodSearch == '' ? searchInput.classList.add('input-red') : foodQuery(foodSearch);
 })
@@ -15,10 +15,11 @@ searchInput.addEventListener('focus', ()=>{
 	searchInput.classList.remove('input-red')
 })
 
-const foodQuery = fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=soup&app_id=${app_id}&app_key=${api_key}`)
+async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${foodSearch}&app_id=${app_id}&app_key=${api_key}`)
 				.then(response => response.json())
 				.then(response => useApiResponse(response))
 				.catch(err => console.error(err));
+}
 
 function useApiResponse(response){
 	console.log(response);
