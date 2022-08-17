@@ -8,18 +8,17 @@ let foodSearch = '';
 searchButton.addEventListener('click', ()=>{
 	event.preventDefault();
 	foodSearch = searchInput.value;
-	foodSearch == '' ? searchInput.classList.add('input-red') : console.log(foodSearch);
-	return foodSearch;
+	foodSearch == '' ? searchInput.classList.add('input-red') : foodQuery(foodSearch);
 })
 
 searchInput.addEventListener('focus', ()=>{
 	searchInput.classList.remove('input-red')
 })
 
-fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=soup&app_id=${app_id}&app_key=${api_key}`)
-	.then(response => response.json())
-	.then(response => useApiResponse(response))
-	.catch(err => console.error(err));
+const foodQuery = fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=soup&app_id=${app_id}&app_key=${api_key}`)
+				.then(response => response.json())
+				.then(response => useApiResponse(response))
+				.catch(err => console.error(err));
 
 function useApiResponse(response){
 	console.log(response);
