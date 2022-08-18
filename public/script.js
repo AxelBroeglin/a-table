@@ -32,7 +32,7 @@ searchInput.addEventListener('focus', ()=>{
 	searchInput.classList.remove('input-red')
 })
 
-async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${foodSearch}${app_id}${api_key}`)
+async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${foodSearch}${app_id}${api_key}${apiKeyAndValues}`)
 				.then(response => response.json())
 				.then(response => useApiResponse(response))
 				.catch(err => console.error(err));
