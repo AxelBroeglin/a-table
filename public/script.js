@@ -26,7 +26,7 @@ function useApiResponse(response){
 	let recipes = [];
 	for (let i = 0; i < 10; i++) {
 		recipes.push(		
-		`<div>
+		`<div class="w-2/4 p-2 bg-red-300">
 			<img src="${response.hits[i].recipe.images.THUMBNAIL.url}" alt="">
 			<div>
 				<h3>${response.hits[i].recipe.label}</h3>
