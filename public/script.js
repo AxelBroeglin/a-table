@@ -19,16 +19,17 @@ searchButton.addEventListener('click', (e)=>{
 		values.push(checkbox.name);
 	});
 	if(values.toString()!==''){
-		apiKeyAndValues = api_key.concat('&health=',values.toString())
+		apiKeyAndValues = api_key.concat('&health=',values.toString());
 	}
 	console.log(apiKeyAndValues)
 	foodSearch = searchInput.value;
 	foodSearch == '' ? searchInput.classList.add('input-red') : foodQuery(foodSearch, apiKeyAndValues);
 })
 
-moreCriteria.addEventListener('click', ()=>{
-	
-})
+//Need to work on hide/reveal, best way to do it ( x != x or smth like this)
+// moreCriteria.addEventListener('click', ()=>{
+
+// })
 
 searchInput.addEventListener('focus', ()=>{
 	searchInput.classList.remove('input-red')
