@@ -1,20 +1,18 @@
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('btn');
 const cardsDisplay = document.getElementById('cards-display');
+const criteria = document.getElementById('criteria');
+const moreCriteria = document.getElementById('more-criteria');
 
 const app_id = '&app_id=1ab55c64';
 const api_key = '&app_key=c86872049aff2debad57830e690d77c8';
 let apiKeyAndValues = ''
 
 let foodSearch = '';
-const criterionVegetarian = document.getElementById('vegetarian');
-const criterionVegan = document.getElementById('vegan');
-const criterionPecatarian = document.getElementById('pecatarian');
-
-const criteria = document.getElementById('criteria');
 
 searchButton.addEventListener('click', (e)=>{
 	e.preventDefault();
+	//Only works for 1 checkbox. Need to see how to build query for several, then conc them.
 	let checkboxes = document.querySelectorAll('input:checked');
 	let values = [];
 	checkboxes.forEach((checkbox) => {
@@ -26,6 +24,10 @@ searchButton.addEventListener('click', (e)=>{
 	console.log(apiKeyAndValues)
 	foodSearch = searchInput.value;
 	foodSearch == '' ? searchInput.classList.add('input-red') : foodQuery(foodSearch, apiKeyAndValues);
+})
+
+moreCriteria.addEventListener('click', ()=>{
+	
 })
 
 searchInput.addEventListener('focus', ()=>{
