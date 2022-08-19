@@ -23,11 +23,19 @@ searchButton.addEventListener('click', (e)=>{
 	console.log(labelValues);
 
 	//Cuisine types
+	labelValues = [];
+	let cuisineTypesChecked = document.querySelectorAll('.cuisine-type:checked');
+	cuisineTypesChecked.forEach((checkbox) => {
+		cuisineValues.push('&cuisineType='+checkbox.name);
+	});
+	cuisineValues = cuisineValues.toString().replace(/,/g, '');
+	console.log(cuisineValues);
 
 	foodSearch = searchInput.value;
 	if(foodSearch == ''){
 		searchInput.classList.add('input-red');
 	}
+	//Do check for cuisine type
 	if(labelValues!==''){
 		foodQuery(foodSearch, labelValues)
 	}else{
@@ -44,7 +52,7 @@ searchInput.addEventListener('focus', ()=>{
 	searchInput.classList.remove('input-red')
 })
 
-async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${foodSearch}${app_id}${api_key}${labelValues}`)
+async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${foodSearch}${app_id}${api_key}${labelValues}${cuisineValues}`)
 				.then(response => response.json())
 				.then(response => useApiResponse(response))
 				.catch(err => console.error(err));
