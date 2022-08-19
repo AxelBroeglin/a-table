@@ -23,7 +23,7 @@ searchButton.addEventListener('click', (e)=>{
 	console.log(labelValues);
 
 	//Cuisine types
-	labelValues = [];
+	cuisineValues = [];
 	let cuisineTypesChecked = document.querySelectorAll('.cuisine-type:checked');
 	cuisineTypesChecked.forEach((checkbox) => {
 		cuisineValues.push('&cuisineType='+checkbox.name);
