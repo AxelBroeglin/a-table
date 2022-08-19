@@ -9,21 +9,26 @@ const api_key = '&app_key=c86872049aff2debad57830e690d77c8';
 let apiKeyAndValues = ''
 
 let foodSearch = '';
+let values = [];
 
 searchButton.addEventListener('click', (e)=>{
 	e.preventDefault();
+	values = [];
 	//Only works for 1 checkbox. Need to see how to build query for several, then conc them.
 	let checkboxes = document.querySelectorAll('input:checked');
-	let values = [];
 	checkboxes.forEach((checkbox) => {
-		values.push(checkbox.name);
+		values.push('&health='+checkbox.name);
 	});
-	if(values.toString()!==''){
-		apiKeyAndValues = api_key.concat('&health=',values.toString());
-	}
-	console.log(apiKeyAndValues)
+	values.toString().replace(/,/g, '');
 	foodSearch = searchInput.value;
-	foodSearch == '' ? searchInput.classList.add('input-red') : foodQuery(foodSearch, apiKeyAndValues);
+	if(foodSearch == ''){
+		searchInput.classList.add('input-red');
+	}
+	if(values!==''){
+		foodQuery(foodSearch, values)
+	}else{
+		foodQuery(foodSearch);
+	}
 })
 
 //Need to work on hide/reveal, best way to do it ( x != x or smth like this)
@@ -35,7 +40,7 @@ searchInput.addEventListener('focus', ()=>{
 	searchInput.classList.remove('input-red')
 })
 
-async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${foodSearch}${app_id}${api_key}${apiKeyAndValues}`)
+async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${foodSearch}${app_id}${api_key}${values}`)
 				.then(response => response.json())
 				.then(response => useApiResponse(response))
 				.catch(err => console.error(err));
