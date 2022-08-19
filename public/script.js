@@ -19,7 +19,7 @@ searchButton.addEventListener('click', (e)=>{
 	checkboxes.forEach((checkbox) => {
 		values.push('&health='+checkbox.name);
 	});
-	values.toString().replace(/,/g, '');
+	values = values.toString().replace(/,/g, '');
 	foodSearch = searchInput.value;
 	if(foodSearch == ''){
 		searchInput.classList.add('input-red');
