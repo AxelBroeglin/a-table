@@ -6,7 +6,6 @@ const moreCriteria = document.getElementById('more-criteria');
 
 const app_id = '&app_id=1ab55c64';
 const api_key = '&app_key=c86872049aff2debad57830e690d77c8';
-let apiKeyAndValues = ''
 
 let foodSearch = '';
 let values = [];
@@ -14,12 +13,13 @@ let values = [];
 searchButton.addEventListener('click', (e)=>{
 	e.preventDefault();
 	values = [];
-	//Only works for 1 checkbox. Need to see how to build query for several, then conc them.
-	let checkboxes = document.querySelectorAll('input:checked');
-	checkboxes.forEach((checkbox) => {
+	let healthLabelsChecked = document.querySelectorAll('.health-labels:checked');
+	console.log(healthLabelsChecked);
+	healthLabelsChecked.forEach((checkbox) => {
 		values.push('&health='+checkbox.name);
 	});
 	values = values.toString().replace(/,/g, '');
+	console.log(values);
 	foodSearch = searchInput.value;
 	if(foodSearch == ''){
 		searchInput.classList.add('input-red');
