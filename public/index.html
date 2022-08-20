@@ -27,7 +27,8 @@
           <input class="bg-slate-200" id="search-input" type="text" name="foodSearch">
           <input class="border-2 px-2" id="btn" type="submit" value="Submit">
           
-          <div id="criteria"> <!-- Criteria -->
+          <!-- Criteria -->
+          <div id="criteria">
             <div id="health-labels">
               <input type="checkbox" id="vegetarian" class='health-labels' name="vegetarian">
               <label for="vegetarian">Vegetarian</label>
@@ -40,8 +41,10 @@
               <p id="more-criteria">More criteria <i class="arrow down"></i></p>
             </div>  
 
-            <div id="reveal-criteria" style="display:none;"> <!-- Reveal Criteria -->
-              <div> <!-- Health labels -->
+            <!-- Reveal Criteria -->
+            <div id="reveal-criteria" style="display:none;">
+              <!-- Health labels -->
+              <div>
                   <p>Health labels</p>
                   <input type="checkbox" id="crustacean-free" class='health-labels' name="crustacean-free">
                   <label for="crustacean-free">Crustacean-free</label>
@@ -71,7 +74,8 @@
                   <label for="tree-nut-free">Tree-nut-free</label>
               </div><!-- End of health labels -->
 
-              <div id="cuisine-types"> <!-- Cuisine types -->
+              <!-- Cuisine types -->
+              <div id="cuisine-types">
                 <p>Cuisine type</p>
                 <input type="checkbox" id="chinese" class='cuisine-type' name="chinese">
                 <label for="chinese">Chinese</label>
@@ -118,14 +122,14 @@
       </div>
 
       <!-- Trigger/Open The Modal -->
-      <button id="myBtn">Open Modal</button>
+      <button id="modal-button">Open Modal</button>
 
       <!-- The Modal -->
-      <div id="myModal" class="modal hidden fixed z-50 pt-24 left-0 top-0 w-full h-full backdrop-blur-sm bg-slate-white/50 overflow-auto">
+      <div id="modal-window" class="modal hidden fixed z-50 pt-24 left-0 top-0 w-full h-full backdrop-blur-sm bg-slate-white/50 overflow-auto">
 
         <!-- Modal content -->
         <div class="modal-content w-4/5 bg-gray-50 m-auto p-5 rounded border border-inherit border-solid">
-          <span class="close text-slate-400 float-right text-2xl font-bold hover:text-black hover:cursor-pointer">&times;</span>
+          <span class="close-span text-slate-400 float-right text-2xl font-bold hover:text-black hover:cursor-pointer">&times;</span>
           <p>Some text in the Modal..</p>
         </div>
 

@@ -82,27 +82,27 @@ function useApiResponse(response){
 }
 
 // Get the modal
-var modal = document.getElementById("myModal");
+let modalWindow = document.getElementById("modal-window");
 
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+let modalBtn = document.getElementById("modal-button");
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+let closeSpan = document.getElementsByClassName("close-span")[0];
 
 // When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
+modalBtn.onclick = function() {
+	modalWindow.style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
+closeSpan.onclick = function() {
+	modalWindow.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
+  if (event.target == modalWindow) {
+    modalWindow.style.display = "none";
   }
 }
