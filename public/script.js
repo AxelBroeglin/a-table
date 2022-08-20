@@ -81,6 +81,12 @@ function useApiResponse(response){
 	}
 }
 
+/**
+ * TODO For each see recipe buttons, attach event that will open the modal window taking response.hits[i] to show photo, title, ingredients, fat carb sugar, calories per serving.
+ * Attaching event listeners can be done outside of the for loop w/ foreach
+ */
+
+
 // Get the modal
 let modalWindow = document.getElementById("modal-window");
 
