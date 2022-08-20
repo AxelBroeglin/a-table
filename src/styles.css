@@ -20,10 +20,6 @@
     -webkit-transform: rotate(45deg);
   }
 
-  .reveal-criteria{
-    display: inline;
-  }
-
-  .hide-criteria{
+  #reveal-criteria{
     display: none;
   }

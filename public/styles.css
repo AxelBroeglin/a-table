@@ -551,10 +551,6 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.inline {
-  display: inline;
-}
-
 .flex {
   display: flex;
 }
@@ -652,10 +648,6 @@ video {
   -webkit-transform: rotate(45deg);
 }
 
-.reveal-criteria{
-  display: inline;
-}
-
-.hide-criteria{
+#reveal-criteria{
   display: none;
 }
