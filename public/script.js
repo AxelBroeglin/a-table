@@ -1,9 +1,13 @@
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('btn');
+
 const cardsDisplay = document.getElementById('cards-display');
+
 const criteria = document.getElementById('criteria');
 const moreCriteria = document.getElementById('more-criteria');
 const revealCriteria = document.getElementById('reveal-criteria');
+
+const openRecipe = document.querySelectorAll('.open-recipe');
 
 const app_id = '&app_id=1ab55c64';
 const api_key = '&app_key=c86872049aff2debad57830e690d77c8';
@@ -71,8 +75,34 @@ function useApiResponse(response){
 			<div>
 				<h3>${trimmedTitle}</h3>
 			</div>
-			<p id="open-recipe">More details</p>
+			<p class="open-recipe cursor-pointer">More details</p>
 		</div>`)
 		cardsDisplay.innerHTML = recipes.join('');
 	}
+}
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
 }

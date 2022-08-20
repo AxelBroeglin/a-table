@@ -113,9 +113,25 @@
     </section>
       
     <section class="flex justify-center">
-        <div id="cards-display" class="grid grid-cols-3">
-          <!-- cards go here -->
+      <div id="cards-display" class="grid grid-cols-3">
+        <!-- cards go here -->
+      </div>
+
+      <!-- Trigger/Open The Modal -->
+      <button id="myBtn">Open Modal</button>
+
+      <!-- The Modal -->
+      <div id="myModal" class="modal hidden fixed z-50 pt-24 left-0 top-0 w-full h-full overflow-auto">
+
+        <!-- Modal content -->
+        <div class="modal-content w-4/5 bg-sky-500/75 m-auto p-5 border border-inherit border-solid">
+          <span class="close text-slate-400 float-right text-2xl font-bold hover:text-black hover:cursor-pointer">&times;</span>
+          <p>Some text in the Modal..</p>
         </div>
+
+      </div>
+
+</div>
     </section>
 
     </main>
