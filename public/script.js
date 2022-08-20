@@ -61,7 +61,7 @@ function useApiResponse(response){
 	let trimmedTitle;
 	for (let i = 0; i < 9; i++) {
 		trimmedTitle = response.hits[i].recipe.label;
-		if(trimmedTitle.length > 5){
+		if(trimmedTitle.split(" ").length >= 5){
 			trimmedTitle = trimmedTitle.split(' ').slice(0, 5).join(' ')+' [...]';
 		}
 		recipes.push(
