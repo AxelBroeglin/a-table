@@ -58,18 +58,33 @@ async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?ty
 
 function useApiResponse(response){
 	let recipes = [];
+	let trimmedTitle;
 	for (let i = 0; i < 9; i++) {
-		console.log(response.hits[i].recipe.label.split(' ').length)
+		trimmedTitle = response.hits[i].recipe.label;
+		if(trimmedTitle.length > 5){
+			trimmedTitle = trimmedTitle.split(' ').slice(0, 5).join(' ')+' [...]';
+		}
 		recipes.push(
 		`<div class="w-1/2 gap-y-1 gap-x-1">
 			<img src="${response.hits[i].recipe.images.SMALL.url}" alt="">
 			<div>
-				<h3>${response.hits[i].recipe.label}</h3>
+				<h3>${trimmedTitle}</h3>
 			</div>
 		</div>`)
 		cardsDisplay.innerHTML = recipes.join('');
 	}
 }
 
-// const length = 6;
-// const trimmedString = string.substring(0, length);
+// const str = 'The quick brown fox jumps over the lazy dog.';
+
+// const words = str.split(' ');
+// console.log(words[3]);
+// // expected output: "fox"
+
+// const chars = str.split('');
+// console.log(chars[8]);
+// // expected output: "k"
+
+// const strCopy = str.split();
+// console.log(strCopy);
+// // expected output: Array ["The quick brown fox jumps over the lazy dog."]
