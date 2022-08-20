@@ -3,6 +3,7 @@ const searchButton = document.getElementById('btn');
 const cardsDisplay = document.getElementById('cards-display');
 const criteria = document.getElementById('criteria');
 const moreCriteria = document.getElementById('more-criteria');
+const revealCriteria = document.getElementById('reveal-criteria');
 
 const app_id = '&app_id=1ab55c64';
 const api_key = '&app_key=c86872049aff2debad57830e690d77c8';
@@ -41,10 +42,9 @@ searchButton.addEventListener('click', (e)=>{
 	}
 })
 
-//Need to work on hide/reveal, best way to do it ( x != x or smth like this)
-// moreCriteria.addEventListener('click', ()=>{
-
-// })
+moreCriteria.addEventListener('click', ()=>{
+	revealCriteria.style.display = '';
+})
 
 searchInput.addEventListener('focus', ()=>{
 	searchInput.classList.remove('input-red')
