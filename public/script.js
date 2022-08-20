@@ -20,7 +20,6 @@ searchButton.addEventListener('click', (e)=>{
 		labelValues.push('&health='+checkbox.name);
 	});
 	labelValues = labelValues.toString().replace(/,/g, '');
-	console.log(labelValues);
 
 	//Cuisine types
 	cuisineValues = [];
@@ -29,7 +28,6 @@ searchButton.addEventListener('click', (e)=>{
 		cuisineValues.push('&cuisineType='+checkbox.name);
 	});
 	cuisineValues = cuisineValues.toString().replace(/,/g, '');
-	console.log(cuisineValues);
 
 	foodSearch = searchInput.value;
 	if(foodSearch == ''){
@@ -59,12 +57,12 @@ async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?ty
 }
 
 function useApiResponse(response){
-	console.log(response);
 	let recipes = [];
-	for (let i = 0; i < 10; i++) {
-		recipes.push(		
-		`<div>
-			<img src="${response.hits[i].recipe.images.THUMBNAIL.url}" alt="">
+	for (let i = 0; i < 9; i++) {
+		console.log(response.hits[i].recipe.label.split(' ').length)
+		recipes.push(
+		`<div class="w-1/2 gap-y-1 gap-x-1">
+			<img src="${response.hits[i].recipe.images.SMALL.url}" alt="">
 			<div>
 				<h3>${response.hits[i].recipe.label}</h3>
 			</div>
@@ -72,3 +70,6 @@ function useApiResponse(response){
 		cardsDisplay.innerHTML = recipes.join('');
 	}
 }
+
+// const length = 6;
+// const trimmedString = string.substring(0, length);
