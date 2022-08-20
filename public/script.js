@@ -43,7 +43,8 @@ searchButton.addEventListener('click', (e)=>{
 })
 
 moreCriteria.addEventListener('click', ()=>{
-	revealCriteria.style.display = '';
+	revealCriteria.style.display = revealCriteria.style.display === '' ? 'none' : '';
+	console.log('bite')
 })
 
 searchInput.addEventListener('focus', ()=>{
