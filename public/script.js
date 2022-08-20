@@ -71,6 +71,7 @@ function useApiResponse(response){
 			<div>
 				<h3>${trimmedTitle}</h3>
 			</div>
+			<p id="open-recipe">More details</p>
 		</div>`)
 		cardsDisplay.innerHTML = recipes.join('');
 	}
