@@ -71,7 +71,7 @@ function useApiResponse(response){
 		}
 
 		recipes.push(
-			//Data index i allows to identify which card will be clicked on
+			//Data index i allows identification of clicked card
 			`<div class="w-1/2 gap-y-1 gap-x-1">
 			<img src="${response.hits[i].recipe.images.SMALL.url}" alt="">
 			<div>
@@ -79,7 +79,7 @@ function useApiResponse(response){
 			</div>
 			<p class="open-recipe cursor-pointer" data-index="${[i]}">More details</p>
 			</div>`)
-			cardsDisplay.innerHTML = recipes.join('');
+		cardsDisplay.innerHTML = recipes.join('');
 		arrayOfRecipesInfo.push(
 			{title : response.hits[i].recipe.label, 
 			image : response.hits[i].recipe.images.SMALL.url, 
@@ -98,7 +98,7 @@ function useApiResponse(response){
 }
 
 function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
-	console.log(arrayOfRecipesInfo[recipeIndex])
+	console.log(arrayOfRecipesInfo[recipeIndex].ingredients)
 	modalWindow.style.display = "block";
 	modalWindow.innerHTML = `
 	<div class="modal-content w-4/5 bg-gray-50 m-auto p-5 rounded border border-inherit border-solid">
@@ -110,11 +110,29 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
         </ul>
   	</div>
 	`
-for(let i = 0; i < arrayOfRecipesInfo[recipeIndex].length; i++){
-	//create li
-	//give the value of wanted element
-	//append ingredients-list w/ li
-}
+// for(let i = 0; i < arrayOfRecipesInfo[recipeIndex].ingredients.length; i++){
+// 	//create li
+// 	//give the value of wanted element
+// 	//append ingredients-list w/ li
+// 	// Create the list item:
+// 	var item = document.createElement('li');
+// 	// Set its contents:
+// 	item.appendChild(document.createTextNode(array[i]));
+
+// 	// Add it to the list:
+// 	list.appendChild(item);
+// }
+
+let listOfIngredients = document.getElementById("ingredients-list");
+
+console.log(arrayOfRecipesInfo[recipeIndex].ingredients[0].text)
+for(let i = 0; i < arrayOfRecipesInfo[recipeIndex].ingredients.length; i++){
+
+	arrayOfRecipesInfo[recipeIndex].text.forEach((item)=>{
+	let liIngredient = document.createElement("li");
+	liIngredient.innerText = item;
+	listOfIngredients.appendChild(liIngredient);
+})}
 
 	// Get the <span> element that closes the modal
 	let closeSpan = document.getElementsByClassName("close-span")[0];
