@@ -70,15 +70,19 @@ function useApiResponse(response){
 			trimmedTitle = trimmedTitle.split(' ').slice(0, 5).join(' ')+' [...]';
 		}
 		recipes.push(
-		`<div class="w-1/2 gap-y-1 gap-x-1">
+			`<div class="w-1/2 gap-y-1 gap-x-1">
 			<img src="${response.hits[i].recipe.images.SMALL.url}" alt="">
 			<div>
-				<h3>${trimmedTitle}</h3>
+			<h3>${trimmedTitle}</h3>
 			</div>
 			<p class="open-recipe cursor-pointer">More details</p>
-		</div>`)
-		cardsDisplay.innerHTML = recipes.join('');
-	}
+			</div>`)
+			cardsDisplay.innerHTML = recipes.join('');
+		}
+	let moreDetailsRecipe = document.querySelectorAll(".open-recipe");
+	moreDetailsRecipe.forEach(element => element.addEventListener('click', ()=>{
+	modalWindow.style.display = "block";
+	}))
 }
 
 /**
@@ -86,20 +90,11 @@ function useApiResponse(response){
  * Attaching event listeners can be done outside of the for loop w/ foreach
  */
 
-
 // Get the modal
 let modalWindow = document.getElementById("modal-window");
 
-// Get the button that opens the modal
-let modalBtn = document.getElementById("modal-button");
-
 // Get the <span> element that closes the modal
 let closeSpan = document.getElementsByClassName("close-span")[0];
-
-// When the user clicks the button, open the modal 
-modalBtn.onclick = function() {
-	modalWindow.style.display = "block";
-}
 
 // When the user clicks on <span> (x), close the modal
 closeSpan.onclick = function() {
