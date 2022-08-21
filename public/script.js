@@ -127,10 +127,11 @@ let listOfIngredients = document.getElementById("ingredients-list");
 
 console.log(arrayOfRecipesInfo[recipeIndex].ingredients[0].text)
 for(let i = 0; i < arrayOfRecipesInfo[recipeIndex].ingredients.length; i++){
+	console.log(arrayOfRecipesInfo[recipeIndex].ingredients[i].text)
 
-	arrayOfRecipesInfo[recipeIndex].text.forEach((item)=>{
+	arrayOfRecipesInfo[recipeIndex].ingredients.forEach((item)=>{
 	let liIngredient = document.createElement("li");
-	liIngredient.innerText = item;
+	liIngredient.innerText = arrayOfRecipesInfo[recipeIndex].ingredients[i].text;
 	listOfIngredients.appendChild(liIngredient);
 })}
 
