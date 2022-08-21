@@ -63,6 +63,7 @@ async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?ty
 
 function useApiResponse(response){
 	let recipes = [];
+	let array = [];
 	let trimmedTitle;
 	for (let i = 0; i < 9; i++) {
 		trimmedTitle = response.hits[i].recipe.label;
@@ -79,22 +80,20 @@ function useApiResponse(response){
 			<p class="open-recipe cursor-pointer">More details</p>
 			</div>`)
 			cardsDisplay.innerHTML = recipes.join('');
-		}
+		array.push(trimmedTitle, response.hits[i].recipe.images.SMALL.url, response.hits[i].recipe.totalTime, response.hits[i].recipe.ingredients, response.hits[i].recipe.url)
+		console.log(array)
+	}
 
-
-	let array = [];
-	array.push(trimmedTitle, response.hits[i].recipe.images.SMALL.url, response.hits[i].recipe.totalTime, response.hits[i].recipe.ingredients, response.hits[i].recipe.url)
-	console.log(array)	
 	let moreDetailsRecipe = document.querySelectorAll(".open-recipe");
 	moreDetailsRecipe.forEach(element => element.addEventListener('click', (e)=>{
-		modalForRecipe(trimmedTitle)
-		console.log(e.target.response)
+		modalForRecipe(array)
+		console.log(array)
 	//or create here a function that will take value of clicked recipe to create modal
 	}))
 }
 
-function modalForRecipe(trimmedTitle){
-	console.log(trimmedTitle)
+function modalForRecipe(array){
+	console.log(array)
 	modalWindow.style.display = "block";
 	modalWindow.innerHTML = `
 	<div class="modal-content w-4/5 bg-gray-50 m-auto p-5 rounded border border-inherit border-solid">
