@@ -128,12 +128,10 @@ let listOfIngredients = document.getElementById("ingredients-list");
 console.log(arrayOfRecipesInfo[recipeIndex].ingredients[0].text)
 for(let i = 0; i < arrayOfRecipesInfo[recipeIndex].ingredients.length; i++){
 	console.log(arrayOfRecipesInfo[recipeIndex].ingredients[i].text)
-
-	arrayOfRecipesInfo[recipeIndex].ingredients.forEach((item)=>{
 	let liIngredient = document.createElement("li");
 	liIngredient.innerText = arrayOfRecipesInfo[recipeIndex].ingredients[i].text;
 	listOfIngredients.appendChild(liIngredient);
-})}
+}
 
 	// Get the <span> element that closes the modal
 	let closeSpan = document.getElementsByClassName("close-span")[0];
