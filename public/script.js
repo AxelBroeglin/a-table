@@ -69,8 +69,11 @@ function useApiResponse(response){
 		if(trimmedTitle.split(" ").length >= 5){
 			trimmedTitle = trimmedTitle.split(' ').slice(0, 5).join(' ')+' [...]';
 		}
+
+		console.log(response.hits[i])
+
 		recipes.push(
-			`<div class="w-1/2 gap-y-1 gap-x-1">
+			`<div class="w-1/2 gap-y-1 gap-x-1" data-title = "${trimmedTitle}" data-image = "${response.hits[i].recipe.images.SMALL.url}" data-total-time = "${response.hits[i].recipe.totalTime}" data-ingredients ="${response.hits[i].recipe.ingredients}" data-url="${response.hits[i].recipe.url}">
 			<img src="${response.hits[i].recipe.images.SMALL.url}" alt="">
 			<div>
 			<h3>${trimmedTitle}</h3>
@@ -79,31 +82,57 @@ function useApiResponse(response){
 			</div>`)
 			cardsDisplay.innerHTML = recipes.join('');
 		}
+	// Need to find a way to give each card the right data
+		// let [i] = {
+		// 	'image': 'response.hits[i].recipe.images.SMALL.url',
+		// 	'totalTitle': 'recipe.totalTime',
+		// 	'ingredients': 'response.hits[i].recipe.ingredients',
+		// 	'url': 'response.hits[i].recipe.url',
+		// }
+		//console.log(recipe[i])
 	let moreDetailsRecipe = document.querySelectorAll(".open-recipe");
-	moreDetailsRecipe.forEach(element => element.addEventListener('click', ()=>{
-	modalWindow.style.display = "block";
+	moreDetailsRecipe.forEach(element => element.addEventListener('click', (e)=>{
+		modalForRecipe()
+		console.log(e.target.response)
+	//or create here a function that will take value of clicked recipe to create modal
 	}))
 }
 
-/**
- * TODO For each see recipe buttons, attach event that will open the modal window taking response.hits[i] to show photo, title, ingredients, fat carb sugar, calories per serving.
- * Attaching event listeners can be done outside of the for loop w/ foreach
- */
+function modalForRecipe(){
+	modalWindow.style.display = "block";
+	modalWindow.innerHTML = `
+	<div class="modal-content w-4/5 bg-gray-50 m-auto p-5 rounded border border-inherit border-solid">
+		<span class="close-span text-slate-400 float-right text-2xl font-bold hover:text-black hover:cursor-pointer">&times;</span>
+		<p>Some text in the Modal..</p>
+  	</div>
+	`
+
+
+	// Get the <span> element that closes the modal
+	let closeSpan = document.getElementsByClassName("close-span")[0];
+
+	// When the user clicks on <span> (x), close the modal
+	closeSpan.addEventListener('click', ()=>{ 
+		modalWindow.style.display = "none";
+	})
+}
 
 // Get the modal
 let modalWindow = document.getElementById("modal-window");
 
-// Get the <span> element that closes the modal
-let closeSpan = document.getElementsByClassName("close-span")[0];
-
-// When the user clicks on <span> (x), close the modal
-closeSpan.onclick = function() {
-	modalWindow.style.display = "none";
-}
-
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modalWindow) {
+window.addEventListener('click', (e)=>{
+  if (e.target == modalWindow) {
     modalWindow.style.display = "none";
   }
-}
+})
+
+let add_new_element = () => {
+	let header = document.getElementById('cards-display');
+	let newEle = document.createElement('p');
+	newEle.innerHTML = 'Content inside p element';
+	
+	cardsDisplay.parentNode.insertBefore(modalWindow, header.cardsDisplay);
+  }
+  
+  add_new_element();
