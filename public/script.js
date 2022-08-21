@@ -48,7 +48,6 @@ searchButton.addEventListener('click', (e)=>{
 
 moreCriteria.addEventListener('click', ()=>{
 	revealCriteria.style.display = revealCriteria.style.display === '' ? 'none' : '';
-	console.log('bite')
 })
 
 searchInput.addEventListener('focus', ()=>{
@@ -63,7 +62,7 @@ async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?ty
 
 function useApiResponse(response){
 	let recipes = [];
-	let array = [];
+	let arrayOfRecipesInfo = [];
 	let trimmedTitle;
 	for (let i = 0; i < 9; i++) {
 		trimmedTitle = response.hits[i].recipe.label;
@@ -72,28 +71,35 @@ function useApiResponse(response){
 		}
 
 		recipes.push(
+			//Data index i allows to identify which card will be clicked on
 			`<div class="w-1/2 gap-y-1 gap-x-1">
 			<img src="${response.hits[i].recipe.images.SMALL.url}" alt="">
 			<div>
 			<h3>${trimmedTitle}</h3>
 			</div>
-			<p class="open-recipe cursor-pointer">More details</p>
+			<p class="open-recipe cursor-pointer" data-index="${[i]}">More details</p>
 			</div>`)
 			cardsDisplay.innerHTML = recipes.join('');
-		array.push(trimmedTitle, response.hits[i].recipe.images.SMALL.url, response.hits[i].recipe.totalTime, response.hits[i].recipe.ingredients, response.hits[i].recipe.url)
-		console.log(array)
+		arrayOfRecipesInfo.push(
+			{title : trimmedTitle, 
+			image : response.hits[i].recipe.images.SMALL.url, 
+			totalTime : response.hits[i].recipe.totalTime, 
+			ingredients : response.hits[i].recipe.ingredients, 
+			url : response.hits[i].recipe.url}
+		)
 	}
 
 	let moreDetailsRecipe = document.querySelectorAll(".open-recipe");
+	
 	moreDetailsRecipe.forEach(element => element.addEventListener('click', (e)=>{
-		modalForRecipe(array)
-		console.log(array)
-	//or create here a function that will take value of clicked recipe to create modal
+		let recipeIndex = e.target.dataset.index
+		modalForRecipe(arrayOfRecipesInfo, recipeIndex)
 	}))
 }
 
-function modalForRecipe(array){
-	console.log(array)
+function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
+	
+	console.log(arrayOfRecipesInfo, recipeIndex)
 	modalWindow.style.display = "block";
 	modalWindow.innerHTML = `
 	<div class="modal-content w-4/5 bg-gray-50 m-auto p-5 rounded border border-inherit border-solid">
