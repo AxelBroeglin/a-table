@@ -70,10 +70,8 @@ function useApiResponse(response){
 			trimmedTitle = trimmedTitle.split(' ').slice(0, 5).join(' ')+' [...]';
 		}
 
-		console.log(response.hits[i])
-
 		recipes.push(
-			`<div class="w-1/2 gap-y-1 gap-x-1" data-title = "${trimmedTitle}" data-image = "${response.hits[i].recipe.images.SMALL.url}" data-total-time = "${response.hits[i].recipe.totalTime}" data-ingredients ="${response.hits[i].recipe.ingredients}" data-url="${response.hits[i].recipe.url}">
+			`<div class="w-1/2 gap-y-1 gap-x-1">
 			<img src="${response.hits[i].recipe.images.SMALL.url}" alt="">
 			<div>
 			<h3>${trimmedTitle}</h3>
@@ -82,23 +80,21 @@ function useApiResponse(response){
 			</div>`)
 			cardsDisplay.innerHTML = recipes.join('');
 		}
-	// Need to find a way to give each card the right data
-		// let [i] = {
-		// 	'image': 'response.hits[i].recipe.images.SMALL.url',
-		// 	'totalTitle': 'recipe.totalTime',
-		// 	'ingredients': 'response.hits[i].recipe.ingredients',
-		// 	'url': 'response.hits[i].recipe.url',
-		// }
-		//console.log(recipe[i])
+
+
+	let array = [];
+	array.push(trimmedTitle, response.hits[i].recipe.images.SMALL.url, response.hits[i].recipe.totalTime, response.hits[i].recipe.ingredients, response.hits[i].recipe.url)
+	console.log(array)	
 	let moreDetailsRecipe = document.querySelectorAll(".open-recipe");
 	moreDetailsRecipe.forEach(element => element.addEventListener('click', (e)=>{
-		modalForRecipe()
+		modalForRecipe(trimmedTitle)
 		console.log(e.target.response)
 	//or create here a function that will take value of clicked recipe to create modal
 	}))
 }
 
-function modalForRecipe(){
+function modalForRecipe(trimmedTitle){
+	console.log(trimmedTitle)
 	modalWindow.style.display = "block";
 	modalWindow.innerHTML = `
 	<div class="modal-content w-4/5 bg-gray-50 m-auto p-5 rounded border border-inherit border-solid">
