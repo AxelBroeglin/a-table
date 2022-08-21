@@ -81,7 +81,7 @@ function useApiResponse(response){
 			</div>`)
 			cardsDisplay.innerHTML = recipes.join('');
 		arrayOfRecipesInfo.push(
-			{title : trimmedTitle, 
+			{title : response.hits[i].recipe.label, 
 			image : response.hits[i].recipe.images.SMALL.url, 
 			totalTime : response.hits[i].recipe.totalTime, 
 			ingredients : response.hits[i].recipe.ingredients, 
@@ -98,16 +98,23 @@ function useApiResponse(response){
 }
 
 function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
-	
-	console.log(arrayOfRecipesInfo, recipeIndex)
+	console.log(arrayOfRecipesInfo[recipeIndex])
 	modalWindow.style.display = "block";
 	modalWindow.innerHTML = `
 	<div class="modal-content w-4/5 bg-gray-50 m-auto p-5 rounded border border-inherit border-solid">
 		<span class="close-span text-slate-400 float-right text-2xl font-bold hover:text-black hover:cursor-pointer">&times;</span>
-		<p>Some text in the Modal..</p>
+		<h3>${arrayOfRecipesInfo[recipeIndex].title}<h3>
+        <img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title">
+        <ul id="ingredients-list">
+
+        </ul>
   	</div>
 	`
-
+for(let i = 0; i < arrayOfRecipesInfo[recipeIndex].length; i++){
+	//create li
+	//give the value of wanted element
+	//append ingredients-list w/ li
+}
 
 	// Get the <span> element that closes the modal
 	let closeSpan = document.getElementsByClassName("close-span")[0];
