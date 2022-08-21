@@ -98,36 +98,18 @@ function useApiResponse(response){
 }
 
 function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
-	console.log(arrayOfRecipesInfo[recipeIndex].ingredients)
 	modalWindow.style.display = "block";
 	modalWindow.innerHTML = `
 	<div class="modal-content w-4/5 bg-gray-50 m-auto p-5 rounded border border-inherit border-solid">
 		<span class="close-span text-slate-400 float-right text-2xl font-bold hover:text-black hover:cursor-pointer">&times;</span>
 		<h3>${arrayOfRecipesInfo[recipeIndex].title}<h3>
         <img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title">
-        <ul id="ingredients-list">
-
-        </ul>
+        <ul id="ingredients-list"></ul>
   	</div>
 	`
-// for(let i = 0; i < arrayOfRecipesInfo[recipeIndex].ingredients.length; i++){
-// 	//create li
-// 	//give the value of wanted element
-// 	//append ingredients-list w/ li
-// 	// Create the list item:
-// 	var item = document.createElement('li');
-// 	// Set its contents:
-// 	item.appendChild(document.createTextNode(array[i]));
-
-// 	// Add it to the list:
-// 	list.appendChild(item);
-// }
 
 let listOfIngredients = document.getElementById("ingredients-list");
-
-console.log(arrayOfRecipesInfo[recipeIndex].ingredients[0].text)
 for(let i = 0; i < arrayOfRecipesInfo[recipeIndex].ingredients.length; i++){
-	console.log(arrayOfRecipesInfo[recipeIndex].ingredients[i].text)
 	let liIngredient = document.createElement("li");
 	liIngredient.innerText = arrayOfRecipesInfo[recipeIndex].ingredients[i].text;
 	listOfIngredients.appendChild(liIngredient);
@@ -151,13 +133,3 @@ window.addEventListener('click', (e)=>{
     modalWindow.style.display = "none";
   }
 })
-
-let add_new_element = () => {
-	let header = document.getElementById('cards-display');
-	let newEle = document.createElement('p');
-	newEle.innerHTML = 'Content inside p element';
-	
-	cardsDisplay.parentNode.insertBefore(modalWindow, header.cardsDisplay);
-  }
-  
-  add_new_element();
