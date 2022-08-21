@@ -69,7 +69,6 @@ function useApiResponse(response){
 		if(trimmedTitle.split(" ").length >= 5){
 			trimmedTitle = trimmedTitle.split(' ').slice(0, 5).join(' ')+' [...]';
 		}
-console.log(response)
 		recipes.push(
 			//Data index i allows identification of clicked card
 			`<div class="w-1/2 gap-y-1 gap-x-1">
