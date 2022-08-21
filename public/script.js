@@ -69,7 +69,7 @@ function useApiResponse(response){
 		if(trimmedTitle.split(" ").length >= 5){
 			trimmedTitle = trimmedTitle.split(' ').slice(0, 5).join(' ')+' [...]';
 		}
-
+console.log(response)
 		recipes.push(
 			//Data index i allows identification of clicked card
 			`<div class="w-1/2 gap-y-1 gap-x-1">
@@ -105,31 +105,32 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 		<h3>${arrayOfRecipesInfo[recipeIndex].title}<h3>
         <img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title">
         <ul id="ingredients-list"></ul>
+		<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank"><p>See the recipe</p></a>
   	</div>
 	`
 
-let listOfIngredients = document.getElementById("ingredients-list");
-for(let i = 0; i < arrayOfRecipesInfo[recipeIndex].ingredients.length; i++){
-	let liIngredient = document.createElement("li");
-	liIngredient.innerText = arrayOfRecipesInfo[recipeIndex].ingredients[i].text;
-	listOfIngredients.appendChild(liIngredient);
-}
+	let listOfIngredients = document.getElementById("ingredients-list");
+	for(let i = 0; i < arrayOfRecipesInfo[recipeIndex].ingredients.length; i++){
+		let liIngredient = document.createElement("li");
+		liIngredient.innerText = arrayOfRecipesInfo[recipeIndex].ingredients[i].text;
+		listOfIngredients.appendChild(liIngredient);
+	}
 
-	// Get the <span> element that closes the modal
-	let closeSpan = document.getElementsByClassName("close-span")[0];
+		// Get the <span> element that closes the modal
+		let closeSpan = document.getElementsByClassName("close-span")[0];
 
-	// When the user clicks on <span> (x), close the modal
-	closeSpan.addEventListener('click', ()=>{ 
+		// When the user clicks on <span> (x), close the modal
+		closeSpan.addEventListener('click', ()=>{ 
+			modalWindow.style.display = "none";
+		})
+	}
+
+	// Get the modal
+	let modalWindow = document.getElementById("modal-window");
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.addEventListener('click', (e)=>{
+	if (e.target == modalWindow) {
 		modalWindow.style.display = "none";
-	})
-}
-
-// Get the modal
-let modalWindow = document.getElementById("modal-window");
-
-// When the user clicks anywhere outside of the modal, close it
-window.addEventListener('click', (e)=>{
-  if (e.target == modalWindow) {
-    modalWindow.style.display = "none";
-  }
+	}
 })
