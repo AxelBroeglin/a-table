@@ -1,8 +1,14 @@
+//Search variables
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('btn');
 
+//Menu variables
+const menuSearch = document.getElementById('menu-search');
+const menuCalendar = document.getElementById('menu-calendar');
+
 const cardsDisplay = document.getElementById('cards-display');
 
+//Criteria variables
 const criteria = document.getElementById('criteria');
 const moreCriteria = document.getElementById('more-criteria');
 const revealCriteria = document.getElementById('reveal-criteria');
