@@ -20,6 +20,11 @@
     -webkit-transform: rotate(45deg);
   }
 
+.calendar{
+  width: 45rem;
+  height: 52rem;
+}
+
   .days-width{
    width:calc(44.2rem / 7);
   }
