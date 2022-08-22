@@ -19,3 +19,11 @@
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
   }
+
+  .days-width{
+   width:calc(44.2rem / 7);
+  }
+
+  .days-div-width{
+  width: calc(40.2rem / 7);
+  }
