@@ -47,6 +47,10 @@ menu.addEventListener('click', event => {
 	}
   });
 
+ //Need to add delegated event to days wrapper (.days)
+ //Identify them with particular format (like yyyymmdd for db)
+ //Modal window opens on click to show the date and the meals
+ //Later recap of calories, fat etc... ?
 
 searchButton.addEventListener('click', (e)=>{
 	e.preventDefault();
