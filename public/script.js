@@ -1,23 +1,21 @@
 //Content container variable
 let contentContainer = document.getElementById('content-container');
 
-//Search variables
+//Search form variables
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('btn');
+
+//Food search variables
+let foodSearch = '';
+let labelValues = [];
+let cuisineValues = [];
 
 //Menu variables
 const menu = document.getElementById('menu');
 const menuSearch = document.getElementById('menu-search');
 const menuCalendar = document.getElementById('menu-calendar');
 
-menu.addEventListener('click', event => { 
-  if (event.target.id === 'menu-search') {
-	console.log('search');
-  } else {
-	console.log('calendar')
-  }
-});
-
+//Card display variable
 const cardsDisplay = document.getElementById('cards-display');
 
 //Criteria variables
@@ -25,15 +23,22 @@ const criteria = document.getElementById('criteria');
 const moreCriteria = document.getElementById('more-criteria');
 const revealCriteria = document.getElementById('reveal-criteria');
 
+//Modal window variable
 const openRecipe = document.querySelectorAll('.open-recipe');
 
+//API variables
 const app_id = '&app_id=1ab55c64';
 const api_key = '&app_key=c86872049aff2debad57830e690d77c8';
 
-let foodSearch = '';
-let labelValues = [];
-let cuisineValues = [];
 
+//Added event listener to ul with event delegation
+menu.addEventListener('click', event => { 
+	if (event.target.id === 'menu-search') {
+	  console.log('search');
+	} else {
+	  console.log('calendar')
+	}
+  });
 //By default, search. Maybe later, your favorite recipes or your calories this week
 //By clicking items in the menu, innerHTML of the container changes, and shows clicked section
 
