@@ -1,10 +1,22 @@
+//Content container variable
+let contentContainer = document.getElementById('content-container');
+
 //Search variables
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('btn');
 
 //Menu variables
+const menu = document.getElementById('menu');
 const menuSearch = document.getElementById('menu-search');
 const menuCalendar = document.getElementById('menu-calendar');
+
+menu.addEventListener('click', event => { 
+  if (event.target.id === 'menu-search') {
+	console.log('search');
+  } else {
+	console.log('calendar')
+  }
+});
 
 const cardsDisplay = document.getElementById('cards-display');
 
