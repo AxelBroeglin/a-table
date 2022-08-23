@@ -26,7 +26,7 @@
   <main class="px-16 py-6">
 
     <!-- Search container -->
-    <div>
+    <div id="search-section">
         <!-- Search -->
         <section>            
             <form>
@@ -121,23 +121,23 @@
 
             </form>
         </section>
-        <!-- End of search -->
-    </div>
       
-    <!-- Result container -->
-    <section class="flex justify-center">
-      <div id="cards-display" class="grid grid-cols-3">
-        <!-- cards go here -->
-      </div>
-
-      <!-- The Modal -->
-      <div id="modal-window" class="modal hidden fixed z-50 pt-24 left-0 top-0 w-full h-full backdrop-blur-sm bg-slate-white/50 overflow-auto">
         
-      </div>
-    </section><!-- End of result container -->
+      <!-- Result container -->
+      <section class="flex justify-center">
+        <div id="cards-display" class="grid grid-cols-3">
+          <!-- cards go here -->
+        </div>
+
+        <!-- The Modal -->
+        <div id="modal-window" class="modal hidden fixed z-50 pt-24 left-0 top-0 w-full h-full backdrop-blur-sm bg-slate-white/50 overflow-auto">
+          
+        </div>
+      </section><!-- End of result container -->
+    </div><!-- End of search -->
 
     <!-- Calendar container -->
-    <section class="calendar-container w-full h-screen text-slate-300	flex justify-center	items-center	">
+    <section id="calendar-section" class="calendar-container w-full h-screen text-slate-300	flex justify-center	items-center	">
       <div class="calendar	bg-zinc-900	shadow-lg">
         <div class="month w-full	h-48	bg-green-700	flex justify-between	items-center py-0	px-8	text-center	shadow-lg">
           <i class="fas fa-angle-left prev cursor-pointer text-4xl	"><</i>
@@ -161,7 +161,6 @@
     </section><!-- End of calendar container -->
 
   </main>
-
 <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
