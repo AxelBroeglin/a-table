@@ -22,6 +22,10 @@ let foodSearch = '';
 let labelValues = [];
 let cuisineValues = [];
 
+//By default, search. Maybe later, your favorite recipes or your calories this week
+//By clicking items in the menu, innerHTML of the container changes, and shows clicked section
+
+
 searchButton.addEventListener('click', (e)=>{
 	e.preventDefault();
 	//Health labels
