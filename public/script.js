@@ -285,3 +285,15 @@ const renderCalendar = () => {
 	console.log(event.target.innerHTML + 'th of ' + dateH3.dataset.currentMonth);
  });
 };
+
+//Use following code for calendar modal
+//	modalWindow.style.display = "block";
+	// modalWindow.innerHTML = `
+	// <div class="modal-content w-4/5 bg-gray-50 m-auto p-5 rounded border border-inherit border-solid">
+	// 	<span class="close-span text-slate-400 float-right text-2xl font-bold hover:text-black hover:cursor-pointer">&times;</span>
+	// 	<h3>${arrayOfRecipesInfo[recipeIndex].title}<h3>
+    //     <img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title">
+    //     <ul id="ingredients-list"></ul>
+	// 	<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank"><p>See the recipe</p></a>
+  	// </div>
+	// `
