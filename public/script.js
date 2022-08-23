@@ -47,11 +47,6 @@ menu.addEventListener('click', event => {
 	}
   });
 
- //Need to add delegated event to days wrapper (.days)
- //Identify them with particular format (like yyyymmdd for db)
- //Modal window opens on click to show the date and the meals
- //Later recap of calories, fat etc... ?
-
 searchButton.addEventListener('click', (e)=>{
 	e.preventDefault();
 	//Health labels
@@ -183,7 +178,7 @@ const renderCalendar = () => {
 			<div class="month w-full	h-48	bg-green-700	flex justify-between	items-center py-0	px-8	text-center	shadow-lg">
 			<i class="fas fa-angle-left prev cursor-pointer text-4xl	"><</i>
 			<div class="date">
-				<h3 class="text-5xl	uppercase tracking-wide	mb-4	"></h3>
+				<h3  class="text-5xl	uppercase tracking-wide	mb-4	"></h3>
 				<p class="text-2xl	"></p>
 			</div>
 			<i class="fas fa-angle-right next cursor-pointer text-4xl	">></i>
@@ -242,7 +237,10 @@ const renderCalendar = () => {
     "December",
   ];
 
-  document.querySelector(".date h3").innerHTML = months[date.getMonth()];
+
+  let dateH3 = document.querySelector(".date h3");
+  dateH3.innerHTML = months[date.getMonth()];
+  dateH3.dataset.currentMonth = months[date.getMonth()];
 
   document.querySelector(".date p").innerHTML = new Date().toDateString();
 
@@ -276,4 +274,14 @@ const renderCalendar = () => {
 	date.setMonth(date.getMonth() + 1);
 	renderCalendar();
   });
+  
+ //Need to add delegated event to days wrapper (.days)
+ //Identify them with particular format (like yyyymmdd for db)
+ //Modal window opens on click to show the date and the meals
+ //Later recap of calories, fat etc... ?
+
+ //Need if for 1st 2nd and 3rd
+ monthDays.addEventListener('click', event =>{
+	console.log(event.target.innerHTML + 'th of ' + dateH3.dataset.currentMonth);
+ });
 };
