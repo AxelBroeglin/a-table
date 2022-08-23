@@ -37,6 +37,7 @@ const api_key = '&app_key=c86872049aff2debad57830e690d77c8';
 //Added event listener to ul with event delegation
 menu.addEventListener('click', event => { 
 	if (event.target.id === 'menu-search') {
+		calendarSection.innerHTML = '';
 		console.log('search');
 		searchSection.style.display = "block";
 	} else {
@@ -45,8 +46,6 @@ menu.addEventListener('click', event => {
 	  	renderCalendar();
 	}
   });
-//By default, search. Maybe later, your favorite recipes or your calories this week
-//By clicking items in the menu, innerHTML of the container changes, and shows clicked section
 
 
 searchButton.addEventListener('click', (e)=>{
@@ -167,33 +166,34 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 	}
 })
 
+
+//Calendar code
 const date = new Date();
 
 const renderCalendar = () => {
-	contentContainer.innerHTML = `
+	//Injects the HTML in the proper section
+	calendarSection.innerHTML = `
 	<!-- Calendar container -->
 	<section id="calendar-section">
-		<div class="calendar-container w-full h-screen text-slate-300	flex justify-center	items-center	">
-			<div class="calendar	bg-zinc-900	shadow-lg">
-				<div class="month w-full	h-48	bg-green-700	flex justify-between	items-center py-0	px-8	text-center	shadow-lg">
-				<i class="fas fa-angle-left prev cursor-pointer text-4xl	"><</i>
-				<div class="date">
-					<h3 class="text-5xl	uppercase tracking-wide	mb-4	"></h3>
-					<p class="text-2xl	"></p>
-				</div>
-				<i class="fas fa-angle-right next cursor-pointer text-4xl	">></i>
-				</div>
-				<div class="weekdays text-2xl h-20	py-0 px-1.5	flex items-center">
-				<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Sun</div>
-				<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Mon</div>
-				<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Tue</div>
-				<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Wed</div>
-				<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Thu</div>
-				<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Fri</div>
-				<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Sat</div>
-				</div>
-				<div class="days w-full flex flex-wrap	p-1"></div>
+		<div class="calendar	bg-zinc-900	shadow-lg">
+			<div class="month w-full	h-48	bg-green-700	flex justify-between	items-center py-0	px-8	text-center	shadow-lg">
+			<i class="fas fa-angle-left prev cursor-pointer text-4xl	"><</i>
+			<div class="date">
+				<h3 class="text-5xl	uppercase tracking-wide	mb-4	"></h3>
+				<p class="text-2xl	"></p>
 			</div>
+			<i class="fas fa-angle-right next cursor-pointer text-4xl	">></i>
+			</div>
+			<div class="weekdays text-2xl h-20	py-0 px-1.5	flex items-center">
+			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Sun</div>
+			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Mon</div>
+			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Tue</div>
+			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Wed</div>
+			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Thu</div>
+			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Fri</div>
+			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Sat</div>
+			</div>
+			<div class="days w-full flex flex-wrap	p-1"></div>
 		</div>
 	</section><!-- End of calendar container -->	
 	`
