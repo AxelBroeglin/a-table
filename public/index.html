@@ -25,11 +25,118 @@
   
   <main class="px-16 py-6">
     <div id="content-container">
+      <!-- Search container -->
+      <div id="search-section">
+          <!-- Search -->
+          <section>            
+              <form>
+                <label for="food-search">Search for food:</label>
+                <input class="bg-slate-200" id="search-input" type="text" name="foodSearch">
+                <input class="border-2 px-2" id="btn" type="submit" value="Submit">
+                
+                <!-- Criteria -->
+                <div id="criteria">
+                  <div id="health-labels">
+                    <input type="checkbox" id="vegetarian" class='health-labels' name="vegetarian">
+                    <label for="vegetarian">Vegetarian</label>
 
+                    <input type="checkbox" id="vegan" class='health-labels' name="vegan">
+                    <label for="vegan">Vegan</label>
 
+                    <input type="checkbox" id="pescatarian" class='health-labels' name="pescatarian">
+                    <label for="pescatarian">Pescatarian</label>
+                    <p id="more-criteria">More criteria <i class="arrow down"></i></p>
+                  </div>  
 
+                  <!-- Reveal Criteria -->
+                  <div id="reveal-criteria" style="display:none;">
+                    <!-- Health labels -->
+                    <div>
+                        <p>Health labels</p>
+                        <input type="checkbox" id="crustacean-free" class='health-labels' name="crustacean-free">
+                        <label for="crustacean-free">Crustacean-free</label>
+
+                        <input type="checkbox" id="dairy-free" class='health-labels' name="dairy-free">
+                        <label for="dairy-free">Dairy-free</label>
+
+                        <input type="checkbox" id="egg-free" class='health-labels' name="egg-free">
+                        <label for="egg-free">Egg-free</label>
+
+                        <input type="checkbox" id="gluten-free" class='health-labels' name="gluten-free">
+                        <label for="gluten-free">Gluten-free</label>
+
+                        <input type="checkbox" id="kosher" class='health-labels' name="kosher">
+                        <label for="kosher">Kosher</label>
+
+                        <input type="checkbox" id="peanut-free" class='health-labels' name="peanut-free">
+                        <label for="peanut-free">Peanut-free</label>
+
+                        <input type="checkbox" id="pork-free" class='health-labels' name="pork-free">
+                        <label for="pork-free">Pork-free</label>
+
+                        <input type="checkbox" id="shellfish-free" class='health-labels' name="shellfish-free">
+                        <label for="shellfish-free">Shellfish-free</label>
+
+                        <input type="checkbox" id="tree-nut-free" class='health-labels' name="tree-nut-free">
+                        <label for="tree-nut-free">Tree-nut-free</label>
+                    </div><!-- End of health labels -->
+
+                    <!-- Cuisine types -->
+                    <div id="cuisine-types">
+                      <p>Cuisine type</p>
+                      <input type="checkbox" id="chinese" class='cuisine-type' name="chinese">
+                      <label for="chinese">Chinese</label>
+
+                      <input type="checkbox" id="french" class='cuisine-type' name="french">
+                      <label for="french">French</label>
+
+                      <input type="checkbox" id="greek" class='cuisine-type' name="greek">
+                      <label for="greek">Greek</label>
+
+                      <input type="checkbox" id="indian" class='cuisine-type' name="indian">
+                      <label for="indian">Indian</label>
+
+                      <input type="checkbox" id="italian" class='cuisine-type' name="italian">
+                      <label for="italian">Italian</label>
+
+                      <input type="checkbox" id="japanese" class='cuisine-type' name="japanese">
+                      <label for="japanese">Japanese</label>
+                      
+                      <input type="checkbox" id="korean" class='cuisine-type' name="korean">
+                      <label for="korean">Korean</label>
+
+                      <input type="checkbox" id="mexican" class='cuisine-type' name="mexican">
+                      <label for="mexican">Mexican</label>
+
+                      <input type="checkbox" id="nordic" class='cuisine-type' name="nordic">
+                      <label for="nordic">Nordic</label>
+
+                      <input type="checkbox" id="south-american" class='cuisine-type' name="South%20American">
+                      <label for="south-american">South American</label>
+                    </div><!-- End of cuisine types -->
+
+                  </div> <!-- End of reveal Criteria -->
+
+                </div> <!-- End of criteria -->
+
+              </form>
+          </section>
         
-      
+          
+        <!-- Result container -->
+        <section class="flex justify-center">
+          <div id="cards-display" class="grid grid-cols-3">
+            <!-- cards go here -->
+          </div>
+
+          <!-- The Modal -->
+          <div id="modal-window" class="modal hidden fixed z-50 pt-24 left-0 top-0 w-full h-full backdrop-blur-sm bg-slate-white/50 overflow-auto">
+            
+          </div>
+        </section><!-- End of result container -->
+      </div><!-- End of search -->
+
+
     </div>
   </main>
 <script type="text/javascript" src="script.js"></script>
