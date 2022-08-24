@@ -282,25 +282,29 @@ const renderCalendar = () => {
 
  //Need if for 1st 2nd and 3rd
  monthDays.addEventListener('click', event =>{
+	modalWindow.style.display = "block";
+	modalWindow.innerHTML = `
+	<div class="modal-content w-4/5 bg-gray-50 m-auto p-5 rounded border border-inherit border-solid">
+	<span class="close-span text-slate-400 float-right text-2xl font-bold hover:text-black hover:cursor-pointer">&times;</span>
+	<h3>${event.target.innerHTML + 'th of ' + dateH3.dataset.currentMonth}<h3>
+    	<h4>Breakfast</h4>
+			<div>Contains recipe link<div/>
+			<p>or "Add recipe" button leading to search</p>
+			<h4>Lunch</h4>
+			<div>Contains recipe link<div/>
+			<p>or "Add recipe" button leading to search</p>
+			<h4>Diner</h4>
+			<div>Contains recipe link<div/>
+			<p>or "Add recipe" button leading to search</p>
+	 	<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank"><p>See the recipe</p></a>
+   </div>
+	`
 	console.log(event.target.innerHTML + 'th of ' + dateH3.dataset.currentMonth);
  });
 };
 
 //Use following code for calendar modal
-//	modalWindow.style.display = "block";
+// modalWindow.style.display = "block";
 // modalWindow.innerHTML = `
-// <div class="modal-content w-4/5 bg-gray-50 m-auto p-5 rounded border border-inherit border-solid">
-// 	<span class="close-span text-slate-400 float-right text-2xl font-bold hover:text-black hover:cursor-pointer">&times;</span>
-// 	<h3>${must be something like : event.target.innerHTML + 'th of ' + dateH3.dataset.currentMonth}<h3>
-//     	<h4>Breakfast</h4>
-// 			<div>Contains recipe link<div/>
-// 			or "Add recipe" button leading to search
-//          	<h4>Lunch</h4>
-// 			<div>Contains recipe link<div/>
-// 			or "Add recipe" button leading to search
-//          	<h4>Diner</h4>
-// 			<div>Contains recipe link<div/>
-// 			or "Add recipe" button leading to search
-// 	 	<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank"><p>See the recipe</p></a>
-//    </div>
+
 // 	 `
