@@ -129,7 +129,7 @@ function useApiResponse(response){
 
 function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 	modalWindow.style.display = "block";
-	modalWindow.innerHTML = `
+	modalContent.innerHTML = `
 		<h3>${arrayOfRecipesInfo[recipeIndex].title}<h3>
         <img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title">
         <ul id="ingredients-list"></ul>
@@ -149,6 +149,7 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 // Get the modal
 let modalWindow = document.getElementById('modal-window');
 let modalContent = document.getElementById('modal-content');
+
 // When the user clicks anywhere outside of the modal, close it
 window.addEventListener('click', (e)=>{
 	if (e.target == modalWindow) {
@@ -280,7 +281,7 @@ const renderCalendar = () => {
  //Later recap of calories, fat etc... ?
 
  //Need if for 1st 2nd and 3rd
- monthDays.addEventListener('click', event =>{
+monthDays.addEventListener('click', event =>{
 	modalWindow.style.display = "block";
 	modalContent.innerHTML = `
 	<h3>${event.target.innerHTML + 'th of ' + dateH3.dataset.currentMonth}<h3>
