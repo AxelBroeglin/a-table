@@ -296,7 +296,7 @@ const renderCalendar = () => {
 			<h4>Diner</h4>
 			<div>Contains recipe link<div/>
 			<p>or "Add recipe" button leading to search</p>
-	 	<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank"><p>See the recipe</p></a>
+	 	<a href="" target="_blank"><p>See the recipe</p></a>
    </div>
 	`
 	console.log(event.target.innerHTML + 'th of ' + dateH3.dataset.currentMonth);
