@@ -130,13 +130,10 @@ function useApiResponse(response){
 function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 	modalWindow.style.display = "block";
 	modalWindow.innerHTML = `
-	<div class="modal-content w-4/5 bg-gray-50 m-auto p-5 rounded border border-inherit border-solid">
-		<span class="close-span text-slate-400 float-right text-2xl font-bold hover:text-black hover:cursor-pointer">&times;</span>
 		<h3>${arrayOfRecipesInfo[recipeIndex].title}<h3>
         <img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title">
         <ul id="ingredients-list"></ul>
 		<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank"><p>See the recipe</p></a>
-  	</div>
 	`
 
 	let listOfIngredients = document.getElementById("ingredients-list");
@@ -146,23 +143,25 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 		listOfIngredients.appendChild(liIngredient);
 	}
 
-		// Get the <span> element that closes the modal
-		let closeSpan = document.getElementsByClassName("close-span")[0];
 
-		// When the user clicks on <span> (x), close the modal
-		closeSpan.addEventListener('click', ()=>{ 
-			modalWindow.style.display = "none";
-		})
-	}
+}
 
-	// Get the modal
-	let modalWindow = document.getElementById("modal-window");
-
-	// When the user clicks anywhere outside of the modal, close it
-	window.addEventListener('click', (e)=>{
+// Get the modal
+let modalWindow = document.getElementById('modal-window');
+let modalContent = document.getElementById('modal-content');
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener('click', (e)=>{
 	if (e.target == modalWindow) {
 		modalWindow.style.display = "none";
 	}
+})
+
+// Get the <span> element that closes the modal
+let closeSpan = document.getElementsByClassName("close-span")[0];
+
+// When the user clicks on <span> (x), close the modal
+closeSpan.addEventListener('click', ()=>{ 
+	modalWindow.style.display = "none";
 })
 
 
@@ -283,9 +282,7 @@ const renderCalendar = () => {
  //Need if for 1st 2nd and 3rd
  monthDays.addEventListener('click', event =>{
 	modalWindow.style.display = "block";
-	modalWindow.innerHTML = `
-	<div class="modal-content w-4/5 bg-gray-50 m-auto p-5 rounded border border-inherit border-solid">
-	<span class="close-span text-slate-400 float-right text-2xl font-bold hover:text-black hover:cursor-pointer">&times;</span>
+	modalContent.innerHTML = `
 	<h3>${event.target.innerHTML + 'th of ' + dateH3.dataset.currentMonth}<h3>
     	<h4>Breakfast</h4>
 			<div>Contains recipe link<div/>
@@ -297,14 +294,6 @@ const renderCalendar = () => {
 			<div>Contains recipe link<div/>
 			<p>or "Add recipe" button leading to search</p>
 	 	<a href="" target="_blank"><p>See the recipe</p></a>
-   </div>
 	`
-	console.log(event.target.innerHTML + 'th of ' + dateH3.dataset.currentMonth);
  });
 };
-
-//Use following code for calendar modal
-// modalWindow.style.display = "block";
-// modalWindow.innerHTML = `
-
-// 	 `
