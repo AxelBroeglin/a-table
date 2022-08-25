@@ -244,6 +244,10 @@ const renderCalendar = () => {
 
   document.querySelector(".date p").innerHTML = new Date().toDateString();
 
+
+  //Check if a specific ID will be necessary to communicate with the DB, like 20220925.
+  //If so, will have to fix the issue of 1 to 9, since it will change the format.
+
   let days = "";
 
   for (let x = firstDayIndex; x > 0; x--) {
@@ -251,13 +255,10 @@ const renderCalendar = () => {
   }
 
   for (let i = 1; i <= lastDay; i++) {
-    if (
-      i === new Date().getDate() &&
-      date.getMonth() === new Date().getMonth()
-    ) {
-      days += `<div class="today text-2xl m-1 days-div-width h-20	flex justify-center items-center shadow-lg bg-green-700 hover:cursor-pointer">${i}</div>`;
-    } else {
-      days += `<div class="text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer">${i}</div>`;
+    if (i === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
+    	days += `<div class="today text-2xl m-1 days-div-width h-20	flex justify-center items-center shadow-lg bg-green-700 hover:cursor-pointer">${i}</div>`;
+    }else{
+    	days += `<div class="text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer">${i}</div>`;
     }
   }
 
