@@ -283,8 +283,24 @@ const renderCalendar = () => {
  //Need if for 1st 2nd and 3rd
 monthDays.addEventListener('click', event =>{
 	modalWindow.style.display = "block";
+	let dateNumber = event.target.innerHTML;
+	switch (dateNumber.slice(-1)) {
+		case '1':
+			dateNumber += 'st ';
+		break;
+		case '2':
+			dateNumber += 'nd ';
+		break;
+		case '3':
+			dateNumber += 'rd ';
+			break;
+		default:
+			dateNumber += 'th ';
+		break;
+	}
+
 	modalContent.innerHTML = `
-	<h3>${event.target.innerHTML + 'th of ' + dateH3.dataset.currentMonth}<h3>
+	<h3>${dateNumber + 'of ' + dateH3.dataset.currentMonth}<h3>
     	<h4>Breakfast</h4>
 			<div>Contains recipe link<div/>
 			<p>or "Add recipe" button leading to search</p>
