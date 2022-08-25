@@ -275,14 +275,13 @@ const renderCalendar = () => {
 	renderCalendar();
   });
   
- //Need to add delegated event to days wrapper (.days)
- //Identify them with particular format (like yyyymmdd for db)
- //Modal window opens on click to show the date and the meals
- //Later recap of calories, fat etc... ?
 
- //Need if for 1st 2nd and 3rd
+//Later recap of calories, fat etc... ?
+
+//Event listener for days in the calendar
 monthDays.addEventListener('click', event =>{
 	modalWindow.style.display = "block";
+	//Switch to check last number and date it accordingly
 	let dateNumber = event.target.innerHTML;
 	switch (dateNumber.slice(-1)) {
 		case '1':
