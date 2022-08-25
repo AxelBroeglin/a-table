@@ -314,3 +314,5 @@ monthDays.addEventListener('click', event =>{
 	`
  });
 };
+
+//Days from previous month and next month take current month as value, need to correct
