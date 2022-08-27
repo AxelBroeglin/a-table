@@ -810,6 +810,22 @@ video {
   padding-top: 0.5rem;
 }
 
+.pt-3 {
+  padding-top: 0.75rem;
+}
+
+.pb-3 {
+  padding-bottom: 0.75rem;
+}
+
+.pl-1 {
+  padding-left: 0.25rem;
+}
+
+.pb-1 {
+  padding-bottom: 0.25rem;
+}
+
 .pt-24 {
   padding-top: 6rem;
 }
@@ -840,6 +856,10 @@ video {
 
 .font-bold {
   font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 600;
 }
 
 .uppercase {
