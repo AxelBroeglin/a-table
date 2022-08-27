@@ -8,6 +8,14 @@
     box-shadow: 0px 0px 15px 0px rgba(240,36,36,0.77);
 }
 
+#health-labels label{
+  padding-right: 1rem;
+}
+
+#reveal-criteria label{
+  padding-right: 1rem;
+}
+
 .arrow {
     border: solid black;
     border-width: 0 3px 3px 0;
