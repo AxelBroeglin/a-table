@@ -95,19 +95,19 @@ function useApiResponse(response){
 	let recipes = [];
 	let arrayOfRecipesInfo = [];
 	let trimmedTitle;
-	for (let i = 0; i < 9; i++) {
+	for (let i = 0; i < 12; i++) {
 		trimmedTitle = response.hits[i].recipe.label;
 		if(trimmedTitle.split(" ").length >= 5){
 			trimmedTitle = trimmedTitle.split(' ').slice(0, 5).join(' ')+' [...]';
 		}
 		recipes.push(
 			//Data index i allows identification of clicked card
-			`<div class="w-1/2 gap-y-1 gap-x-1">
-			<img src="${response.hits[i].recipe.images.SMALL.url}" alt="">
-			<div>
-			<h3>${trimmedTitle}</h3>
-			</div>
-			<p class="open-recipe cursor-pointer" data-index="${[i]}">More details</p>
+			`<div class="w-1/2 gap-y-1 gap-x-1 pb-2">
+			<img src="${response.hits[i].recipe.images.REGULAR.url}" alt="">
+				<div class="flex flex-col mb-4 text-center	">
+					<h3>${trimmedTitle}</h3>
+					<button class="open-recipe cursor-pointer" data-index="${[i]}">More details</button>
+				</div>
 			</div>`)
 		cardsDisplay.innerHTML = recipes.join('');
 		arrayOfRecipesInfo.push(
