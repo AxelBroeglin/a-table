@@ -115,6 +115,10 @@ function useApiResponse(response){
 			{title : response.hits[i].recipe.label, 
 			image : response.hits[i].recipe.images.REGULAR.url, 
 			totalTime : response.hits[i].recipe.totalTime, 
+			servings : response.hits[i].recipe.yield,
+			fat : Math.trunc(response.hits[i].recipe.digest[0].total)+" grams",
+			carbs : Math.trunc(response.hits[i].recipe.digest[1].total)+" grams",
+			protein : Math.trunc(response.hits[i].recipe.digest[2].total)+" grams",
 			ingredients : response.hits[i].recipe.ingredients, 
 			url : response.hits[i].recipe.url}
 		)
@@ -136,7 +140,10 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 			<img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title" class="w-4/12">
 			<div class="w-7/12">
 				<h4 class="font-bold uppercase text-green-600">Nutritional information</h4>
-				
+				<p>Serving.s: ${arrayOfRecipesInfo[recipeIndex].servings}</p>
+				<p>Fat: ${arrayOfRecipesInfo[recipeIndex].fat}</p>
+				<p>Carbs: ${arrayOfRecipesInfo[recipeIndex].carbs}</p>
+				<p>Protein: ${arrayOfRecipesInfo[recipeIndex].protein}</p>
 				<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank" class="cursor-pointer font-bold text-green-600"><button>See the recipe</button></a>
 			</div>
 		</div>
