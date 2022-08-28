@@ -135,9 +135,7 @@ function useApiResponse(response){
 
 function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 	modalWindow.style.display = "block";
-	console.log(arrayOfRecipesInfo[recipeIndex].cuisineType);
 	cuisineType = arrayOfRecipesInfo[recipeIndex].cuisineType.toString();
-	arrayOfRecipesInfo[recipeIndex].totalTime > 0 ? console.log('time') : console.log('pas time');
 	modalContent.innerHTML = `
 		<h3 class="font-bold uppercase text-xl text-green-600 text-center">${arrayOfRecipesInfo[recipeIndex].title}</h3>
         <div class="flex justify-between pt-12 pb-6">
@@ -155,11 +153,8 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 		</div>
         <ul id="ingredients-list" class="columns-2"></ul>
 	`
-	console.log(arrayOfRecipesInfo[recipeIndex].totalTime)
 	if(arrayOfRecipesInfo[recipeIndex].totalTime > 0){
-
 		let cuisineTypeP = document.getElementById('cuisine-type');
-		console.log(cuisineTypeP)
 		let totalTimeP = document.createElement("p");
 		totalTimeP.innerHTML = 'Total time: ' + arrayOfRecipesInfo[recipeIndex].totalTime + ' minutes';
 		cuisineTypeP.after(totalTimeP);
