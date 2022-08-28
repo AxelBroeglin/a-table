@@ -116,9 +116,10 @@ function useApiResponse(response){
 			image : response.hits[i].recipe.images.REGULAR.url, 
 			totalTime : response.hits[i].recipe.totalTime, 
 			servings : response.hits[i].recipe.yield,
-			fat : Math.trunc(response.hits[i].recipe.digest[0].total)+" grams",
-			carbs : Math.trunc(response.hits[i].recipe.digest[1].total)+" grams",
-			protein : Math.trunc(response.hits[i].recipe.digest[2].total)+" grams",
+			calories : response.hits[i].recipe.calories,
+			fat : Math.trunc(response.hits[i].recipe.digest[0].total),
+			carbs : Math.trunc(response.hits[i].recipe.digest[1].total),
+			protein : Math.trunc(response.hits[i].recipe.digest[2].total),
 			cuisineType : response.hits[i].recipe.cuisineType,
 			ingredients : response.hits[i].recipe.ingredients, 
 			url : response.hits[i].recipe.url}
@@ -136,16 +137,20 @@ function useApiResponse(response){
 function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 	modalWindow.style.display = "block";
 	cuisineType = arrayOfRecipesInfo[recipeIndex].cuisineType.toString();
+	let calPerServing = arrayOfRecipesInfo[recipeIndex].calories / arrayOfRecipesInfo[recipeIndex].servings;
+	console.log(arrayOfRecipesInfo[recipeIndex].fat)
 	modalContent.innerHTML = `
 		<h3 class="font-bold uppercase text-xl text-green-600 text-center">${arrayOfRecipesInfo[recipeIndex].title}</h3>
         <div class="flex justify-between pt-12 pb-6">
 			<img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title" class="w-4/12">
 			<div class="w-7/12">
 				<h4 class="font-bold uppercase text-green-600">Nutritional information</h4>
-				<p>Servings: ${arrayOfRecipesInfo[recipeIndex].servings}</p>
-				<p>Fat: ${arrayOfRecipesInfo[recipeIndex].fat}</p>
-				<p>Carbs: ${arrayOfRecipesInfo[recipeIndex].carbs}</p>
-				<p>Protein: ${arrayOfRecipesInfo[recipeIndex].protein}</p>
+				<p>${arrayOfRecipesInfo[recipeIndex].servings} Servings</p>
+				<p>Per serving :</p>
+				<p>Calories: ${Math.trunc(calPerServing)}</p>
+				<p>Fat: ${Math.trunc(arrayOfRecipesInfo[recipeIndex].fat / arrayOfRecipesInfo[recipeIndex].servings)} grams</p>
+				<p>Carbs: ${Math.trunc(arrayOfRecipesInfo[recipeIndex].carbs / arrayOfRecipesInfo[recipeIndex].servings)} grams</p>
+				<p>Protein: ${Math.trunc(arrayOfRecipesInfo[recipeIndex].protein / arrayOfRecipesInfo[recipeIndex].servings)} grams</p>
 				<p id="cuisine-type">Cuisine type: ${cuisineType.charAt(0).toUpperCase() + cuisineType.slice(1)}</p>
 				
 				<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank" class="cursor-pointer font-bold text-green-600"><button>See the recipe</button></a>
