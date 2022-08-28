@@ -137,6 +137,7 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 	modalWindow.style.display = "block";
 	console.log(arrayOfRecipesInfo[recipeIndex].cuisineType);
 	cuisineType = arrayOfRecipesInfo[recipeIndex].cuisineType.toString();
+	arrayOfRecipesInfo[recipeIndex].totalTime > 0 ? console.log('time') : console.log('pas time');
 	modalContent.innerHTML = `
 		<h3 class="font-bold uppercase text-xl text-green-600 text-center">${arrayOfRecipesInfo[recipeIndex].title}</h3>
         <div class="flex justify-between pt-12 pb-6">
@@ -147,13 +148,24 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 				<p>Fat: ${arrayOfRecipesInfo[recipeIndex].fat}</p>
 				<p>Carbs: ${arrayOfRecipesInfo[recipeIndex].carbs}</p>
 				<p>Protein: ${arrayOfRecipesInfo[recipeIndex].protein}</p>
-				<p>Cuisine type: ${cuisineType.charAt(0).toUpperCase() + cuisineType.slice(1)}</p>
+				<p id="cuisine-type">Cuisine type: ${cuisineType.charAt(0).toUpperCase() + cuisineType.slice(1)}</p>
+				
 				<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank" class="cursor-pointer font-bold text-green-600"><button>See the recipe</button></a>
 			</div>
 		</div>
         <ul id="ingredients-list" class="columns-2"></ul>
 	`
+	console.log(arrayOfRecipesInfo[recipeIndex].totalTime)
+	if(arrayOfRecipesInfo[recipeIndex].totalTime > 0){
 
+		let cuisineTypeP = document.getElementById('cuisine-type');
+		console.log(cuisineTypeP)
+		let totalTimeP = document.createElement("p");
+		totalTimeP.innerHTML = 'Total time: ' + arrayOfRecipesInfo[recipeIndex].totalTime + ' minutes';
+		cuisineTypeP.after(totalTimeP);
+	}
+	
+	
 	let listOfIngredients = document.getElementById("ingredients-list");
 	for(let i = 0; i < arrayOfRecipesInfo[recipeIndex].ingredients.length; i++){
 		let liIngredient = document.createElement("li");
