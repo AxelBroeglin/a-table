@@ -92,6 +92,7 @@ async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?ty
 }
 
 function useApiResponse(response){
+	console.log(response);
 	let recipes = [];
 	let arrayOfRecipesInfo = [];
 	let trimmedTitle;
@@ -131,15 +132,21 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 	modalWindow.style.display = "block";
 	modalContent.innerHTML = `
 		<h3 class="font-bold uppercase text-xl text-green-600 text-center">${arrayOfRecipesInfo[recipeIndex].title}</h3>
-        <img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title" class="pt-12">
-        <ul id="ingredients-list"></ul>
-		<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank"><p>See the recipe</p></a>
+        <div class="flex justify-between pt-12 pb-6">
+			<img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title" class="w-4/12">
+			<div class="w-7/12">
+				<h4 class="font-bold uppercase text-green-600">Nutritional information</h4>
+
+			</div>
+		</div>
+        <ul id="ingredients-list" class="columns-2"></ul>
+		<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank" class="cursor-pointer font-bold text-green-600"><button>See the recipe</button></a>
 	`
 
 	let listOfIngredients = document.getElementById("ingredients-list");
 	for(let i = 0; i < arrayOfRecipesInfo[recipeIndex].ingredients.length; i++){
 		let liIngredient = document.createElement("li");
-		liIngredient.innerText = arrayOfRecipesInfo[recipeIndex].ingredients[i].text;
+		liIngredient.innerText = "- " + arrayOfRecipesInfo[recipeIndex].ingredients[i].text;
 		listOfIngredients.appendChild(liIngredient);
 	}
 
