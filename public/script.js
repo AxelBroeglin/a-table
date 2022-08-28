@@ -136,11 +136,11 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 			<img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title" class="w-4/12">
 			<div class="w-7/12">
 				<h4 class="font-bold uppercase text-green-600">Nutritional information</h4>
-
+				
+				<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank" class="cursor-pointer font-bold text-green-600"><button>See the recipe</button></a>
 			</div>
 		</div>
         <ul id="ingredients-list" class="columns-2"></ul>
-		<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank" class="cursor-pointer font-bold text-green-600"><button>See the recipe</button></a>
 	`
 
 	let listOfIngredients = document.getElementById("ingredients-list");

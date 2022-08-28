@@ -16,6 +16,13 @@
   padding-right: 1rem;
 }
 
+a[target=_blank]{
+  background-image: url(../public/images/external-link.svg);
+  background-repeat:no-repeat;
+  background-position: right;
+  padding-right:1.3em;
+}
+
 .arrow {
     border: solid black;
     border-width: 0 3px 3px 0;
@@ -32,10 +39,10 @@
   width: 45rem;
 }
 
-  .days-width{
-   width:calc(44.2rem / 7);
-  }
+.days-width{
+  width:calc(44.2rem / 7);
+}
 
-  .days-div-width{
-  width: calc(40.2rem / 7);
-  }
+.days-div-width{
+width: calc(40.2rem / 7);
+}
