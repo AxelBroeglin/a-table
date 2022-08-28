@@ -98,13 +98,13 @@ function useApiResponse(response){
 	for (let i = 0; i < 12; i++) {
 		trimmedTitle = response.hits[i].recipe.label;
 		if(trimmedTitle.split(" ").length >= 5){
-			trimmedTitle = trimmedTitle.split(' ').slice(0, 5).join(' ')+' [...]';
+			trimmedTitle = trimmedTitle.split(' ').slice(0, 4).join(' ').substring(0,24)+' [...]';
 		}
 		recipes.push(
 			//Data index i allows identification of clicked card
-			`<div class="w-1/2 gap-y-1 gap-x-1 pb-2 h-1/3">
-			<img src="${response.hits[i].recipe.images.REGULAR.url}" alt="">
-				<div class="flex flex-col mb-4 text-center ">
+			`<div class="w-1/2 gap-y-1 gap-x-1 pb-2 h-full  mb-2">
+				<img src="${response.hits[i].recipe.images.REGULAR.url}" alt="">
+				<div class="flex flex-col justify-between pt-2 pb-4 text-center h-28">
 					<h3>${trimmedTitle}</h3>
 					<button class="open-recipe cursor-pointer" data-index="${[i]}">More details</button>
 				</div>
@@ -112,7 +112,7 @@ function useApiResponse(response){
 		cardsDisplay.innerHTML = recipes.join('');
 		arrayOfRecipesInfo.push(
 			{title : response.hits[i].recipe.label, 
-			image : response.hits[i].recipe.images.SMALL.url, 
+			image : response.hits[i].recipe.images.REGULAR.url, 
 			totalTime : response.hits[i].recipe.totalTime, 
 			ingredients : response.hits[i].recipe.ingredients, 
 			url : response.hits[i].recipe.url}
