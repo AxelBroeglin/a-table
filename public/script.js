@@ -102,9 +102,9 @@ function useApiResponse(response){
 		}
 		recipes.push(
 			//Data index i allows identification of clicked card
-			`<div class="w-1/2 gap-y-1 gap-x-1 pb-2">
+			`<div class="w-1/2 gap-y-1 gap-x-1 pb-2 h-1/3">
 			<img src="${response.hits[i].recipe.images.REGULAR.url}" alt="">
-				<div class="flex flex-col mb-4 text-center	">
+				<div class="flex flex-col mb-4 text-center ">
 					<h3>${trimmedTitle}</h3>
 					<button class="open-recipe cursor-pointer" data-index="${[i]}">More details</button>
 				</div>
