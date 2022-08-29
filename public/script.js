@@ -143,7 +143,7 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 		<h3 class="font-bold uppercase text-xl text-green-600 text-center">${arrayOfRecipesInfo[recipeIndex].title}</h3>
         <div class="flex justify-between pt-12 pb-6">
 			<img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title" class="w-4/12">
-			<div class="w-7/12 flex flex-col">
+			<div class="w-7/12">
 				<h4 class="font-bold uppercase text-green-600">Nutritional information</h4>
 				<p>${arrayOfRecipesInfo[recipeIndex].servings} Servings</p>
 				<p>Per serving :</p>
@@ -153,7 +153,7 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 				<p>Protein: ${Math.trunc(arrayOfRecipesInfo[recipeIndex].protein / arrayOfRecipesInfo[recipeIndex].servings)} grams</p>
 				<p id="cuisine-type">Cuisine type: ${cuisineType.charAt(0).toUpperCase() + cuisineType.slice(1)}</p>
 				
-				<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank" class="cursor-pointer mt-auto font-bold text-green-600"><button>See the recipe</button></a>
+				<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank" class="cursor-pointer font-bold text-green-600"><button>See the recipe</button></a>
 			</div>
 		</div>
         <ul id="ingredients-list" class="columns-2"></ul>
