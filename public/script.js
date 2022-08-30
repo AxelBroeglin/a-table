@@ -31,9 +31,15 @@ function checkSearchCriteriaArray(searchCriteriaArray, healthLabel) {
 			if ( searchCriteriaArray[i] === healthLabel) {
 				searchCriteriaArray.splice(i, 1);
 			}
-		console.log('New array : ' + searchCriteriaArray);
-    }
-}}
+			console.log('New array : ' + searchCriteriaArray);
+    	}
+	}
+	renderSearchCriteriaArray(searchCriteriaArray);
+}
+
+function renderSearchCriteriaArray(searchCriteriaArray){
+	console.log(searchCriteriaArray);
+}
 
 
 //Menu variables
