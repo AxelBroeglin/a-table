@@ -40,9 +40,10 @@ function checkSearchCriteriaArray(searchCriteriaArray, healthLabel) {
 
 function renderSearchCriteriaArray(searchCriteriaArray){
 	searchRecapContainer.innerHTML = '';
-	const healthLabelIcon = document.createElement("img");
 	searchCriteriaArray.forEach(function (i) {
 		const healthLabelIcon = document.createElement("img");
+		healthLabelIcon.alt = i
+		console.log(healthLabelIcon)
 		healthLabelIcon.src = `./images/health-labels/${i}.png`
 	})
 	// for( let i = 0; i < searchCriteriaArray.length; i++){
