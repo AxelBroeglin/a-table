@@ -25,23 +25,41 @@ searchRecapHealthLabels.forEach(healthLabel => healthLabel.addEventListener('cli
 function checkSearchCriteriaArray(searchCriteriaArray, healthLabel) {
     if (searchCriteriaArray.indexOf(healthLabel) === -1) {
         searchCriteriaArray.push(healthLabel);
-        console.log('New array : ' + searchCriteriaArray);
     } else if (searchCriteriaArray.indexOf(healthLabel) > -1) {
 		for( let i = 0; i < searchCriteriaArray.length; i++){
 			if ( searchCriteriaArray[i] === healthLabel) {
 				searchCriteriaArray.splice(i, 1);
 			}
-			console.log('New array : ' + searchCriteriaArray);
     	}
 	}
 	renderSearchCriteriaArray(searchCriteriaArray);
 }
 
+
+// const healthLabelIcon = document.createElement("div");
+
 function renderSearchCriteriaArray(searchCriteriaArray){
-	console.log(searchCriteriaArray);
-	for( let i = 0; i < searchCriteriaArray.length; i++){
-		console.log(searchCriteriaArray[i])
-	}
+	searchRecapContainer.innerHTML = '';
+	const healthLabelIcon = document.createElement("img");
+	searchCriteriaArray.forEach(function (i) {
+		const healthLabelIcon = document.createElement("img");
+		healthLabelIcon.src = `./images/health-labels/${i}.png`
+	})
+	// for( let i = 0; i < searchCriteriaArray.length; i++){
+	// 	console.log(searchCriteriaArray[i])
+	// }
+}
+
+const ulElement = document.createElement("ul");
+
+function myfunc() {
+  ulElement.textContent = ""
+  sortedList.forEach(function (i) {
+    const li = document.createElement("li");
+    li.textContent = i + " [" + new Date().getSeconds() + "]";
+    ulElement.appendChild(li);
+  });
+  resultLeft.appendChild(ulElement);
 }
 
 
