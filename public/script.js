@@ -11,7 +11,12 @@ let labelValues = [];
 let cuisineValues = [];
 
 //Food search recap variables
-const searchRecap = document.getElementById('search-recap');
+const searchRecapContainer = document.getElementById('search-recap');
+const searchRecapHealthLabels = document.querySelectorAll('.health-labels');
+const searchRecapCuisinetypes = document.querySelectorAll('.cuisine-types');
+
+searchRecapHealthLabels.forEach(healthLabel => healthLabel.addEventListener('click', () => console.log('ok')))
+//Click a label check if present in array, if yes takes it off of it, if no adds it, then calls function to render.
 
 //Menu variables
 const menu = document.getElementById('menu');
@@ -88,6 +93,10 @@ searchInput.addEventListener('focus', ()=>{
 	searchInput.classList.remove('input-red')
 })
 
+//Search Recap
+let searchRecapP = [];
+
+
 async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${foodSearch}${app_id}${api_key}${labelValues}${cuisineValues}`)
 				.then(response => response.json())
 				.then(response => useApiResponse(response))
@@ -141,7 +150,6 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 	modalWindow.style.display = "block";
 	cuisineType = arrayOfRecipesInfo[recipeIndex].cuisineType.toString();
 	let calPerServing = arrayOfRecipesInfo[recipeIndex].calories / arrayOfRecipesInfo[recipeIndex].servings;
-	console.log(arrayOfRecipesInfo[recipeIndex].fat)
 	modalContent.innerHTML = `
 		<h3 class="font-bold uppercase text-xl text-green-600 text-center">${arrayOfRecipesInfo[recipeIndex].title}</h3>
         <div class="flex justify-between pt-12 pb-6">
