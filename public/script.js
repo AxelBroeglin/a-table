@@ -39,6 +39,9 @@ function checkSearchCriteriaArray(searchCriteriaArray, healthLabel) {
 
 function renderSearchCriteriaArray(searchCriteriaArray){
 	console.log(searchCriteriaArray);
+	for( let i = 0; i < searchCriteriaArray.length; i++){
+		console.log(searchCriteriaArray[i])
+	}
 }
 
 
