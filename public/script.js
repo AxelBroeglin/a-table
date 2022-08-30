@@ -11,12 +11,26 @@ let labelValues = [];
 let cuisineValues = [];
 
 //Food search recap variables
-const searchRecapContainer = document.getElementById('search-recap');
+const searchRecapContainer = document.getElementById('search-recap-container');
 const searchRecapHealthLabels = document.querySelectorAll('.health-labels');
 const searchRecapCuisinetypes = document.querySelectorAll('.cuisine-types');
+let searchCriteriaArray = [];
 
-searchRecapHealthLabels.forEach(healthLabel => healthLabel.addEventListener('click', () => console.log('ok')))
+
+searchRecapHealthLabels.forEach(healthLabel => healthLabel.addEventListener('click', (event)=>{
+	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)
+}))
 //Click a label check if present in array, if yes takes it off of it, if no adds it, then calls function to render.
+
+function checkSearchCriteriaArray(searchCriteriaArray, healthLabel) {
+    if (searchCriteriaArray.indexOf(healthLabel) === -1) {
+        searchCriteriaArray.push(healthLabel);
+        console.log('New array : ' + searchCriteriaArray);
+    } else if (searchCriteriaArray.indexOf(healthLabel) > -1) {
+        console.log(healthLabel + ' already in the array.');
+    }
+}
+
 
 //Menu variables
 const menu = document.getElementById('menu');
