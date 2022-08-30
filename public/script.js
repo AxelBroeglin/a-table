@@ -27,9 +27,13 @@ function checkSearchCriteriaArray(searchCriteriaArray, healthLabel) {
         searchCriteriaArray.push(healthLabel);
         console.log('New array : ' + searchCriteriaArray);
     } else if (searchCriteriaArray.indexOf(healthLabel) > -1) {
-        console.log(healthLabel + ' already in the array.');
+		for( let i = 0; i < searchCriteriaArray.length; i++){
+			if ( searchCriteriaArray[i] === healthLabel) {
+				searchCriteriaArray.splice(i, 1);
+			}
+		console.log('New array : ' + searchCriteriaArray);
     }
-}
+}}
 
 
 //Menu variables
