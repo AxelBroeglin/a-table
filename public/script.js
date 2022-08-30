@@ -10,6 +10,9 @@ let foodSearch = '';
 let labelValues = [];
 let cuisineValues = [];
 
+//Food search recap variables
+const searchRecap = document.getElementById('search-recap');
+
 //Menu variables
 const menu = document.getElementById('menu');
 const menuSearch = document.getElementById('menu-search');
