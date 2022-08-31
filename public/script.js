@@ -45,7 +45,7 @@ function renderSearchCriteriaArray(searchCriteriaArray){
 		healthLabelIcon.alt = i
 		console.log(healthLabelIcon)
 		healthLabelIcon.src = `./images/criteria-icons/${i}.png`
-		//healthLabelIcon.classList.add("w-2.5")
+		healthLabelIcon.classList.add("cursor-pointer", "shadow-lg")
 		searchRecapContainer.append(healthLabelIcon);
 	})
 }
