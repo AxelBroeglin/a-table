@@ -45,6 +45,7 @@ function renderSearchCriteriaArray(searchCriteriaArray){
 		healthLabelIcon.alt = i
 		console.log(healthLabelIcon)
 		healthLabelIcon.src = `./images/health-labels/${i}.png`
+		searchRecapContainer.append(healthLabelIcon);
 	})
 	// for( let i = 0; i < searchCriteriaArray.length; i++){
 	// 	console.log(searchCriteriaArray[i])
