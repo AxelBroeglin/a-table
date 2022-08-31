@@ -18,10 +18,13 @@ let searchCriteriaArray = [];
 
 searchRecapCriteria.forEach(criterion => criterion.addEventListener('click', (event)=>{
 	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)
-	console.log(searchCriteriaArray)
 }))
 
-//Click a label check if present in array, if yes takes it off of it, if no adds it, then calls function to render.
+//Takes value out of array, needs to de-select checkbox
+searchRecapContainer.addEventListener('click', event => {
+	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)
+})
+
 
 function checkSearchCriteriaArray(searchCriteriaArray, criterion) {
     if (searchCriteriaArray.indexOf(criterion) === -1) {
@@ -42,7 +45,6 @@ function renderSearchCriteriaArray(searchCriteriaArray){
 	searchCriteriaArray.forEach(function (i) {
 		const healthLabelIcon = document.createElement("img");
 		healthLabelIcon.alt = i
-		console.log(healthLabelIcon)
 		healthLabelIcon.src = `./images/criteria-icons/${i}.png`
 		healthLabelIcon.setAttribute('name', i);
 		healthLabelIcon.classList.add("cursor-pointer", "shadow-lg")
@@ -50,11 +52,6 @@ function renderSearchCriteriaArray(searchCriteriaArray){
 	})
 }
 
-
-searchRecapContainer.addEventListener('click', event => {
-	console.log('test')
-	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)
-})
 
 //Menu variables
 const menu = document.getElementById('menu');
@@ -84,11 +81,9 @@ const api_key = '&app_key=c86872049aff2debad57830e690d77c8';
 menu.addEventListener('click', event => { 
 	if (event.target.id === 'menu-search') {
 		calendarSection.innerHTML = '';
-		console.log('search');
 		searchSection.style.display = "block";
 	} else {
 		searchSection.style.display = "none";
-	  	console.log('calendar')
 	  	renderCalendar();
 	}
   });
