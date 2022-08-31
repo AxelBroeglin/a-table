@@ -20,8 +20,12 @@ searchRecapCriteria.forEach(criterion => criterion.addEventListener('click', (ev
 	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)
 }))
 
-//Takes value out of array, needs to de-select checkbox
+
 searchRecapContainer.addEventListener('click', event => {
+	//Unselect checkbox related to clicked icon
+	const iconClicked = event.target.name;
+	document.getElementById(iconClicked).checked = false;
+
 	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)
 })
 
