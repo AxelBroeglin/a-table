@@ -13,21 +13,23 @@ let cuisineValues = [];
 //Food search recap variables
 const searchRecapContainer = document.getElementById('search-recap-container');
 const searchRecapHealthLabels = document.querySelectorAll('.health-labels');
-const searchRecapCuisinetypes = document.querySelectorAll('.cuisine-types');
+const searchRecapCuisineTypes = document.querySelectorAll('.cuisine-types');
+const searchRecapCriteria = document.querySelectorAll('.search-criteria');
 let searchCriteriaArray = [];
 
 
-searchRecapHealthLabels.forEach(healthLabel => healthLabel.addEventListener('click', (event)=>{
+searchRecapCriteria.forEach(criterion => criterion.addEventListener('click', (event)=>{
 	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)
 }))
+
 //Click a label check if present in array, if yes takes it off of it, if no adds it, then calls function to render.
 
-function checkSearchCriteriaArray(searchCriteriaArray, healthLabel) {
-    if (searchCriteriaArray.indexOf(healthLabel) === -1) {
-        searchCriteriaArray.push(healthLabel);
-    } else if (searchCriteriaArray.indexOf(healthLabel) > -1) {
+function checkSearchCriteriaArray(searchCriteriaArray, criterion) {
+    if (searchCriteriaArray.indexOf(criterion) === -1) {
+        searchCriteriaArray.push(criterion);
+    } else if (searchCriteriaArray.indexOf(criterion) > -1) {
 		for( let i = 0; i < searchCriteriaArray.length; i++){
-			if ( searchCriteriaArray[i] === healthLabel) {
+			if ( searchCriteriaArray[i] === criterion) {
 				searchCriteriaArray.splice(i, 1);
 			}
     	}
