@@ -51,7 +51,7 @@ function renderSearchCriteriaArray(searchCriteriaArray){
 		healthLabelIcon.alt = i
 		healthLabelIcon.src = `./images/criteria-icons/${i}.png`
 		healthLabelIcon.setAttribute('name', i);
-		healthLabelIcon.classList.add("cursor-pointer", "shadow-lg")
+		healthLabelIcon.classList.add("cursor-pointer", "shadow-lg", "mr-2")
 		searchRecapContainer.append(healthLabelIcon);
 	})
 }
