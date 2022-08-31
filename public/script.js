@@ -36,8 +36,6 @@ function checkSearchCriteriaArray(searchCriteriaArray, healthLabel) {
 }
 
 
-// const healthLabelIcon = document.createElement("div");
-
 function renderSearchCriteriaArray(searchCriteriaArray){
 	searchRecapContainer.innerHTML = '';
 	searchCriteriaArray.forEach(function (i) {
@@ -47,9 +45,6 @@ function renderSearchCriteriaArray(searchCriteriaArray){
 		healthLabelIcon.src = `./images/health-labels/${i}.png`
 		searchRecapContainer.append(healthLabelIcon);
 	})
-	// for( let i = 0; i < searchCriteriaArray.length; i++){
-	// 	console.log(searchCriteriaArray[i])
-	// }
 }
 
 const ulElement = document.createElement("ul");
