@@ -670,6 +670,14 @@ video {
   width: 80%;
 }
 
+.w-2\.5 {
+  width: 0.625rem;
+}
+
+.w-2 {
+  width: 0.5rem;
+}
+
 .w-4\/6 {
   width: 66.666667%;
 }
@@ -899,6 +907,10 @@ video {
   padding-bottom: 1.5rem;
 }
 
+.pl-4 {
+  padding-left: 1rem;
+}
+
 .text-center {
   text-align: center;
 }
@@ -987,6 +999,10 @@ video {
 
 #health-labels label{
   padding-right: 1rem;
+}
+
+#search-recap-container img{
+  width:2rem;
 }
 
 #reveal-criteria label{

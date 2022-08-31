@@ -43,6 +43,7 @@ function renderSearchCriteriaArray(searchCriteriaArray){
 		healthLabelIcon.alt = i
 		console.log(healthLabelIcon)
 		healthLabelIcon.src = `./images/health-labels/${i}.png`
+		//healthLabelIcon.classList.add("w-2.5")
 		searchRecapContainer.append(healthLabelIcon);
 	})
 }

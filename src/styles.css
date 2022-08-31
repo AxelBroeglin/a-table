@@ -12,6 +12,10 @@
   padding-right: 1rem;
 }
 
+#search-recap-container img{
+  width:2rem;
+}
+
 #reveal-criteria label{
   padding-right: 1rem;
 }
