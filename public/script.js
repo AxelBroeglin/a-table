@@ -12,14 +12,13 @@ let cuisineValues = [];
 
 //Food search recap variables
 const searchRecapContainer = document.getElementById('search-recap-container');
-const searchRecapHealthLabels = document.querySelectorAll('.health-labels');
-const searchRecapCuisineTypes = document.querySelectorAll('.cuisine-types');
 const searchRecapCriteria = document.querySelectorAll('.search-criteria');
 let searchCriteriaArray = [];
 
 
 searchRecapCriteria.forEach(criterion => criterion.addEventListener('click', (event)=>{
 	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)
+	console.log(searchCriteriaArray)
 }))
 
 //Click a label check if present in array, if yes takes it off of it, if no adds it, then calls function to render.
@@ -45,23 +44,17 @@ function renderSearchCriteriaArray(searchCriteriaArray){
 		healthLabelIcon.alt = i
 		console.log(healthLabelIcon)
 		healthLabelIcon.src = `./images/criteria-icons/${i}.png`
+		healthLabelIcon.setAttribute('name', i);
 		healthLabelIcon.classList.add("cursor-pointer", "shadow-lg")
 		searchRecapContainer.append(healthLabelIcon);
 	})
 }
 
-const ulElement = document.createElement("ul");
 
-function myfunc() {
-  ulElement.textContent = ""
-  sortedList.forEach(function (i) {
-    const li = document.createElement("li");
-    li.textContent = i + " [" + new Date().getSeconds() + "]";
-    ulElement.appendChild(li);
-  });
-  resultLeft.appendChild(ulElement);
-}
-
+searchRecapContainer.addEventListener('click', event => {
+	console.log('test')
+	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)
+})
 
 //Menu variables
 const menu = document.getElementById('menu');
