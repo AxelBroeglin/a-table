@@ -44,7 +44,7 @@ function renderSearchCriteriaArray(searchCriteriaArray){
 		const healthLabelIcon = document.createElement("img");
 		healthLabelIcon.alt = i
 		console.log(healthLabelIcon)
-		healthLabelIcon.src = `./images/health-labels/${i}.png`
+		healthLabelIcon.src = `./images/criteria-icons/${i}.png`
 		//healthLabelIcon.classList.add("w-2.5")
 		searchRecapContainer.append(healthLabelIcon);
 	})
