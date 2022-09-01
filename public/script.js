@@ -103,35 +103,45 @@ menu.addEventListener('click', event => {
 	}
   });
 
+//Event listener for submit button
 searchButton.addEventListener('click', (e)=>{
 	e.preventDefault();
 	//Health labels
 	labelValues = [];
+	//Get all selected health labels checkboxes
 	let healthLabelsChecked = document.querySelectorAll('.health-labels:checked');
+	//Push url part + each of them in labelValues array
 	healthLabelsChecked.forEach((checkbox) => {
 		labelValues.push('&health='+checkbox.name);
 	});
+	//Regex to replace ',' by nothing in order to make a proper url
 	labelValues = labelValues.toString().replace(/,/g, '');
 
 	//Cuisine types
 	cuisineValues = [];
+	//Get all selected cuisine types checkboxes
 	let cuisineTypesChecked = document.querySelectorAll('.cuisine-types:checked');
+	//Push url part + each of them in labelValues array
 	cuisineTypesChecked.forEach((checkbox) => {
 		cuisineValues.push('&cuisineType='+checkbox.name);
 	});
+	//Regex to replace ',' by nothing in order to make a proper url
 	cuisineValues = cuisineValues.toString().replace(/,/g, '');
-console.log(cuisineValues);
+	//Declaration of foodSearch
 	foodSearch = searchInput.value;
+	//Check if foodSearch is empty -> red box around input
 	if(foodSearch == ''){
 		searchInput.classList.add('input-red');
 	}
-	//Do check for cuisine type
+	//Check if labelValues is not empty, if not execute foodQuery with it
 	if(labelValues!==''){
 		foodQuery(foodSearch, labelValues)
 	}else{
+		//If it is empty, foodQuery without it, check necessary because labels come before cuisine types
 		foodQuery(foodSearch);
 	}
 })
+
 
 moreCriteria.addEventListener('click', ()=>{
 	revealCriteria.style.display = revealCriteria.style.display === '' ? 'none' : '';
