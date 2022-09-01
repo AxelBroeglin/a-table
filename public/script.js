@@ -25,8 +25,8 @@ searchRecapContainer.addEventListener('click', event => {
 	//Unselect checkbox related to clicked icon
 	const iconClicked = event.target.name;
 	document.getElementById(iconClicked).checked = false;
-	//Send array to check function wient event target name
-	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)
+	//Send array to check function alongside with event target name
+	checkSearchCriteriaArray(searchCriteriaArray, event.target.name);
 })
 
 //Function to check if value already in array or not
@@ -46,20 +46,27 @@ function checkSearchCriteriaArray(searchCriteriaArray, criterion) {
 	renderSearchCriteriaArray(searchCriteriaArray);
 }
 
-
+//Function to render array
 function renderSearchCriteriaArray(searchCriteriaArray){
+	//Reset container html
 	searchRecapContainer.innerHTML = '';
+	//Take each item in array
 	searchCriteriaArray.forEach(function (i) {
+		//Create an image
 		const healthLabelIcon = document.createElement("img");
+		//Gives alt of event target name
 		healthLabelIcon.alt = i
-		healthLabelIcon.src = `./images/criteria-icons/${i}.png`
+		//SRC is set to event target name
+		healthLabelIcon.src = `./images/criteria-icons/${i}.png`;
+		//Same for name
 		healthLabelIcon.setAttribute('name', i);
-		healthLabelIcon.classList.add("cursor-pointer", "shadow-lg", "mr-2")
+		//Add styling classes
+		healthLabelIcon.classList.add("cursor-pointer", "shadow-lg", "mr-2");
+		//Append newly created image to container
 		searchRecapContainer.append(healthLabelIcon);
 	})
 }
 
-//PROBLEM WITH RESULTS ?
 
 //Menu variables
 const menu = document.getElementById('menu');
@@ -85,7 +92,7 @@ const openRecipe = document.querySelectorAll('.open-recipe');
 const app_id = '&app_id=1ab55c64';
 const api_key = '&app_key=c86872049aff2debad57830e690d77c8';
 
-//Added event listener to ul with event delegation
+//Add event listener to ul with event delegation
 menu.addEventListener('click', event => { 
 	if (event.target.id === 'menu-search') {
 		calendarSection.innerHTML = '';
