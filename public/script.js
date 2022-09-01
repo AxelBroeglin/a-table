@@ -15,31 +15,34 @@ const searchRecapContainer = document.getElementById('search-recap-container');
 const searchRecapCriteria = document.querySelectorAll('.search-criteria');
 let searchCriteriaArray = [];
 
-
+//Event listener for search criteria
 searchRecapCriteria.forEach(criterion => criterion.addEventListener('click', (event)=>{
 	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)
 }))
 
-
+//Event listener for search recap container
 searchRecapContainer.addEventListener('click', event => {
 	//Unselect checkbox related to clicked icon
 	const iconClicked = event.target.name;
 	document.getElementById(iconClicked).checked = false;
-
+	//Send array to check function wient event target name
 	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)
 })
 
-
+//Function to check if value already in array or not
 function checkSearchCriteriaArray(searchCriteriaArray, criterion) {
+	//If index === -1 : absent -> push in array
     if (searchCriteriaArray.indexOf(criterion) === -1) {
         searchCriteriaArray.push(criterion);
     } else if (searchCriteriaArray.indexOf(criterion) > -1) {
+		//If index > -1 : present -> splice item
 		for( let i = 0; i < searchCriteriaArray.length; i++){
 			if ( searchCriteriaArray[i] === criterion) {
 				searchCriteriaArray.splice(i, 1);
 			}
     	}
 	}
+	//Send array to its render function
 	renderSearchCriteriaArray(searchCriteriaArray);
 }
 
