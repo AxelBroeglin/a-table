@@ -56,6 +56,7 @@ function renderSearchCriteriaArray(searchCriteriaArray){
 	})
 }
 
+//PROBLEM WITH RESULTS ?
 
 //Menu variables
 const menu = document.getElementById('menu');
@@ -104,9 +105,9 @@ searchButton.addEventListener('click', (e)=>{
 
 	//Cuisine types
 	cuisineValues = [];
-	let cuisineTypesChecked = document.querySelectorAll('.cuisine-type:checked');
+	let cuisineTypesChecked = document.querySelectorAll('.cuisine-types:checked');
 	cuisineTypesChecked.forEach((checkbox) => {
-		cuisineValues.push('&cuisineType='+checkbox.name);
+		cuisineValues.push('&cuisineTypes='+checkbox.name);
 	});
 	cuisineValues = cuisineValues.toString().replace(/,/g, '');
 
