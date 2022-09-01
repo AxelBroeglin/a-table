@@ -142,35 +142,42 @@ searchButton.addEventListener('click', (e)=>{
 	}
 })
 
-
+//Event listener for reveal button for more criteria
 moreCriteria.addEventListener('click', ()=>{
 	revealCriteria.style.display = revealCriteria.style.display === '' ? 'none' : '';
 })
 
+//Event listener on search input to remove red box if focus
 searchInput.addEventListener('focus', ()=>{
 	searchInput.classList.remove('input-red')
 })
 
-//Search Recap
-let searchRecapP = [];
-
-
+//Async await function that calls the API
 async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${foodSearch}${app_id}${api_key}${labelValues}${cuisineValues}`)
 				.then(response => response.json())
 				.then(response => useApiResponse(response))
 				.catch(err => console.error(err));
 }
 
+
+//Function that handles the answer from API
 function useApiResponse(response){
 	console.log(response);
+	//Create array that will contain the different recipes from answer
 	let recipes = [];
+	//Create array that will contain the different recipes info from answer
 	let arrayOfRecipesInfo = [];
+	//Create variable to trim the titles
 	let trimmedTitle;
+	//For loop for the 12 answers
 	for (let i = 0; i < 12; i++) {
+		//Trimmed title takes value of recipe label
 		trimmedTitle = response.hits[i].recipe.label;
+		//If length > 5 -> limit number of words and characters
 		if(trimmedTitle.split(" ").length >= 5){
 			trimmedTitle = trimmedTitle.split(' ').slice(0, 4).join(' ').substring(0,24)+' [...]';
 		}
+		//Push values into recipes array
 		recipes.push(
 			//Data index i allows identification of clicked card
 			`<div class="w-4/6 gap-y-1 gap-x-1 mb-8 shadow-md rounded-md">
@@ -180,7 +187,9 @@ function useApiResponse(response){
 					<button class="open-recipe cursor-pointer font-bold text-green-600" data-index="${[i]}">More details</button>
 				</div>
 			</div>`)
+		//Container receives the joined cards
 		cardsDisplay.innerHTML = recipes.join('');
+		//Array of info take created object for easy riding
 		arrayOfRecipesInfo.push(
 			{title : response.hits[i].recipe.label, 
 			image : response.hits[i].recipe.images.REGULAR.url, 
@@ -195,12 +204,14 @@ function useApiResponse(response){
 			url : response.hits[i].recipe.url}
 		)
 	}
-
+	//Get the modal window that will receive recipe info
 	let moreDetailsRecipe = document.querySelectorAll(".open-recipe");
-	
+	//Add event listener for each element in container
 	moreDetailsRecipe.forEach(element => element.addEventListener('click', (e)=>{
-		let recipeIndex = e.target.dataset.index
-		modalForRecipe(arrayOfRecipesInfo, recipeIndex)
+		//Create variable for readability
+		let recipeIndex = e.target.dataset.index;
+		//Array of info and recipeIndex sent to the modal window function
+		modalForRecipe(arrayOfRecipesInfo, recipeIndex);
 	}))
 }
 
