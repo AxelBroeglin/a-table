@@ -107,10 +107,10 @@ searchButton.addEventListener('click', (e)=>{
 	cuisineValues = [];
 	let cuisineTypesChecked = document.querySelectorAll('.cuisine-types:checked');
 	cuisineTypesChecked.forEach((checkbox) => {
-		cuisineValues.push('&cuisineTypes='+checkbox.name);
+		cuisineValues.push('&cuisineType='+checkbox.name);
 	});
 	cuisineValues = cuisineValues.toString().replace(/,/g, '');
-
+console.log(cuisineValues);
 	foodSearch = searchInput.value;
 	if(foodSearch == ''){
 		searchInput.classList.add('input-red');
