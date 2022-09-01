@@ -215,10 +215,15 @@ function useApiResponse(response){
 	}))
 }
 
+//Function that renders modal window content
 function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
+	//Make the modal appear
 	modalWindow.style.display = "block";
+	//cuisineType takes value for readability
 	cuisineType = arrayOfRecipesInfo[recipeIndex].cuisineType.toString();
+	//Calc that determines calories per serving
 	let calPerServing = arrayOfRecipesInfo[recipeIndex].calories / arrayOfRecipesInfo[recipeIndex].servings;
+	//HTML structure and values of the modal window
 	modalContent.innerHTML = `
 		<h3 class="font-bold uppercase text-xl text-green-600 text-center">${arrayOfRecipesInfo[recipeIndex].title}</h3>
         <div class="flex justify-between pt-12 pb-6">
@@ -238,39 +243,46 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 		</div>
         <ul id="ingredients-list" class="columns-2"></ul>
 	`
+	//The API does not always return a cooking total time, this checks if it is the case and acts accordingly
 	if(arrayOfRecipesInfo[recipeIndex].totalTime > 0){
+		//Created cuisineTypeP variable in order to append totalTime after it
 		let cuisineTypeP = document.getElementById('cuisine-type');
+		//Create the p for total time
 		let totalTimeP = document.createElement("p");
+		//Total time HTML
 		totalTimeP.innerHTML = 'Total time: ' + arrayOfRecipesInfo[recipeIndex].totalTime + ' minutes';
+		//Append totalTimeP
 		cuisineTypeP.after(totalTimeP);
 	}
 	
-	
+	//Render the 2nd part of the modal window, the list of ingredients
 	let listOfIngredients = document.getElementById("ingredients-list");
+	//For loop that will create the li
 	for(let i = 0; i < arrayOfRecipesInfo[recipeIndex].ingredients.length; i++){
 		let liIngredient = document.createElement("li");
 		liIngredient.innerText = "- " + arrayOfRecipesInfo[recipeIndex].ingredients[i].text;
+		//Append ingredients in the list
 		listOfIngredients.appendChild(liIngredient);
 	}
 
 
 }
 
-// Get the modal
+//Modal windows variables
 let modalWindow = document.getElementById('modal-window');
 let modalContent = document.getElementById('modal-content');
 
-// When the user clicks anywhere outside of the modal, close it
+//Event listener outside of the modal to close it
 window.addEventListener('click', (e)=>{
 	if (e.target == modalWindow) {
 		modalWindow.style.display = "none";
 	}
 })
 
-// Get the <span> element that closes the modal
+//Close span variable
 let closeSpan = document.getElementsByClassName("close-span")[0];
 
-// When the user clicks on <span> (x), close the modal
+//Event listener on the close span to close modal
 closeSpan.addEventListener('click', ()=>{ 
 	modalWindow.style.display = "none";
 })
