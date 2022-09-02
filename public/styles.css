@@ -679,6 +679,10 @@ video {
   height: 5rem;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
 .w-full {
   width: 100%;
 }
@@ -701,6 +705,14 @@ video {
 
 .w-1\/5 {
   width: 20%;
+}
+
+.w-2\/12 {
+  width: 16.666667%;
+}
+
+.w-10\/12 {
+  width: 83.333333%;
 }
 
 .transform {
@@ -886,6 +898,11 @@ video {
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
+}
+
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .pl-8 {
