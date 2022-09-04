@@ -11,7 +11,7 @@ $myquery = "
   ";
 $query = mysql_query($myquery);
 
-$data = '';
+$data = 'dsddsdsds';
 
 //Error handling
 if ( ! $query ) {
@@ -19,7 +19,7 @@ if ( ! $query ) {
     die;
 }
 
-echo json_encode($data);
+echo json_encode('query');
 
 // close connection
 mysql_close($server);

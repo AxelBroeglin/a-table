@@ -1,14 +1,9 @@
 window.addEventListener('load', (event) => {
-
 	console.log('mabite')
-	fetch("./php/script.php")
-  .then(res => res.text())
-  .then((txt) => {
-    console.log(txt);
-  })
+	fetch("./php/script.php", { method: "GET"})
+  .then(res => console.log(res))
   .catch((err) => { console.error(err); });
   return false;  });
-
 
 
 //Content container variable
