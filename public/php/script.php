@@ -1,37 +1,38 @@
 <?php
 include 'connection.php';
 
-//Connect to database
-$server = mysql_connect($host, $username, $password);
-$connection = mysql_select_db($database, $server);
+
+$conn = new mysqli($host, $username, $password,$database) or die("Connect failed: %s\n". $conn -> error);
+// //Connect to database
+// $server = mysqli_connect($host, $username, $password);
+// $connection = mysqli_select_db($database, $server);
 
 //Perform query
 $myquery = "
   SELECT * FROM  `users`
   ";
-$query = mysql_query($myquery);
+$query = mysqli_query($myquery);
 
-$data = 'dsddsdsds';
 
 //Error handling
 if ( ! $query ) {
-    echo mysql_error();
+    echo json_encode(mysql_error());
     die;
 }
 
-echo json_encode('query');
+echo json_encode($query);
 
 // close connection
-mysql_close($server);
+mysqli_close($server);
 
-//Create connection
-$conn = new mysqli($host, $username, $password, $database);
-echo json_encode($conn->host_info . "\n");
+// //Create connection
+// $conn = new mysqli($host, $username, $password, $database);
+// echo json_encode($conn->host_info . "\n");
 
 
-// Check connection
-if ($conn->connect_error) {
-   die("Connection failed: " . $conn->connect_error);
-}
-  echo json_encode("Connected successfully");
+// // Check connection
+// if ($conn->connect_error) {
+//    die("Connection failed: " . $conn->connect_error);
+// }
+//   echo json_encode("Connected successfully");
 ?>
