@@ -31,6 +31,7 @@ const searchRecapContainer = document.getElementById('search-recap-container');
 const searchRecapCriteria = document.querySelectorAll('.search-criteria');
 let searchCriteriaArray = [];
 
+
 //Event listener for search criteria
 searchRecapCriteria.forEach(criterion => criterion.addEventListener('click', (event)=>{
 	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)

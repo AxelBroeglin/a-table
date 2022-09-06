@@ -9,9 +9,9 @@ $conn = new mysqli($host, $username, $password,$database) or die("Connect failed
 
 //Perform query
 $myquery = "
-  SELECT * FROM  `users`
+SELECT `name` FROM `users` 
   ";
-$query = mysqli_query($myquery);
+$query = mysqli_query($conn, $myquery);
 
 
 //Error handling
@@ -24,15 +24,4 @@ echo json_encode($query);
 
 // close connection
 mysqli_close($server);
-
-// //Create connection
-// $conn = new mysqli($host, $username, $password, $database);
-// echo json_encode($conn->host_info . "\n");
-
-
-// // Check connection
-// if ($conn->connect_error) {
-//    die("Connection failed: " . $conn->connect_error);
-// }
-//   echo json_encode("Connected successfully");
 ?>
