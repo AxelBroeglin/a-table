@@ -1,4 +1,15 @@
-
+window.addEventListener("load", function() {
+	fetch('./php/script.php')
+	.then(function(response){
+		return response.text();
+	})
+	.then(function(text){
+		console.log(text);
+	})
+	.catch(function(err){
+		console.log(err);
+	})
+})
 
 
   
