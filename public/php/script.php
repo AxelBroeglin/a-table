@@ -1,4 +1,5 @@
 <?php
-include 'connection.php';
+//include 'connection.php';
 
+print_r('succes');
 ?>
