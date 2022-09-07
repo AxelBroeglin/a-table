@@ -1,17 +1,7 @@
-// window.addEventListener('load', (event) => {
-// 	console.log('mabite')
-// 	fetch("./php/script.php", { method: "GET"})
-//   .then(res => console.log(res))
-//   .catch((err) => { console.error(err); });
-//   return false;  });
 
-  const xmlhttp = new XMLHttpRequest();
-  xmlhttp.addEventListener('load', (event) => {
-	const myObj = JSON.parse(event.target.responseText);
-	document.getElementById("demo").innerHTML = myObj;
-  })
-  xmlhttp.open("GET", "./php/script.php");
-  xmlhttp.send();
+
+
+  
 
 
 //Content container variable
