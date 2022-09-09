@@ -1,18 +1,20 @@
 <?php
-print_r('test');
+
+//include 'connection.php';
 
 $username = "axelbrgln";  
-$password = "Lepanache35";
-$host = "ftp.cluster031.hosting.ovh.net";
+$password = "Enfoire35";
+$host = "axelbrgln.mysql.db";
 $database="axelbrgln";
 
-$dsn = 'mysql:host=ftp.cluster031.hosting.ovh.net;dbname=axelbrgln';
-print_r($dsn);
-try{
-    $pdo = new PDO($dsn, $username, $password);
-}catch(PDOException $ex){
-    echo $ex->getMessage()." la ligne est".$ex->getLine();
-}
-// include 'connection.php';
+$dsn = 'mysql:host=axelbrgln.mysql.db;dbname=axelbrgln';
 
+$pdo = new PDO($dsn, $username, $password);
+
+// select all users
+$stmt = $pdo->prepare("SELECT * FROM Meals");
+$stmt->execute();
+
+$result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+echo $result;
 ?>
