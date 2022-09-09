@@ -1,7 +1,7 @@
 <?php
 print_r('test');
 
-$username = "axelbrgln";  
+$username = "axelbrg";  
 $password = "Lepanache35";
 $host = "ftp.cluster031.hosting.ovh.net";
 $database="axelbrgln";
