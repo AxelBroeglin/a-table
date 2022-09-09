@@ -1,4 +1,5 @@
 <?php ?>
+<!DOCTYPE html>
 <html lang='en'>
 <head>
   <meta charset="UTF-8">
@@ -25,8 +26,12 @@
     </nav>
   </div><!-- End of header -->
 
-  <div id="demo"></div>
-  
+  <div id="demo">
+
+    <?php require_once './php/script.php';?>
+
+  </div>
+
   <main class="pt-8 px-8 w-10/12">
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque nunc tellus, vel blandit metus feugiat congue. Ut id pellentesque ligula, nec iaculis elit. Phasellus porttitor pellentesque semper. Duis eget pharetra urna.</p>
     <div id="content-container" class="pt-8">
