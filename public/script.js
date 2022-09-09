@@ -1,10 +1,10 @@
 window.addEventListener("load", function() {
 	fetch('./php/script.php')
 	.then(function(response){
-		return response.text();
+		return response.json();
 	})
-	.then(function(text){
-		console.log(text);
+	.then(function(json){
+		console.log(json);
 	})
 	.catch(function(err){
 		console.log(err);
