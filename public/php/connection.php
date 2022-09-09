@@ -1,7 +1,10 @@
 <?php
 $username = "axelbrgln";  
-$password = "Lepanache35";
-$host = "axelbrg.cluster031.hosting.ovh.net";
+$password = "Enfoire35";
+$host = "axelbrgln.mysql.db";
 $database="axelbrgln";
 
+$dsn = 'mysql:host=axelbrgln.mysql.db;dbname=axelbrgln';
+
+$pdo = new PDO($dsn, $username, $password);
 ?>
