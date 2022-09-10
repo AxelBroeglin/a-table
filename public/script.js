@@ -17,7 +17,7 @@
 
 //Content container variable
 let contentContainer = document.getElementById('content-container');
-
+ 
 //Search form variables
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('btn');
@@ -304,6 +304,24 @@ let closeSpan = document.getElementsByClassName("close-span")[0];
 closeSpan.addEventListener('click', ()=>{ 
 	modalWindow.style.display = "none";
 })
+
+
+
+//Create code to INSERT RECIPE FOR SPECIFIC DAYS :
+// 1) Button Add to Calendar (event list fetches 'add-to-calendar.php' with POSTed info, php will make query)
+// 2) Set data attr to days to retrieve date and make query : mmddyyyy
+// 3) Create query ('add-to-calendar.php') with user id, date, recipe, name, according to chosen meal
+
+//REFACTORIZE renderCalendar() :
+// 1) Click on Calendar in menu or on Add to Calendar -> rendarCalendar + results from Db w/ symbols for already existing choices (if lunch or diner selected for this day, show proper symbol)
+//		- If !empty -> show symbol.s
+//		- If empty -> show nothing
+// 2) Click on specific day : renderCalendar + results from Db for specific day
+//		- If empty -> show nothing
+//		- If !empty -> show title + url
+
+//Create USER ACCESS
+
 
 
 //Calendar code
