@@ -1,20 +1,3 @@
-// window.addEventListener("load", function() {
-// 	fetch('./php/script.php')
-// 	.then(function(response){
-// 		return response.json();
-// 	})
-// 	.then(function(json){
-// 		console.log(json);
-// 	})
-// 	.catch(function(err){
-// 		console.log(err);
-// 	})
-// })
-
-
-  
-
-
 //Content container variable
 let contentContainer = document.getElementById('content-container');
  
