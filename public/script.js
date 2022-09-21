@@ -246,7 +246,7 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 		<h3 class="font-bold uppercase text-xl text-green-600 text-center">${arrayOfRecipesInfo[recipeIndex].title}</h3>
         <div class="flex justify-between pt-12 pb-6">
 			<img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title" class="w-4/12">
-			<div class="w-7/12">
+			<div class="w-7/12 modal-info-container">
 				<h4 class="font-bold uppercase text-green-600">Nutritional information</h4>
 				<p>${arrayOfRecipesInfo[recipeIndex].servings} Servings</p>
 				<p>Per serving :</p>
@@ -256,7 +256,10 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 				<p>Protein: ${Math.trunc(arrayOfRecipesInfo[recipeIndex].protein / arrayOfRecipesInfo[recipeIndex].servings)} grams</p>
 				<p id="cuisine-type">Cuisine type: ${cuisineType.charAt(0).toUpperCase() + cuisineType.slice(1)}</p>
 				
-				<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank" class="cursor-pointer font-bold text-green-600"><button>See the recipe</button></a>
+				<div class="flex justify-around link-calendar-container">
+					<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank" class="cursor-pointer font-bold text-green-600"><button>See the recipe</button></a>
+					<input class="border-2 border-green-600 bg-green-600 rounded px-2 text-slate-50" id="btn" type="submit" value="Add">
+				</div>
 			</div>
 		</div>
         <ul id="ingredients-list" class="columns-2"></ul>
@@ -307,22 +310,6 @@ closeSpan.addEventListener('click', ()=>{
 
 
 
-//Create code to INSERT RECIPE FOR SPECIFIC DAYS :
-// 1) Button Add to Calendar (event list fetches 'add-to-calendar.php' with POSTed info, php will make query)
-// 2) Set data attr to days to retrieve date and make query : mmddyyyy
-// 3) Create query ('add-to-calendar.php') with user id, date, recipe, name, according to chosen meal
-
-//REFACTORIZE renderCalendar() :
-// 1) Click on Calendar in menu or on Add to Calendar -> rendarCalendar + results from Db w/ symbols for already existing choices (if lunch or diner selected for this day, show proper symbol)
-//		- If !empty -> show symbol.s
-//		- If empty -> show nothing
-// 2) Click on specific day : renderCalendar + results from Db for specific day
-//		- If empty -> show nothing
-//		- If !empty -> show title + url
-
-//Create USER ACCESS
-
-
 
 //Calendar code
 const date = new Date();
@@ -332,14 +319,14 @@ const renderCalendar = () => {
 	calendarSection.innerHTML = `
 	<!-- Calendar container -->
 	<section id="calendar-section">
-		<div class="calendar	bg-zinc-900	shadow-lg">
-			<div class="month w-full	h-48	bg-green-700	flex justify-between	items-center py-0	px-8	text-center	shadow-lg">
-			<i class="fas fa-angle-left prev cursor-pointer text-4xl	"><</i>
+		<div class="calendar bg-zinc-900 shadow-lg">
+			<div class="month w-full h-48 bg-green-700 flex justify-between	items-center py-0 px-8 text-center shadow-lg">
+			<i class="fas fa-angle-left prev cursor-pointer text-4xl"><</i>
 			<div class="date">
-				<h3  class="text-5xl	uppercase tracking-wide	mb-4	"></h3>
-				<p class="text-2xl	"></p>
+				<h3  class="text-5xl uppercase tracking-wide	mb-4"></h3>
+				<p class="text-2xl"></p>
 			</div>
-			<i class="fas fa-angle-right next cursor-pointer text-4xl	">></i>
+			<i class="fas fa-angle-right next cursor-pointer text-4x	">></i>
 			</div>
 			<div class="weekdays text-2xl h-20	py-0 px-1.5	flex items-center">
 			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Sun</div>
@@ -352,7 +339,8 @@ const renderCalendar = () => {
 			</div>
 			<div class="days w-full flex flex-wrap	p-1"></div>
 		</div>
-	</section><!-- End of calendar container -->	
+	</section>
+	<!-- End of calendar container -->	
 	`
   date.setDate(1);
 
@@ -399,29 +387,55 @@ const renderCalendar = () => {
   let dateH3 = document.querySelector(".date h3");
   dateH3.innerHTML = months[date.getMonth()];
   dateH3.dataset.currentMonth = months[date.getMonth()];
+  //These variables will be used later in the event listener for prev and next days
+  const previousMonth = months[date.getMonth()-1];
+  const nextMonth = months[date.getMonth()+1]
 
-  document.querySelector(".date p").innerHTML = new Date().toDateString();
 
+  let currentMonthNumber = months.indexOf(months[date.getMonth()]) + 1;
 
-  //Check if a specific ID will be necessary to communicate with the DB, like 20220925.
-  //If so, will have to fix the issue of 1 to 9, since it will change the format.
+ if (currentMonthNumber.toString().length < 2){
+	dateH3.dataset.currentMonthNumber = "0" + currentMonthNumber;
+} else {
+	dateH3.dataset.currentMonthNumber = currentMonthNumber;
+}
+
+const dateP = document.querySelector(".date p");
+dateP.innerHTML = new Date().toDateString();
+dateP.dataset.currentYearNumber = dateP.innerHTML.slice(-4);
 
   let days = "";
 
   for (let x = firstDayIndex; x > 0; x--) {
-    days += `<div class="prev-date text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800 hover:border-gray-300 hover:cursor-pointer opacity-50">${prevLastDay - x + 1}</div>`;
+	if(prevLastDay - x + 1 < 10){
+		days += `<div data-currentDayNumber="0${prevLastDay - x + 1}"  class="days-calendar prev-date text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800 hover:border-gray-300 hover:cursor-pointer opacity-50">${prevLastDay - x + 1}</div>`;
+	} else {
+		days += `<div data-currentDayNumber="${prevLastDay - x + 1}"  class="prev-date text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800 hover:border-gray-300 hover:cursor-pointer opacity-50">${prevLastDay - x + 1}</div>`;
+	}
   }
 
   for (let i = 1; i <= lastDay; i++) {
     if (i === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
-    	days += `<div class="today text-2xl m-1 days-div-width h-20	flex justify-center items-center shadow-lg bg-green-700 hover:cursor-pointer">${i}</div>`;
+		if(i < 10){
+			days += `<div data-currentDayNumber="0${i}" class="days-calendar today text-2xl m-1 days-div-width h-20	flex justify-center items-center shadow-lg bg-green-700 hover:cursor-pointer">${i}</div>`;
+		} else {
+			days += `<div data-currentDayNumber="${i}" class="days-calendar today text-2xl m-1 days-div-width h-20	flex justify-center items-center shadow-lg bg-green-700 hover:cursor-pointer">${i}</div>`;
+		}
     }else{
-    	days += `<div class="text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer">${i}</div>`;
+		if(i < 10){
+			days += `<div data-currentDayNumber="0${i}"  class="days-calendar text-2xl m-1 days-div-width h-20 flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer">${i}</div>`;
+		} else {
+			days += `<div data-currentDayNumber="${i}" class="days-calendar text-2xl m-1 days-div-width h-20 flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer">${i}</div>`;
+		}
     }
   }
 
   for (let j = 1; j <= nextDays; j++) {
-    days += `<div class="next-date text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer  opacity-50">${j}</div>`;
+	if(j < 10){
+		days += `<div data-currentDayNumber="0${j}" class="days-calendar next-date text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer  opacity-50">${j}</div>`;
+	} else {
+		days += `<div data-currentDayNumber="${j}" class="days-calendar next-date text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer  opacity-50">${j}</div>`;
+	}
     monthDays.innerHTML = days;
   }
   document.querySelector(".prev").addEventListener("click", () => {
@@ -435,10 +449,10 @@ const renderCalendar = () => {
   });
   
 
-//Later recap of calories, fat etc... ?
-
 //Event listener for days in the calendar
 monthDays.addEventListener('click', event =>{
+	let formatedDate = dateP.dataset.currentYearNumber+dateH3.dataset.currentMonthNumber+event.target.getAttribute('data-currentDayNumber');
+	console.log(formatedDate)
 	modalWindow.style.display = "block";
 	//Switch to check last number and date it accordingly
 	let dateNumber = event.target.innerHTML;
@@ -456,21 +470,48 @@ monthDays.addEventListener('click', event =>{
 			dateNumber += 'th ';
 		break;
 	}
-
-	modalContent.innerHTML = `
-	<h3>${dateNumber + 'of ' + dateH3.dataset.currentMonth}<h3>
-    	<h4>Breakfast</h4>
-			<div>Contains recipe link<div/>
-			<p>or "Add recipe" button leading to search</p>
-			<h4>Lunch</h4>
-			<div>Contains recipe link<div/>
-			<p>or "Add recipe" button leading to search</p>
-			<h4>Diner</h4>
-			<div>Contains recipe link<div/>
-			<p>or "Add recipe" button leading to search</p>
-	 	<a href="" target="_blank"><p>See the recipe</p></a>
-	`
+	if(event.target.classList.contains('prev-date')){
+		modalContent.innerHTML = `
+		<h3>${dateNumber + 'of ' + previousMonth}<h3>
+			<h4>Breakfast</h4>
+				<div>Contains recipe link<div/>
+				<p>or "Add recipe" button leading to search</p>
+				<h4>Lunch</h4>
+				<div>Contains recipe link<div/>
+				<p>or "Add recipe" button leading to search</p>
+				<h4>Diner</h4>
+				<div>Contains recipe link<div/>
+				<p>or "Add recipe" button leading to search</p>
+			 <a href="" target="_blank"><p>See the recipe</p></a>
+		`
+	} else if (event.target.classList.contains('next-date')){
+		modalContent.innerHTML = `
+		<h3>${dateNumber + 'of ' + nextMonth}<h3>
+			<h4>Breakfast</h4>
+				<div>Contains recipe link<div/>
+				<p>or "Add recipe" button leading to search</p>
+				<h4>Lunch</h4>
+				<div>Contains recipe link<div/>
+				<p>or "Add recipe" button leading to search</p>
+				<h4>Diner</h4>
+				<div>Contains recipe link<div/>
+				<p>or "Add recipe" button leading to search</p>
+			 <a href="" target="_blank"><p>See the recipe</p></a>
+		`
+	} else {
+		modalContent.innerHTML = `
+		<h3>${dateNumber + 'of ' + dateH3.dataset.currentMonth}<h3>
+			<h4>Breakfast</h4>
+				<div>Contains recipe link<div/>
+				<p>or "Add recipe" button leading to search</p>
+				<h4>Lunch</h4>
+				<div>Contains recipe link<div/>
+				<p>or "Add recipe" button leading to search</p>
+				<h4>Diner</h4>
+				<div>Contains recipe link<div/>
+				<p>or "Add recipe" button leading to search</p>
+			 <a href="" target="_blank"><p>See the recipe</p></a>
+		`
+	}
  });
 };
-
-//Days from previous month and next month take current month as value, need to correct
