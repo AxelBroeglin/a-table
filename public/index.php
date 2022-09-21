@@ -13,7 +13,7 @@
     <nav class="fixed flex flex-col text-green-600">
       <div>
         <h1 class="font-bold p-8 uppercase text-2xl">
-          <a href="/">A table</a>
+          <a href="/">À table</a>
         </h1>
       </div>
       <div class="mt-4">
@@ -27,8 +27,6 @@
   </div><!-- End of header -->
 
   <div id="demo">
-
-    <?php require_once './php/script.php';?>
 
   </div>
 
