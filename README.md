@@ -44,6 +44,7 @@ Grocery list is : _incomplete_
 Room for improvement:
 - Finish project
 - Responsive
+- Incorporate Typescript
 
 To do:
 - Finish the project
