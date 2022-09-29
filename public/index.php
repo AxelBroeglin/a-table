@@ -1,4 +1,9 @@
-<?php ?>
+<?php
+  session_start();
+  ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?> 
 <!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -16,11 +21,29 @@
           <a href="/">À table</a>
         </h1>
       </div>
+      <div>
+        <ul id="user" class="flex flex-col text-lg font-bold pl-8">
+
+          <?php
+            if(isset($_SESSION["userid"])){
+          ?>
+          <li class="mb-2 cursor-pointer"><a href="#"><?php echo $_SESSION["useruid"];?></a></li>
+          <li class="mb-2 cursor-pointer"><a href="includes/logout.inc.php">Logout</a></li>
+          <?php
+            } else {
+          ?>
+          <li id="user-sign-up" data-user="sign-up" class="mb-2 cursor-pointer">Sign up</li>
+          <li id="user-login" data-user="login" class="mb-2 cursor-pointer">Login</li>
+          <?php
+            }
+          ?>
+
+        </ul>
+      </div>
       <div class="mt-4">
         <ul id="menu" class="flex flex-col text-lg font-bold pl-8">
           <li id="menu-search" data-menu="search" class="mb-2 cursor-pointer">Search</li>
           <li id="menu-calendar" data-menu="calendar" class="mb-2 cursor-pointer">Calendar</li>
-          <li id="menu-grocery-list" data-menu="grocery-list" class="mb-2 cursor-pointer">Grocery list</li>
         </ul>
       </div>
     </nav>
