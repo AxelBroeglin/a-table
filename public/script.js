@@ -1,3 +1,20 @@
+// window.addEventListener("load", function() {
+// 	fetch('./script.php')
+// 	.then(function(response){
+// 		return response.json();
+// 	})
+// 	.then(function(json){
+// 		console.log(json);
+// 	})
+// 	.catch(function(err){
+// 		console.log(err);
+// 	})
+// })
+
+
+  
+
+
 //Content container variable
 let contentContainer = document.getElementById('content-container');
  
@@ -74,6 +91,11 @@ const menu = document.getElementById('menu');
 const menuSearch = document.getElementById('menu-search');
 const menuCalendar = document.getElementById('menu-calendar');
 
+//User variables
+const user = document.getElementById('user');
+const userSignUp = document.getElementById('user-sign-up');
+const userLogin = document.getElementById('user-login');
+
 //Sections variables
 const calendarSection = document.getElementById('calendar-section');
 const searchSection = document.getElementById('search-section');
@@ -93,7 +115,7 @@ const openRecipe = document.querySelectorAll('.open-recipe');
 const app_id = '&app_id=1ab55c64';
 const api_key = '&app_key=c86872049aff2debad57830e690d77c8';
 
-//Add event listener to ul with event delegation
+//Add event listener to MENU ul with event delegation
 menu.addEventListener('click', event => { 
 	if (event.target.id === 'menu-search') {
 		calendarSection.innerHTML = '';
@@ -101,6 +123,36 @@ menu.addEventListener('click', event => {
 	} else {
 		searchSection.style.display = "none";
 	  	renderCalendar();
+	}
+  });
+
+//Add event listener to USER ul with event delegation
+user.addEventListener('click', event => { 
+	modalWindow.style.display = "block";
+	if (event.target.id === 'user-sign-up') {
+		modalContent.innerHTML = `
+		<h4>Sign up</h4>
+		<p>Don't have an account yet ? <span id="sign-up-span">Sign up here</span></p>
+		<form action="./includes/signup.inc.php" method="post">
+		  <input type="text" name="uid" placeholder="Username">
+		  <input type="password" name="password" placeholder="Password">
+		  <input type="password" name="passwordrepeat" placeholder="Repeat password">
+		  <input type="text" name="email" placeholder="E-mail">
+		  <br>
+		  <button type="submit" name="submit">SIGN UP</button>
+		</form>
+		`;		
+	} else {
+		modalContent.innerHTML = `
+		<h4>Login</h4>
+		<p>Don't have an account yet ? <span id="sign-up-span">Sign up here</span></p>
+		<form action="./includes/login.inc.php" method="post">
+		  <input type="text" name="uid" placeholder="Username">
+		  <input type="password" name="password" placeholder="Password">
+		  <br>
+		  <button type="submit" name="submit">LOGIN</button>
+		</form>
+		`;
 	}
   });
 
