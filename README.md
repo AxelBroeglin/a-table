@@ -26,7 +26,7 @@
 
 
 ## Screenshots
-//Soon
+[screenshot-1](https://user-images.githubusercontent.com/16608247/193648087-73ac8dc0-e581-455e-8773-b04a34dd22e6.png)
 
 
 ## Project Status
@@ -35,7 +35,8 @@ Project is: _incomplete_
 Search with API is : _complete_
 Filters is : _complete_
 Sign in is : _complete_
-Login is _incomplete_
+Login is _complete_!
+
 Add meal to calendar is : _incomplete_
 Send recipe calendar for the week is : _incomplete_
 Grocery list is : _incomplete_
