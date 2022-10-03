@@ -26,7 +26,7 @@
 
 
 ## Screenshots
-[screenshot-1](https://user-images.githubusercontent.com/16608247/193648087-73ac8dc0-e581-455e-8773-b04a34dd22e6.png)
+![image](https://user-images.githubusercontent.com/16608247/193648087-73ac8dc0-e581-455e-8773-b04a34dd22e6.png)
 
 
 ## Project Status
