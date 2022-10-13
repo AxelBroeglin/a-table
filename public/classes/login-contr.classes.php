@@ -1,63 +1,34 @@
-
 <?php
 
-class Login extends Dbh {
+class loginContr extends Login {
 
-    protected function getUser($uid, $password){
-        $stmt = $this->connect()->prepare('SELECT users_password FROM Users WHERE users_uid = ? OR users_email = ?;');
-
-        if(!$stmt->execute(array($uid, $password))) {
-            $stmt = null;
-            header("location: ../index.php?error=stmtfailed");
-            exit();
-        }
-
-        if($stmt->rowCount() == 0){
-            $stmt = null;
-            header("location: ../index.php?error=usernotfound");
-            exit();
-        }
-
-        $passwordHashed = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $checkPassword = password_verify($password, $passwordHashed[0]["users_password"]);
-
-        if($checkPassword == false){
-            $stmt = null;
-            header("location: ../index.php?error=wrongpassword");
-            exit();
-        } elseif($check_password == true){
-            $stmt = $this->connect()->prepare('SELECT * FROM Users WHERE users_uid = ? OR users_email = ? AND users_password = ?;');
-
-            if(!$stmt->execute(array($uid, $uid, $password))) {
-                $stmt = null;
-                header("location: ../index.php?error=stmtfailed");
-                exit();
-            }
-
-            if($stmt->rowCount() == 0){
-                $stmt = null;
-                header("location: ../index.php?error=usernotfound");
-                exit();
-            }
-
-            $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            session_start();
-            $_SESSION["userid"] = $user[0]["users_id"];
-            $_SESSION["useruid"] = $user[0]["users_uid"];
-
-            $stmt = null;
-
-
-
-
-            // $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            // session_start();
-            // $_SESSION["userid"] = $user[0]["users_id"];
-            // $_SESSION["useruid"] = $user[0]["users_uid"];
-
-            // $stmt = null;
-        }
+    private $uid;
+    private $password;
+    
+    public function __construct($uid, $password) {
+        $this->uid = $uid;
+        $this->password = $password;
     }
+
+    public function loginUser() {
+        if($this->emptyInput() == false) {
+            // echo "Empty input!";
+            header("location: ../index.php?error=emptyinput");
+            exit();
+        }
+
+        $this->getUser($this->uid, $this->password);
+    }
+
+    private function emptyInput() {
+        $result;
+        if(empty($this->uid) || empty($this->password)) {
+            $result = false;
+        }
+        else {
+            $result = true;
+        }
+        return $result;
+    }
+
 }
