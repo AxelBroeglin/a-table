@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 if(isset($_POST["submit"])){
 
     // //Grabbing the data
@@ -18,5 +20,4 @@ if(isset($_POST["submit"])){
 
     //Going back to front page
     header("location: ../index.php?error=none");
-
-}   
+}
