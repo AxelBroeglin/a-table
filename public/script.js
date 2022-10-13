@@ -89,7 +89,10 @@ function renderSearchCriteriaArray(searchCriteriaArray){
 //Menu variables
 const menu = document.getElementById('menu');
 const menuSearch = document.getElementById('menu-search');
-const menuCalendar = document.getElementById('menu-calendar');
+
+//Calendar variables
+// const menuCalendar = document.getElementById('menu-calendar');
+// const recipeCalendar = document.getElementById('recipe-calendar');
 
 //User variables
 const user = document.getElementById('user');
@@ -118,13 +121,19 @@ const api_key = '&app_key=c86872049aff2debad57830e690d77c8';
 //Add event listener to MENU ul with event delegation
 menu.addEventListener('click', event => { 
 	if (event.target.id === 'menu-search') {
-		calendarSection.innerHTML = '';
-		searchSection.style.display = "block";
+		calendarSection.style.display = 'none';
+		searchSection.style.display = 'block';
 	} else {
-		searchSection.style.display = "none";
-	  	renderCalendar();
+		searchSection.style.display = 'none';
+		calendarSection.style.display = 'block';
 	}
   });
+
+window.addEventListener('load', (event) => {
+	renderCalendar(calendarSection);
+	calendarSection.style.display = 'none';
+});
+//ONLOAD charge calendar into calendarSection, show section when clicked
 
 //Add event listener to USER ul with event delegation
 user.addEventListener('click', event => { 
@@ -293,12 +302,21 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 				
 				<div class="flex justify-around link-calendar-container">
 					<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank" class="cursor-pointer font-bold text-green-600"><button>See the recipe</button></a>
-					<input class="border-2 border-green-600 bg-green-600 rounded px-2 text-slate-50" id="btn" type="submit" value="Add">
+					<a href="#"><input id="recipe-calendar-button" class="border-2 border-green-600 bg-green-600 rounded px-2 text-slate-50" id="btn" type="submit" value="Add"></a>
 				</div>
 			</div>
 		</div>
         <ul id="ingredients-list" class="columns-2"></ul>
-	`
+	`;
+	//Modal info container variable
+	const modalInfoContainer = document.querySelector(".modal-info-container");
+
+	//Add to calendar button variable and event listener
+	const recipeCalendarButton = document.getElementById("recipe-calendar-button");
+	recipeCalendarButton.addEventListener('click', ()=>{
+		renderCalendar(modalInfoContainer);
+	});
+
 	//The API does not always return a cooking total time, this checks if it is the case and acts accordingly
 	if(arrayOfRecipesInfo[recipeIndex].totalTime > 0){
 		//Created cuisineTypeP variable in order to append totalTime after it
@@ -320,8 +338,6 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 		//Append ingredients in the list
 		listOfIngredients.appendChild(liIngredient);
 	}
-
-
 }
 
 //Modal windows variables
@@ -344,16 +360,13 @@ closeSpan.addEventListener('click', ()=>{
 })
 
 
-
-
 //Calendar code
 const date = new Date();
 
-const renderCalendar = () => {
+const renderCalendar = (section) => {
 	//Injects the HTML in the proper section
-	calendarSection.innerHTML = `
+	section.innerHTML = `
 	<!-- Calendar container -->
-	<section id="calendar-section">
 		<div class="calendar bg-zinc-900 shadow-lg">
 			<div class="month w-full h-48 bg-green-700 flex justify-between	items-center py-0 px-8 text-center shadow-lg">
 			<i class="fas fa-angle-left prev cursor-pointer text-4xl"><</i>
@@ -374,11 +387,10 @@ const renderCalendar = () => {
 			</div>
 			<div class="days w-full flex flex-wrap	p-1"></div>
 		</div>
-	</section>
 	<!-- End of calendar container -->	
 	`
   date.setDate(1);
-
+console.log('test');
   const monthDays = document.querySelector(".days");
 
   const lastDay = new Date(
@@ -420,8 +432,15 @@ const renderCalendar = () => {
 
 
   let dateH3 = document.querySelector(".date h3");
+  console.log('test');
+
   dateH3.innerHTML = months[date.getMonth()];
+  console.log('test');
+
+
   dateH3.dataset.currentMonth = months[date.getMonth()];
+  console.log('test');
+
   //These variables will be used later in the event listener for prev and next days
   const previousMonth = months[date.getMonth()-1];
   const nextMonth = months[date.getMonth()+1]
@@ -429,15 +448,19 @@ const renderCalendar = () => {
 
   let currentMonthNumber = months.indexOf(months[date.getMonth()]) + 1;
 
- if (currentMonthNumber.toString().length < 2){
-	dateH3.dataset.currentMonthNumber = "0" + currentMonthNumber;
-} else {
-	dateH3.dataset.currentMonthNumber = currentMonthNumber;
-}
+	if (currentMonthNumber.toString().length < 2){
+		dateH3.dataset.currentMonthNumber = "0" + currentMonthNumber;
+		console.log('test');
 
-const dateP = document.querySelector(".date p");
-dateP.innerHTML = new Date().toDateString();
-dateP.dataset.currentYearNumber = dateP.innerHTML.slice(-4);
+	} else {
+	dateH3.dataset.currentMonthNumber = currentMonthNumber;
+	console.log('test');
+
+	}
+
+	const dateP = document.querySelector(".date p");
+	dateP.innerHTML = new Date().toDateString();
+	dateP.dataset.currentYearNumber = dateP.innerHTML.slice(-4);
 
   let days = "";
 
@@ -475,12 +498,12 @@ dateP.dataset.currentYearNumber = dateP.innerHTML.slice(-4);
   }
   document.querySelector(".prev").addEventListener("click", () => {
 	date.setMonth(date.getMonth() - 1);
-	renderCalendar();
+	renderCalendar(section);
   });
   
   document.querySelector(".next").addEventListener("click", () => {
 	date.setMonth(date.getMonth() + 1);
-	renderCalendar();
+	renderCalendar(section);
   });
   
 
@@ -550,3 +573,8 @@ monthDays.addEventListener('click', event =>{
 	}
  });
 };
+
+//Calendar : 
+//- december is empty
+//- Oct for every month (current month)
+//- Year stays 2022, does not switch 2023
