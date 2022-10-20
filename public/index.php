@@ -1,580 +1,187 @@
-// window.addEventListener("load", function() {
-// 	fetch('./script.php')
-// 	.then(function(response){
-// 		return response.json();
-// 	})
-// 	.then(function(json){
-// 		console.log(json);
-// 	})
-// 	.catch(function(err){
-// 		console.log(err);
-// 	})
-// })
-
-
-  
-
-
-//Content container variable
-let contentContainer = document.getElementById('content-container');
- 
-//Search form variables
-const searchInput = document.getElementById('search-input');
-const searchButton = document.getElementById('btn');
-
-//Food search variables
-let foodSearch = '';
-let labelValues = [];
-let cuisineValues = [];
-
-//Food search recap variables
-const searchRecapContainer = document.getElementById('search-recap-container');
-const searchRecapCriteria = document.querySelectorAll('.search-criteria');
-let searchCriteriaArray = [];
-
-
-//Event listener for search criteria
-searchRecapCriteria.forEach(criterion => criterion.addEventListener('click', (event)=>{
-	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)
-}))
-
-//Event listener for search recap container
-searchRecapContainer.addEventListener('click', event => {
-	//Unselect checkbox related to clicked icon
-	const iconClicked = event.target.name;
-	document.getElementById(iconClicked).checked = false;
-	//Send array to check function alongside with event target name
-	checkSearchCriteriaArray(searchCriteriaArray, event.target.name);
-})
-
-//Function to check if value already in array or not
-function checkSearchCriteriaArray(searchCriteriaArray, criterion) {
-	//If index === -1 : absent -> push in array
-    if (searchCriteriaArray.indexOf(criterion) === -1) {
-        searchCriteriaArray.push(criterion);
-    } else if (searchCriteriaArray.indexOf(criterion) > -1) {
-		//If index > -1 : present -> splice item
-		for( let i = 0; i < searchCriteriaArray.length; i++){
-			if ( searchCriteriaArray[i] === criterion) {
-				searchCriteriaArray.splice(i, 1);
-			}
-    	}
-	}
-	//Send array to its render function
-	renderSearchCriteriaArray(searchCriteriaArray);
-}
-
-//Function to render array
-function renderSearchCriteriaArray(searchCriteriaArray){
-	//Reset container html
-	searchRecapContainer.innerHTML = '';
-	//Take each item in array
-	searchCriteriaArray.forEach(function (i) {
-		//Create an image
-		const healthLabelIcon = document.createElement("img");
-		//Gives alt of event target name
-		healthLabelIcon.alt = i
-		//SRC is set to event target name
-		healthLabelIcon.src = `./images/criteria-icons/${i}.png`;
-		//Same for name
-		healthLabelIcon.setAttribute('name', i);
-		//Add styling classes
-		healthLabelIcon.classList.add("cursor-pointer", "shadow-lg", "mr-2");
-		//Append newly created image to container
-		searchRecapContainer.append(healthLabelIcon);
-	})
-}
-
-
-//Menu variables
-const menu = document.getElementById('menu');
-const menuSearch = document.getElementById('menu-search');
-
-//Calendar variables
-// const menuCalendar = document.getElementById('menu-calendar');
-// const recipeCalendar = document.getElementById('recipe-calendar');
-
-//User variables
-const user = document.getElementById('user');
-const userSignUp = document.getElementById('user-sign-up');
-const userLogin = document.getElementById('user-login');
-
-//Sections variables
-const calendarSection = document.getElementById('calendar-section');
-const searchSection = document.getElementById('search-section');
-
-//Card display variable
-const cardsDisplay = document.getElementById('cards-display');
-
-//Criteria variables
-const criteria = document.getElementById('criteria');
-const moreCriteria = document.getElementById('more-criteria');
-const revealCriteria = document.getElementById('reveal-criteria');
-
-//Modal window variable
-const openRecipe = document.querySelectorAll('.open-recipe');
-
-//API variables
-const app_id = '&app_id=1ab55c64';
-const api_key = '&app_key=c86872049aff2debad57830e690d77c8';
-
-//Add event listener to MENU ul with event delegation
-menu.addEventListener('click', event => { 
-	if (event.target.id === 'menu-search') {
-		calendarSection.style.display = 'none';
-		searchSection.style.display = 'block';
-	} else {
-		searchSection.style.display = 'none';
-		calendarSection.style.display = 'block';
-	}
-  });
-
-window.addEventListener('load', (event) => {
-	renderCalendar(calendarSection);
-	calendarSection.style.display = 'none';
-});
-//ONLOAD charge calendar into calendarSection, show section when clicked
-
-//Add event listener to USER ul with event delegation
-user.addEventListener('click', event => { 
-	modalWindow.style.display = "block";
-	if (event.target.id === 'user-sign-up') {
-		modalContent.innerHTML = `
-		<h4>Sign up</h4>
-		<p>Don't have an account yet ? <span id="sign-up-span">Sign up here</span></p>
-		<form action="./includes/signup.inc.php" method="post">
-		  <input type="text" name="uid" placeholder="Username">
-		  <input type="password" name="password" placeholder="Password">
-		  <input type="password" name="passwordrepeat" placeholder="Repeat password">
-		  <input type="text" name="email" placeholder="E-mail">
-		  <br>
-		  <button type="submit" name="submit">SIGN UP</button>
-		</form>
-		`;		
-	} else {
-		modalContent.innerHTML = `
-		<h4>Login</h4>
-		<p>Don't have an account yet ? <span id="sign-up-span">Sign up here</span></p>
-		<form action="./includes/login.inc.php" method="post">
-		  <input type="text" name="uid" placeholder="Username">
-		  <input type="password" name="password" placeholder="Password">
-		  <br>
-		  <button type="submit" name="submit">LOGIN</button>
-		</form>
-		`;
-	}
-  });
-
-//Event listener for submit button
-searchButton.addEventListener('click', (e)=>{
-	e.preventDefault();
-	//Health labels
-	labelValues = [];
-	//Get all selected health labels checkboxes
-	let healthLabelsChecked = document.querySelectorAll('.health-labels:checked');
-	//Push url part + each of them in labelValues array
-	healthLabelsChecked.forEach((checkbox) => {
-		labelValues.push('&health='+checkbox.name);
-	});
-	//Regex to replace ',' by nothing in order to make a proper url
-	labelValues = labelValues.toString().replace(/,/g, '');
-
-	//Cuisine types
-	cuisineValues = [];
-	//Get all selected cuisine types checkboxes
-	let cuisineTypesChecked = document.querySelectorAll('.cuisine-types:checked');
-	//Push url part + each of them in labelValues array
-	cuisineTypesChecked.forEach((checkbox) => {
-		cuisineValues.push('&cuisineType='+checkbox.name);
-	});
-	//Regex to replace ',' by nothing in order to make a proper url
-	cuisineValues = cuisineValues.toString().replace(/,/g, '');
-	//Declaration of foodSearch
-	foodSearch = searchInput.value;
-	//Check if foodSearch is empty -> red box around input
-	if(foodSearch == ''){
-		searchInput.classList.add('input-red');
-	}
-	//Check if labelValues is not empty, if not execute foodQuery with it
-	if(labelValues!==''){
-		foodQuery(foodSearch, labelValues)
-	}else{
-		//If it is empty, foodQuery without it, check necessary because labels come before cuisine types
-		foodQuery(foodSearch);
-	}
-})
-
-//Event listener for reveal button for more criteria
-moreCriteria.addEventListener('click', ()=>{
-	revealCriteria.style.display = revealCriteria.style.display === '' ? 'none' : '';
-})
-
-//Event listener on search input to remove red box if focus
-searchInput.addEventListener('focus', ()=>{
-	searchInput.classList.remove('input-red')
-})
-
-//Async await function that calls the API
-async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${foodSearch}${app_id}${api_key}${labelValues}${cuisineValues}`)
-				.then(response => response.json())
-				.then(response => useApiResponse(response))
-				.catch(err => console.error(err));
-}
-
-
-//Function that handles the answer from API
-function useApiResponse(response){
-	console.log(response);
-	//Create array that will contain the different recipes from answer
-	let recipes = [];
-	//Create array that will contain the different recipes info from answer
-	let arrayOfRecipesInfo = [];
-	//Create variable to trim the titles
-	let trimmedTitle;
-	//For loop for the 12 answers
-	for (let i = 0; i < 12; i++) {
-		//Trimmed title takes value of recipe label
-		trimmedTitle = response.hits[i].recipe.label;
-		//If length > 5 -> limit number of words and characters
-		if(trimmedTitle.split(" ").length >= 5){
-			trimmedTitle = trimmedTitle.split(' ').slice(0, 4).join(' ').substring(0,24)+' [...]';
-		}
-		//Push values into recipes array
-		recipes.push(
-			//Data index i allows identification of clicked card
-			`<div class="w-4/6 gap-y-1 gap-x-1 mb-8 shadow-md rounded-md">
-				<img src="${response.hits[i].recipe.images.REGULAR.url}" alt="" class="rounded-t-md">
-				<div class="flex flex-col justify-between pt-2 pb-4 text-center h-28 bg-neutral-50">
-					<h3 class="font-semibold">${trimmedTitle}</h3>
-					<button class="open-recipe cursor-pointer font-bold text-green-600" data-index="${[i]}">More details</button>
-				</div>
-			</div>`)
-		//Container receives the joined cards
-		cardsDisplay.innerHTML = recipes.join('');
-		//Array of info take created object for easy riding
-		arrayOfRecipesInfo.push(
-			{title : response.hits[i].recipe.label, 
-			image : response.hits[i].recipe.images.REGULAR.url, 
-			totalTime : response.hits[i].recipe.totalTime, 
-			servings : response.hits[i].recipe.yield,
-			calories : response.hits[i].recipe.calories,
-			fat : Math.trunc(response.hits[i].recipe.digest[0].total),
-			carbs : Math.trunc(response.hits[i].recipe.digest[1].total),
-			protein : Math.trunc(response.hits[i].recipe.digest[2].total),
-			cuisineType : response.hits[i].recipe.cuisineType,
-			ingredients : response.hits[i].recipe.ingredients, 
-			url : response.hits[i].recipe.url}
-		)
-	}
-	//Get the modal window that will receive recipe info
-	let moreDetailsRecipe = document.querySelectorAll(".open-recipe");
-	//Add event listener for each element in container
-	moreDetailsRecipe.forEach(element => element.addEventListener('click', (e)=>{
-		//Create variable for readability
-		let recipeIndex = e.target.dataset.index;
-		//Array of info and recipeIndex sent to the modal window function
-		modalForRecipe(arrayOfRecipesInfo, recipeIndex);
-	}))
-}
-
-//Function that renders modal window content
-function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
-	//Make the modal appear
-	modalWindow.style.display = "block";
-	//cuisineType takes value for readability
-	cuisineType = arrayOfRecipesInfo[recipeIndex].cuisineType.toString();
-	//Calc that determines calories per serving
-	let calPerServing = arrayOfRecipesInfo[recipeIndex].calories / arrayOfRecipesInfo[recipeIndex].servings;
-	//HTML structure and values of the modal window
-	modalContent.innerHTML = `
-		<h3 class="font-bold uppercase text-xl text-green-600 text-center">${arrayOfRecipesInfo[recipeIndex].title}</h3>
-        <div class="flex justify-between pt-12 pb-6">
-			<img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title" class="w-4/12">
-			<div class="w-7/12 modal-info-container">
-				<h4 class="font-bold uppercase text-green-600">Nutritional information</h4>
-				<p>${arrayOfRecipesInfo[recipeIndex].servings} Servings</p>
-				<p>Per serving :</p>
-				<p>Calories: ${Math.trunc(calPerServing)}</p>
-				<p>Fat: ${Math.trunc(arrayOfRecipesInfo[recipeIndex].fat / arrayOfRecipesInfo[recipeIndex].servings)} grams</p>
-				<p>Carbs: ${Math.trunc(arrayOfRecipesInfo[recipeIndex].carbs / arrayOfRecipesInfo[recipeIndex].servings)} grams</p>
-				<p>Protein: ${Math.trunc(arrayOfRecipesInfo[recipeIndex].protein / arrayOfRecipesInfo[recipeIndex].servings)} grams</p>
-				<p id="cuisine-type">Cuisine type: ${cuisineType.charAt(0).toUpperCase() + cuisineType.slice(1)}</p>
-				
-				<div class="flex justify-around link-calendar-container">
-					<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank" class="cursor-pointer font-bold text-green-600"><button>See the recipe</button></a>
-					<a href="#"><input id="recipe-calendar-button" class="border-2 border-green-600 bg-green-600 rounded px-2 text-slate-50" id="btn" type="submit" value="Add"></a>
-				</div>
-			</div>
-		</div>
-        <ul id="ingredients-list" class="columns-2"></ul>
-	`;
-	//Modal info container variable
-	const modalInfoContainer = document.querySelector(".modal-info-container");
-
-	//Add to calendar button variable and event listener
-	const recipeCalendarButton = document.getElementById("recipe-calendar-button");
-	recipeCalendarButton.addEventListener('click', ()=>{
-		renderCalendar(modalInfoContainer);
-	});
-
-	//The API does not always return a cooking total time, this checks if it is the case and acts accordingly
-	if(arrayOfRecipesInfo[recipeIndex].totalTime > 0){
-		//Created cuisineTypeP variable in order to append totalTime after it
-		let cuisineTypeP = document.getElementById('cuisine-type');
-		//Create the p for total time
-		let totalTimeP = document.createElement("p");
-		//Total time HTML
-		totalTimeP.innerHTML = 'Total time: ' + arrayOfRecipesInfo[recipeIndex].totalTime + ' minutes';
-		//Append totalTimeP
-		cuisineTypeP.after(totalTimeP);
-	}
-	
-	//Render the 2nd part of the modal window, the list of ingredients
-	let listOfIngredients = document.getElementById("ingredients-list");
-	//For loop that will create the li
-	for(let i = 0; i < arrayOfRecipesInfo[recipeIndex].ingredients.length; i++){
-		let liIngredient = document.createElement("li");
-		liIngredient.innerText = "- " + arrayOfRecipesInfo[recipeIndex].ingredients[i].text;
-		//Append ingredients in the list
-		listOfIngredients.appendChild(liIngredient);
-	}
-}
-
-//Modal windows variables
-let modalWindow = document.getElementById('modal-window');
-let modalContent = document.getElementById('modal-content');
-
-//Event listener outside of the modal to close it
-window.addEventListener('click', (e)=>{
-	if (e.target == modalWindow) {
-		modalWindow.style.display = "none";
-	}
-})
-
-//Close span variable
-let closeSpan = document.getElementsByClassName("close-span")[0];
-
-//Event listener on the close span to close modal
-closeSpan.addEventListener('click', ()=>{ 
-	modalWindow.style.display = "none";
-})
-
-
-//Calendar code
-const date = new Date();
-
-const renderCalendar = (section) => {
-	//Injects the HTML in the proper section
-	section.innerHTML = `
-	<!-- Calendar container -->
-		<div class="calendar bg-zinc-900 shadow-lg">
-			<div class="month w-full h-48 bg-green-700 flex justify-between	items-center py-0 px-8 text-center shadow-lg">
-			<i class="fas fa-angle-left prev cursor-pointer text-4xl"><</i>
-			<div class="date">
-				<h3  class="text-5xl uppercase tracking-wide	mb-4"></h3>
-				<p class="text-2xl"></p>
-			</div>
-			<i class="fas fa-angle-right next cursor-pointer text-4x	">></i>
-			</div>
-			<div class="weekdays text-2xl h-20	py-0 px-1.5	flex items-center">
-			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Sun</div>
-			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Mon</div>
-			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Tue</div>
-			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Wed</div>
-			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Thu</div>
-			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Fri</div>
-			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Sat</div>
-			</div>
-			<div class="days w-full flex flex-wrap	p-1"></div>
-		</div>
-	<!-- End of calendar container -->	
-	`
-  date.setDate(1);
-console.log('test');
-  const monthDays = document.querySelector(".days");
-
-  const lastDay = new Date(
-    date.getFullYear(),
-    date.getMonth() + 1,
-    0
-  ).getDate();
-
-  const prevLastDay = new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    0
-  ).getDate();
-
-  const firstDayIndex = date.getDay();
-
-  const lastDayIndex = new Date(
-    date.getFullYear(),
-    date.getMonth() + 1,
-    0
-  ).getDay();
-
-  const nextDays = 7 - lastDayIndex - 1;
-
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-
-  let dateH3 = document.querySelector(".date h3");
-  console.log('test');
-
-  dateH3.innerHTML = months[date.getMonth()];
-  console.log('test');
-
-
-  dateH3.dataset.currentMonth = months[date.getMonth()];
-  console.log('test');
-
-  //These variables will be used later in the event listener for prev and next days
-  const previousMonth = months[date.getMonth()-1];
-  const nextMonth = months[date.getMonth()+1]
-
-
-  let currentMonthNumber = months.indexOf(months[date.getMonth()]) + 1;
-
-	if (currentMonthNumber.toString().length < 2){
-		dateH3.dataset.currentMonthNumber = "0" + currentMonthNumber;
-		console.log('test');
-
-	} else {
-	dateH3.dataset.currentMonthNumber = currentMonthNumber;
-	console.log('test');
-
-	}
-
-	const dateP = document.querySelector(".date p");
-	dateP.innerHTML = new Date().toDateString();
-	dateP.dataset.currentYearNumber = dateP.innerHTML.slice(-4);
-
-  let days = "";
-
-  for (let x = firstDayIndex; x > 0; x--) {
-	if(prevLastDay - x + 1 < 10){
-		days += `<div data-currentDayNumber="0${prevLastDay - x + 1}"  class="days-calendar prev-date text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800 hover:border-gray-300 hover:cursor-pointer opacity-50">${prevLastDay - x + 1}</div>`;
-	} else {
-		days += `<div data-currentDayNumber="${prevLastDay - x + 1}"  class="prev-date text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800 hover:border-gray-300 hover:cursor-pointer opacity-50">${prevLastDay - x + 1}</div>`;
-	}
-  }
-
-  for (let i = 1; i <= lastDay; i++) {
-    if (i === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
-		if(i < 10){
-			days += `<div data-currentDayNumber="0${i}" class="days-calendar today text-2xl m-1 days-div-width h-20	flex justify-center items-center shadow-lg bg-green-700 hover:cursor-pointer">${i}</div>`;
-		} else {
-			days += `<div data-currentDayNumber="${i}" class="days-calendar today text-2xl m-1 days-div-width h-20	flex justify-center items-center shadow-lg bg-green-700 hover:cursor-pointer">${i}</div>`;
-		}
-    }else{
-		if(i < 10){
-			days += `<div data-currentDayNumber="0${i}"  class="days-calendar text-2xl m-1 days-div-width h-20 flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer">${i}</div>`;
-		} else {
-			days += `<div data-currentDayNumber="${i}" class="days-calendar text-2xl m-1 days-div-width h-20 flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer">${i}</div>`;
-		}
-    }
-  }
-
-  for (let j = 1; j <= nextDays; j++) {
-	if(j < 10){
-		days += `<div data-currentDayNumber="0${j}" class="days-calendar next-date text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer  opacity-50">${j}</div>`;
-	} else {
-		days += `<div data-currentDayNumber="${j}" class="days-calendar next-date text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer  opacity-50">${j}</div>`;
-	}
-    monthDays.innerHTML = days;
-  }
-  document.querySelector(".prev").addEventListener("click", () => {
-	date.setMonth(date.getMonth() - 1);
-	renderCalendar(section);
-  });
-  
-  document.querySelector(".next").addEventListener("click", () => {
-	date.setMonth(date.getMonth() + 1);
-	renderCalendar(section);
-  });
-  
-
-//Event listener for days in the calendar
-monthDays.addEventListener('click', event =>{
-	let formatedDate = dateP.dataset.currentYearNumber+dateH3.dataset.currentMonthNumber+event.target.getAttribute('data-currentDayNumber');
-	console.log(formatedDate)
-	modalWindow.style.display = "block";
-	//Switch to check last number and date it accordingly
-	let dateNumber = event.target.innerHTML;
-	switch (dateNumber.slice(-1)) {
-		case '1':
-			dateNumber += 'st ';
-		break;
-		case '2':
-			dateNumber += 'nd ';
-		break;
-		case '3':
-			dateNumber += 'rd ';
-			break;
-		default:
-			dateNumber += 'th ';
-		break;
-	}
-	if(event.target.classList.contains('prev-date')){
-		modalContent.innerHTML = `
-		<h3>${dateNumber + 'of ' + previousMonth}<h3>
-			<h4>Breakfast</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-				<h4>Lunch</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-				<h4>Diner</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-			 <a href="" target="_blank"><p>See the recipe</p></a>
-		`
-	} else if (event.target.classList.contains('next-date')){
-		modalContent.innerHTML = `
-		<h3>${dateNumber + 'of ' + nextMonth}<h3>
-			<h4>Breakfast</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-				<h4>Lunch</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-				<h4>Diner</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-			 <a href="" target="_blank"><p>See the recipe</p></a>
-		`
-	} else {
-		modalContent.innerHTML = `
-		<h3>${dateNumber + 'of ' + dateH3.dataset.currentMonth}<h3>
-			<h4>Breakfast</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-				<h4>Lunch</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-				<h4>Diner</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-			 <a href="" target="_blank"><p>See the recipe</p></a>
-		`
-	}
- });
-};
-
-//Calendar : 
-//- december is empty
-//- Oct for every month (current month)
-//- Year stays 2022, does not switch 2023
+<?php
+session_start();
+  ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?> 
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="flex">
+
+  <div class="h-screen w-2/12 border-r-2 border-slate-100"><!-- Header -->
+    <nav class="fixed flex flex-col text-green-600">
+      <div>
+        <h1 class="font-bold p-8 uppercase text-2xl">
+          <a href="/">À table</a>
+        </h1>
+      </div>
+      <div>
+        <ul id="menu-connexion" class="flex flex-col text-lg font-bold pl-8">
+
+          <?php
+            if(isset($_SESSION["userid"])){
+          ?>
+          <li class="mb-2 cursor-pointer"><a href="#"><?php echo $_SESSION["useruid"];?></a></li>
+          <li class="mb-2 cursor-pointer"><a href="includes/logout.inc.php">Logout</a></li>
+          <?php
+            } else {
+          ?>
+          <li id="user-sign-up" data-user="sign-up" class="mb-2 cursor-pointer">Sign up</li>
+          <li id="user-login" data-user="login" class="mb-2 cursor-pointer">Login</li>
+          <?php
+            }
+          ?>
+
+        </ul>
+      </div>
+      <div class="mt-4">
+        <ul id="menu" class="flex flex-col text-lg font-bold pl-8">
+          <li id="menu-search" data-menu="search" class="mb-2 cursor-pointer">Search</li>
+          <li id="menu-calendar" data-menu="calendar" class="calendar-buttons mb-2 cursor-pointer">Calendar</li>
+        </ul>
+      </div>
+    </nav>
+  </div><!-- End of header -->
+
+  <div id="demo">
+
+  </div>
+
+  <main class="pt-8 px-8 w-10/12">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque nunc tellus, vel blandit metus feugiat congue. Ut id pellentesque ligula, nec iaculis elit. Phasellus porttitor pellentesque semper. Duis eget pharetra urna.</p>
+    <div id="content-container" class="pt-8">
+      <!-- Search container -->
+      <div id="search-section">
+          <!-- Search -->
+          <section>            
+              <form>
+                <div class="flex flex-row items-center">
+                  <label for="food-search" class="pr-4 font-semibold">Search for food:</label>
+                  <input class="bg-slate-200 mx-2" id="search-input" type="text" name="foodSearch">
+                  <input class="border-2 border-green-600 bg-green-600 rounded px-2 text-slate-50" id="btn" type="submit" value="Submit">
+                  <!-- Preparation for search recap -->
+                  <div id="search-recap-container" class="pl-4 flex flex-row"></div>
+                </div>
+                
+                <!-- Criteria -->
+                <div id="criteria" class="pt-2">
+                  <div id="health-labels">
+                    <input type="checkbox" id="vegetarian" class='health-labels search-criteria' name="vegetarian">
+                    <label for="vegetarian">Vegetarian</label>
+
+                    <input type="checkbox" id="vegan" class='health-labels search-criteria' name="vegan">
+                    <label for="vegan">Vegan</label>
+
+                    <input type="checkbox" id="pescatarian" class='health-labels search-criteria' name="pescatarian">
+                    <label for="pescatarian">Pescatarian</label>
+                    <p id="more-criteria" class="pt-3 pb-3 font-semibold">More criteria 	&ensp;<i class="arrow down pl-1"></i></p>
+                  </div>  
+
+                  <!-- Reveal Criteria -->
+                  <div id="reveal-criteria" style="display:none;">
+                    <!-- Health labels -->
+                    <div>
+                        <h3 class="pb-1 font-bold text-green-600">Health labels</h3>
+                        <input type="checkbox" id="crustacean-free" class='health-labels search-criteria' name="crustacean-free">
+                        <label for="crustacean-free">Crustacean-free</label>
+
+                        <input type="checkbox" id="dairy-free" class='health-labels search-criteria' name="dairy-free">
+                        <label for="dairy-free">Dairy-free</label>
+
+                        <input type="checkbox" id="egg-free" class='health-labels search-criteria' name="egg-free">
+                        <label for="egg-free">Egg-free</label>
+
+                        <input type="checkbox" id="gluten-free" class='health-labels search-criteria' name="gluten-free">
+                        <label for="gluten-free">Gluten-free</label>
+
+                        <input type="checkbox" id="kosher" class='health-labels search-criteria' name="kosher">
+                        <label for="kosher">Kosher</label>
+
+                        <input type="checkbox" id="peanut-free" class='health-labels search-criteria' name="peanut-free">
+                        <label for="peanut-free">Peanut-free</label>
+
+                        <input type="checkbox" id="pork-free" class='health-labels search-criteria' name="pork-free">
+                        <label for="pork-free">Pork-free</label>
+
+                        <input type="checkbox" id="shellfish-free" class='health-labels search-criteria' name="shellfish-free">
+                        <label for="shellfish-free">Shellfish-free</label>
+
+                        <input type="checkbox" id="tree-nut-free" class='health-labels search-criteria' name="tree-nut-free">
+                        <label for="tree-nut-free">Tree-nut-free</label>
+                    </div><!-- End of health labels -->
+
+                    <!-- Cuisine types -->
+                    <div id="cuisine-types" class="pt-2 pb-1">
+                      <h3 class="font-bold text-green-600">Cuisine type</h3>
+                      <input type="checkbox" id="chinese" class='cuisine-types search-criteria' name="chinese">
+                      <label for="chinese">Chinese</label>
+
+                      <input type="checkbox" id="french" class='cuisine-types search-criteria' name="french">
+                      <label for="french">French</label>
+
+                      <input type="checkbox" id="greek" class='cuisine-types search-criteria' name="greek">
+                      <label for="greek">Greek</label>
+
+                      <input type="checkbox" id="indian" class='cuisine-types search-criteria' name="indian">
+                      <label for="indian">Indian</label>
+
+                      <input type="checkbox" id="italian" class='cuisine-types search-criteria' name="italian">
+                      <label for="italian">Italian</label>
+
+                      <input type="checkbox" id="japanese" class='cuisine-types search-criteria' name="japanese">
+                      <label for="japanese">Japanese</label>
+                      
+                      <input type="checkbox" id="korean" class='cuisine-types search-criteria' name="korean">
+                      <label for="korean">Korean</label>
+
+                      <input type="checkbox" id="mexican" class='cuisine-types search-criteria' name="mexican">
+                      <label for="mexican">Mexican</label>
+
+                      <input type="checkbox" id="nordic" class='cuisine-types search-criteria' name="nordic">
+                      <label for="nordic">Nordic</label>
+
+                      <input type="checkbox" id="south-american" class='cuisine-types search-criteria' name="south-american">
+                      <label for="south-american">South American</label>
+                    </div><!-- End of cuisine types -->
+
+                  </div> <!-- End of reveal Criteria -->
+
+                </div> <!-- End of criteria -->
+
+              </form>
+          </section>
+        
+          
+        <!-- Result container -->
+        <section class="flex justify-center pt-6">
+          <div id="cards-display" class="grid grid-cols-4 justify-items-center content-between">
+            <!-- cards go here -->
+          </div>
+
+         
+        </section><!-- End of result container -->
+      </div><!-- End of search -->
+
+      <!-- The Modal -->
+      <div id="modal-window" class="modal hidden fixed z-50 pt-24 left-0 top-0 w-full h-full backdrop-blur-sm bg-slate-white/50 overflow-auto">   
+      	<div class="w-4/5 bg-gray-50 m-auto p-10 rounded border border-inherit border-solid">
+          <span class="close-span text-green-600 float-right text-2xl font-bold hover:text-green-800 hover:cursor-pointer">&times;</span>
+          <div id="modal-content"></div>
+        </div>
+      </div>
+      
+      <!-- Calendar container -->
+      <section id="calendar-section" class="calendar-container w-full text-slate-300	flex	items-center	">
+        
+      </section><!-- End of calendar container -->
+    </div>
+  </main>
+<script type="text/javascript" src="script.js"></script>
+</body>
+</html>
