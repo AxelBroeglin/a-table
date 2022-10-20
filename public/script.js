@@ -95,9 +95,7 @@ const menuSearch = document.getElementById('menu-search');
 // const recipeCalendar = document.getElementById('recipe-calendar');
 
 //User variables
-const user = document.getElementById('user');
-const userSignUp = document.getElementById('user-sign-up');
-const userLogin = document.getElementById('user-login');
+const menuConnexion = document.getElementById('menu-connexion');
 
 //Sections variables
 const calendarSection = document.getElementById('calendar-section');
@@ -135,10 +133,15 @@ window.addEventListener('load', (event) => {
 });
 //ONLOAD charge calendar into calendarSection, show section when clicked
 
-//Add event listener to USER ul with event delegation
-user.addEventListener('click', event => { 
+//Add event listener to Menu connexion ul with event delegation
+menuConnexion.addEventListener('click', event => {
+	const menuLoginSignIn = event.target.id;
+	loginSignInFunction(menuLoginSignIn);
+});
+
+function loginSignInFunction(menuLoginSignIn, recipeLoginSignIn){
 	modalWindow.style.display = "block";
-	if (event.target.id === 'user-sign-up') {
+	if (menuLoginSignIn === 'user-sign-up' || recipeLoginSignIn === 'user-sign-up') {
 		modalContent.innerHTML = `
 		<h4>Sign up</h4>
 		<p>Don't have an account yet ? <span id="sign-up-span">Sign up here</span></p>
@@ -163,7 +166,7 @@ user.addEventListener('click', event => {
 		</form>
 		`;
 	}
-  });
+}
 
 //Event listener for submit button
 searchButton.addEventListener('click', (e)=>{
@@ -273,12 +276,12 @@ function useApiResponse(response){
 		//Create variable for readability
 		let recipeIndex = e.target.dataset.index;
 		//Array of info and recipeIndex sent to the modal window function
-		modalForRecipe(arrayOfRecipesInfo, recipeIndex);
+		modalForRecipe(arrayOfRecipesInfo, recipeIndex, trimmedTitle);
 	}))
 }
 
 //Function that renders modal window content
-function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
+function modalForRecipe(arrayOfRecipesInfo, recipeIndex, trimmedTitle){
 	//Make the modal appear
 	modalWindow.style.display = "block";
 	//cuisineType takes value for readability
@@ -300,22 +303,39 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex){
 				<p>Protein: ${Math.trunc(arrayOfRecipesInfo[recipeIndex].protein / arrayOfRecipesInfo[recipeIndex].servings)} grams</p>
 				<p id="cuisine-type">Cuisine type: ${cuisineType.charAt(0).toUpperCase() + cuisineType.slice(1)}</p>
 				
-				<div class="flex justify-around link-calendar-container">
+				<div class="link-calendar-container">
 					<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank" class="cursor-pointer font-bold text-green-600"><button>See the recipe</button></a>
-					<a href="#"><input id="recipe-calendar-button" class="border-2 border-green-600 bg-green-600 rounded px-2 text-slate-50" id="btn" type="submit" value="Add"></a>
+					
+					${document.body.textContent.includes("Sign up") ? '<p>Sign up or log in to add a meal to the calendar</p><div id="recipe-connexion" class="flex"><a id="user-sign-up" data-user="sign-up" class="mb-2 cursor-pointer font-bold text-green-600">Sign up</a></br><a id="user-login" data-user="login" class="mb-2 ml-4 cursor-pointer font-bold text-green-600">Login</a></div>' : '<bouton id="recipe-calendar-button" class="border-2 border-green-600 bg-green-600 rounded px-2 text-slate-50" id="btn" type="submit" value="Add">Add</bouton>'}
 				</div>
 			</div>
 		</div>
         <ul id="ingredients-list" class="columns-2"></ul>
 	`;
+
+	//Variable declaration for event delegation of Recipe Connexion
+	const recipeConnexion = document.getElementById('recipe-connexion');
+	//Add event listener to Menu connexion ul with event delegation
+	if(recipeConnexion !== null){
+		recipeConnexion.addEventListener('click', event => {
+			const recipeLoginSignIn = event.target.id;
+			loginSignInFunction(recipeLoginSignIn);
+		});
+	}
+
 	//Modal info container variable
 	const modalInfoContainer = document.querySelector(".modal-info-container");
 
+	//Variables of recipe info
+	let mealTitle = trimmedTitle.replace(/ /g,"_");;
+	let mealURL = arrayOfRecipesInfo[recipeIndex].url;
 	//Add to calendar button variable and event listener
 	const recipeCalendarButton = document.getElementById("recipe-calendar-button");
+	if(recipeCalendarButton !== null){
 	recipeCalendarButton.addEventListener('click', ()=>{
-		renderCalendar(modalInfoContainer);
-	});
+		console.log(mealTitle, mealURL)
+		renderCalendar(modalInfoContainer, mealTitle, mealURL);
+	})};
 
 	//The API does not always return a cooking total time, this checks if it is the case and acts accordingly
 	if(arrayOfRecipesInfo[recipeIndex].totalTime > 0){
@@ -363,7 +383,8 @@ closeSpan.addEventListener('click', ()=>{
 //Calendar code
 const date = new Date();
 
-const renderCalendar = (section) => {
+const renderCalendar = (section, mealTitle, mealURL) => {
+	console.log(mealTitle, mealURL)
 	//Injects the HTML in the proper section
 	section.innerHTML = `
 	<!-- Calendar container -->
@@ -390,7 +411,7 @@ const renderCalendar = (section) => {
 	<!-- End of calendar container -->	
 	`
   date.setDate(1);
-console.log('test');
+
   const monthDays = document.querySelector(".days");
 
   const lastDay = new Date(
@@ -430,32 +451,20 @@ console.log('test');
     "December",
   ];
 
-
   let dateH3 = document.querySelector(".date h3");
-  console.log('test');
-
   dateH3.innerHTML = months[date.getMonth()];
-  console.log('test');
-
-
   dateH3.dataset.currentMonth = months[date.getMonth()];
-  console.log('test');
 
   //These variables will be used later in the event listener for prev and next days
   const previousMonth = months[date.getMonth()-1];
   const nextMonth = months[date.getMonth()+1]
 
-
   let currentMonthNumber = months.indexOf(months[date.getMonth()]) + 1;
 
 	if (currentMonthNumber.toString().length < 2){
 		dateH3.dataset.currentMonthNumber = "0" + currentMonthNumber;
-		console.log('test');
-
 	} else {
 	dateH3.dataset.currentMonthNumber = currentMonthNumber;
-	console.log('test');
-
 	}
 
 	const dateP = document.querySelector(".date p");
@@ -507,74 +516,45 @@ console.log('test');
   });
   
 
-//Event listener for days in the calendar
-monthDays.addEventListener('click', event =>{
-	let formatedDate = dateP.dataset.currentYearNumber+dateH3.dataset.currentMonthNumber+event.target.getAttribute('data-currentDayNumber');
-	console.log(formatedDate)
-	modalWindow.style.display = "block";
-	//Switch to check last number and date it accordingly
-	let dateNumber = event.target.innerHTML;
-	switch (dateNumber.slice(-1)) {
-		case '1':
-			dateNumber += 'st ';
-		break;
-		case '2':
-			dateNumber += 'nd ';
-		break;
-		case '3':
-			dateNumber += 'rd ';
+	//Event listener for days in the calendar
+	monthDays.addEventListener('click', event =>{
+		let formatedDate = dateP.dataset.currentYearNumber+dateH3.dataset.currentMonthNumber+event.target.getAttribute('data-currentDayNumber');
+		console.log(formatedDate, mealTitle, mealURL)
+		modalWindow.style.display = "block";
+		//Switch to check last number and date it accordingly
+		let dateNumber = event.target.innerHTML;
+		switch (dateNumber.slice(-1)) {
+			case '1':
+				dateNumber += 'st ';
 			break;
-		default:
-			dateNumber += 'th ';
-		break;
-	}
-	if(event.target.classList.contains('prev-date')){
+			case '2':
+				dateNumber += 'nd ';
+			break;
+			case '3':
+				dateNumber += 'rd ';
+				break;
+			default:
+				dateNumber += 'th ';
+			break;
+		}
+		let dateAddToCalendar = '';
+		if(event.target.classList.contains('prev-date')){
+			dateAddToCalendar = dateNumber + 'of ' + previousMonth;
+		} else if (event.target.classList.contains('next-date')){
+			dateAddToCalendar = dateNumber + 'of ' + nextMonth;
+		} else {
+			dateAddToCalendar = dateNumber + 'of ' + dateH3.dataset.currentMonth;
+		};
+		//Workaround to check if a user is logged in, to show the rights buttons (Add or log in). If no user is logged in, Sign in appears on the page, if someone is logged in, Sign in is replaced by user's name.
 		modalContent.innerHTML = `
-		<h3>${dateNumber + 'of ' + previousMonth}<h3>
-			<h4>Breakfast</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-				<h4>Lunch</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-				<h4>Diner</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-			 <a href="" target="_blank"><p>See the recipe</p></a>
+		<h3>${dateAddToCalendar}<h3>
+		<h4>Lunch</h4>
+		<p>Contains recipe link</p>
+		<a href="https://axelbroeglin.dev/projects/a-table/public//includes/add-to-calendar.inc.php?date=${formatedDate}&title=${mealTitle}&url=${mealURL}&type=lunch"><button class="add-to-calendar-button cursor-pointer font-bold text-green-600">Add for Lunch</button></a>
+		</br>
+		<h4>Diner</h4>
+		<p>Contains recipe link</p>
+		<a href="https://axelbroeglin.dev/projects/a-table/public//includes/add-to-calendar.inc.php?date=${formatedDate}&title=${mealTitle}&url=${mealURL}&type=diner"><button class="add-to-calendar-button cursor-pointer font-bold text-green-600">Add for Diner</button></a>
 		`
-	} else if (event.target.classList.contains('next-date')){
-		modalContent.innerHTML = `
-		<h3>${dateNumber + 'of ' + nextMonth}<h3>
-			<h4>Breakfast</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-				<h4>Lunch</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-				<h4>Diner</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-			 <a href="" target="_blank"><p>See the recipe</p></a>
-		`
-	} else {
-		modalContent.innerHTML = `
-		<h3>${dateNumber + 'of ' + dateH3.dataset.currentMonth}<h3>
-			<h4>Breakfast</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-				<h4>Lunch</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-				<h4>Diner</h4>
-				<div>Contains recipe link<div/>
-				<p>or "Add recipe" button leading to search</p>
-			 <a href="" target="_blank"><p>See the recipe</p></a>
-		`
-	}
- });
+	});
 };
-
-//Calendar : 
-//- december is empty
-//- Oct for every month (current month)
-//- Year stays 2022, does not switch 2023
