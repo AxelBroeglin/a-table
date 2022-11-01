@@ -1,52 +1,5 @@
 @tailwind base;
+
 @tailwind components;
+
 @tailwind utilities;
-
-
-
-.input-red{
-    box-shadow: 0px 0px 15px 0px rgba(240,36,36,0.77);
-}
-
-#health-labels label{
-  padding-right: 1rem;
-}
-
-#search-recap-container img{
-  width:2rem;
-}
-
-#reveal-criteria label{
-  padding-right: 1rem;
-}
-
-a[target=_blank]{
-  background-image: url(../public/images/external-link.svg);
-  background-repeat:no-repeat;
-  background-position: right;
-  padding-right:1.3em;
-}
-
-.arrow {
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
-  }
-
-  .down {
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-  }
-
-.calendar{
-  width: 45rem;
-}
-
-.days-width{
-  width:calc(44.2rem / 7);
-}
-
-.days-div-width{
-width: calc(40.2rem / 7);
-}
