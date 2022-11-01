@@ -11,7 +11,7 @@ error_reporting(E_ALL);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A table</title>
   <meta name="description" content="With À table, find your recipes, plan your meals, make your life easier !"/>
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./public/styles.css">
 </head>
 <body class="">
 
