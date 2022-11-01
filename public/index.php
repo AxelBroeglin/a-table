@@ -9,51 +9,61 @@ error_reporting(E_ALL);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>A table</title>
+  <meta name="description" content="With À table, find your recipes, plan your meals, make your life easier !"/>
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body class="flex">
+<body class="">
 
-  <div class="h-screen w-2/12 border-r-2 border-slate-100"><!-- Header -->
-    <nav class="fixed flex flex-col text-green-600">
-      <div>
-        <h1 class="font-bold p-8 uppercase text-2xl">
-          <a href="/">À table</a>
-        </h1>
-      </div>
-      <div>
-        <ul id="menu-connexion" class="flex flex-col text-lg font-bold pl-8">
+<!-- Header -->
+    <div style="padding:15px 0 15px 0;" class="sticky top-0 z-40 text-slate-50 bg-green-600">
+      <div class="w-4/5 m-auto flex justify-between	items-center">
+        <div>
+          <h1 class="font-bold uppercase text-2xl">
+            <a href="/">À table</a>
+          </h1>
+        </div>
+        <!-- Search and Calendar -->
+        <div class="bg-slate-50 flex grow items-center border-slate-100 border border-solid rounded-full m-1 p-3">
+          <span class="font-bold text-green-600">I am looking for</span>
+          <input type="search" placeholder="a recipe, an ingredient..." value="">
+          <button aria-label="Filtrer"></button>
+        </div>
 
+        <!--<div class="">
+          <ul id="menu" class="flex text-lg font-bold">
+            <li id="menu-search" data-menu="search" class="mr-2 cursor-pointer">Search</li>
+            <?php
+              if(isset($_SESSION["userid"])){
+            ?>
+            <li id="menu-calendar" data-menu="calendar" class="calendar-buttons cursor-pointer">Calendar</li>
+            <?php
+              }
+            ?>
+          </ul>
+        </div>End of Search and Calendar -->
+        <div><!-- Login and Sign in -->
+        <ul id="menu-connexion" class="flex text-lg font-bold">
+          
           <?php
-            if(isset($_SESSION["userid"])){
-          ?>
-          <li class="mb-2 cursor-pointer"><a href="#"><?php echo $_SESSION["useruid"];?></a></li>
-          <li class="mb-2 cursor-pointer"><a href="includes/logout.inc.php">Logout</a></li>
-          <?php
-            } else {
-          ?>
-          <li id="user-sign-up" data-user="sign-up" class="mb-2 cursor-pointer">Sign up</li>
-          <li id="user-login" data-user="login" class="mb-2 cursor-pointer">Login</li>
-          <?php
-            }
-          ?>
-
-        </ul>
+              if(isset($_SESSION["userid"])){
+                ?>
+            <li class="mr-2 cursor-pointer"><a href="#"><?php echo $_SESSION["useruid"];?></a></li>
+            <li class="cursor-pointer"><a href="includes/logout.inc.php">Logout</a></li>
+            <?php
+              } else {
+                ?>
+            <li id="user-sign-up" data-user="sign-up" class="mr-2 cursor-pointer">Sign up</li>
+            <li id="user-login" data-user="login" class="cursor-pointer">Login</li>
+            <?php
+              }
+              ?>
+          </ul>
+        </div><!-- Login and Sign in -->
       </div>
-      <div class="mt-4">
-        <ul id="menu" class="flex flex-col text-lg font-bold pl-8">
-          <li id="menu-search" data-menu="search" class="mb-2 cursor-pointer">Search</li>
-          <li id="menu-calendar" data-menu="calendar" class="calendar-buttons mb-2 cursor-pointer">Calendar</li>
-        </ul>
-      </div>
-    </nav>
-  </div><!-- End of header -->
+    </div><!-- End of header -->
 
-  <div id="demo">
-
-  </div>
-
-  <main class="pt-8 px-8 w-10/12">
+  <main class="pt-8 w-4/5 m-auto"><!-- Main -->
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque nunc tellus, vel blandit metus feugiat congue. Ut id pellentesque ligula, nec iaculis elit. Phasellus porttitor pellentesque semper. Duis eget pharetra urna.</p>
     <div id="content-container" class="pt-8">
       <!-- Search container -->
@@ -170,7 +180,7 @@ error_reporting(E_ALL);
 
       <!-- The Modal -->
       <div id="modal-window" class="modal hidden fixed z-50 pt-24 left-0 top-0 w-full h-full backdrop-blur-sm bg-slate-white/50 overflow-auto">   
-      	<div class="w-4/5 bg-gray-50 m-auto p-10 rounded border border-inherit border-solid">
+      	<div id="modal-content-container" class="bg-gray-50 m-auto p-10 rounded border border-inherit border-solid">
           <span class="close-span text-green-600 float-right text-2xl font-bold hover:text-green-800 hover:cursor-pointer">&times;</span>
           <div id="modal-content"></div>
         </div>
@@ -181,7 +191,7 @@ error_reporting(E_ALL);
         
       </section><!-- End of calendar container -->
     </div>
-  </main>
+  </main><!-- End of Main -->
 <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
