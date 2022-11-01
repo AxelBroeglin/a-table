@@ -117,15 +117,17 @@ const app_id = '&app_id=1ab55c64';
 const api_key = '&app_key=c86872049aff2debad57830e690d77c8';
 
 //Add event listener to MENU ul with event delegation
-menu.addEventListener('click', event => { 
-	if (event.target.id === 'menu-search') {
-		calendarSection.style.display = 'none';
-		searchSection.style.display = 'block';
-	} else {
-		searchSection.style.display = 'none';
-		calendarSection.style.display = 'block';
-	}
-  });
+if(menu!==null){
+	menu.addEventListener('click', event => { 
+		if (event.target.id === 'menu-search') {
+			calendarSection.style.display = 'none';
+			searchSection.style.display = 'block';
+		} else {
+			searchSection.style.display = 'none';
+			calendarSection.style.display = 'block';
+		}
+	})
+};
 
 window.addEventListener('load', (event) => {
 	renderCalendar(calendarSection);
@@ -141,31 +143,37 @@ menuConnexion.addEventListener('click', event => {
 
 function loginSignInFunction(menuLoginSignIn, recipeLoginSignIn){
 	modalWindow.style.display = "block";
+	modalContentContainer.style.width = "50%";
 	if (menuLoginSignIn === 'user-sign-up' || recipeLoginSignIn === 'user-sign-up') {
-		modalContent.innerHTML = `
-		<h4>Sign up</h4>
-		<p>Don't have an account yet ? <span id="sign-up-span">Sign up here</span></p>
-		<form action="./includes/signup.inc.php" method="post">
-		  <input type="text" name="uid" placeholder="Username">
-		  <input type="password" name="password" placeholder="Password">
-		  <input type="password" name="passwordrepeat" placeholder="Repeat password">
-		  <input type="text" name="email" placeholder="E-mail">
-		  <br>
-		  <button type="submit" name="submit">SIGN UP</button>
-		</form>
-		`;		
+		modalSignUp();
 	} else {
 		modalContent.innerHTML = `
-		<h4>Login</h4>
-		<p>Don't have an account yet ? <span id="sign-up-span">Sign up here</span></p>
-		<form action="./includes/login.inc.php" method="post">
+		<p>Don't have an account yet ? <span id="sign-up-span" class="cursor-pointer font-bold text-green-600">Sign up here</span></p>
+		<form style="margin:20px;" action="./includes/login.inc.php" method="post">
 		  <input type="text" name="uid" placeholder="Username">
 		  <input type="password" name="password" placeholder="Password">
 		  <br>
 		  <button type="submit" name="submit">LOGIN</button>
 		</form>
 		`;
+		const signUpSpan = document.getElementById('sign-up-span');
+		signUpSpan.addEventListener('click', event => {
+			modalSignUp();
+		})
 	}
+}
+function modalSignUp(){
+	modalContent.innerHTML = `
+	<h4>Sign up</h4>
+	<form action="./includes/signup.inc.php" method="post">
+	  <input type="text" name="uid" placeholder="Username">
+	  <input type="password" name="password" placeholder="Password">
+	  <input type="password" name="passwordrepeat" placeholder="Repeat password">
+	  <input type="text" name="email" placeholder="E-mail">
+	  <br>
+	  <button type="submit" name="submit">SIGN UP</button>
+	</form>
+	`;
 }
 
 //Event listener for submit button
@@ -284,6 +292,7 @@ function useApiResponse(response){
 function modalForRecipe(arrayOfRecipesInfo, recipeIndex, trimmedTitle){
 	//Make the modal appear
 	modalWindow.style.display = "block";
+	modalContentContainer.classList.add("w-4/5");
 	//cuisineType takes value for readability
 	cuisineType = arrayOfRecipesInfo[recipeIndex].cuisineType.toString();
 	//Calc that determines calories per serving
@@ -362,6 +371,7 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex, trimmedTitle){
 
 //Modal windows variables
 let modalWindow = document.getElementById('modal-window');
+let modalContentContainer = document.getElementById('modal-content-container');
 let modalContent = document.getElementById('modal-content');
 
 //Event listener outside of the modal to close it
@@ -558,3 +568,31 @@ const renderCalendar = (section, mealTitle, mealURL) => {
 		`
 	});
 };
+
+//MENU REWORK
+//See paper
+
+//CALENDAR
+//11th, change rule for 11
+//December is empty (check for other months)
+//Oct for every month (current month)
+//Year stays 2022, does not switch 2023
+//Change style
+//When click on Add on a recipe, delete picture
+
+//PHP
+//Show on calendar if menu already selected
+//Add possibility to add to calendar
+//Add possibility to delete from calendar
+
+//STYLING
+//Change menu on the left, put icons, make calendar available only if connected
+//Style recipe page (Show info with more clarity and space, add colors, create section for see recipe, log in and sign in)
+//Sign in and login to be styled
+//Responsive of the page
+
+//FOR THE FUTURE
+//Responsive
+//Add random recipes on front page, maybe with carousel ? (Need inspiration ?)
+//Export grocery list
+//Export weekly calendar
