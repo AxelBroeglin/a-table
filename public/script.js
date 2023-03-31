@@ -29,6 +29,31 @@ const searchSection = document.getElementById('search-section');
 //Card display variable
 const cardsDisplay = document.getElementById('cards-display');
 
+//Hamburger variables
+const hamburger = document.querySelector('#hamburger-menu');
+const panel = document.querySelector('#panel-menu');
+
+// Open panel on hamburger menu click
+hamburger.addEventListener('click', () => {
+  panel.classList.toggle('hidden');
+  panel.classList.toggle('animate-fade-in-down');
+});
+
+// Close panel on outside click
+document.addEventListener('click', (event) => {
+  const isOutsidePanel = !panel.contains(event.target);
+  const isNotHamburgerMenu = event.target !== hamburger;
+  if (isOutsidePanel && isNotHamburgerMenu) {
+	panel.classList.add('hidden');
+	panel.classList.remove('animate-fade-in-down');
+  }
+});
+
+// Prevent click event on hamburger menu from reaching document
+hamburger.addEventListener('click', (event) => {
+  event.stopPropagation();
+});
+
 //Criteria variables
 const criteria = document.getElementById('criteria');
 const moreCriteria = document.getElementById('more-criteria');

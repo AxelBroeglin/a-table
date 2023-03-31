@@ -16,8 +16,32 @@ error_reporting(E_ALL);
 </head>
 <body class="">
 
+  <!-- Panel -->
+  <div id="panel-menu" class="absolute top-0 right-0 h-full w-1/5 bg-white shadow-md z-10 hidden">
+    <!-- Login and Sign in -->
+    <div class="flex">
+      <?php
+          if(isset($_SESSION["userid"])){
+            ?>
+        <button id="menu-calendar" data-user="" class="mr-4 cursor-pointer"><img class="w-8 h-auto" src="./images/calendar-icon.png" alt=""></button>
+      <ul id="menu-connexion" class="flex items-center text-lg font-bold">
+        <li class="mr-4 cursor-default"><?php echo $_SESSION["useruid"];?></li>
+        <li class="cursor-pointer"><a href="includes/logout.inc.php">Logout</a></li>
+        <?php
+          } else {
+            ?>
+      <ul id="menu-connexion" class="flex items-center text-lg font-bold">
+        <li id="user-sign-up" data-user="sign-up" class="mr-4 cursor-pointer">Sign up</li>
+        <li id="user-login" data-user="login" class="cursor-pointer">Login</li>
+        <?php
+          }
+          ?>
+      </ul>
+    </div><!-- End of Login and Sign in -->
+  </div><!-- end panel -->
+  
   <!-- Header -->
-  <div style="padding:15px 0 15px 0;" class="sticky top-0 z-40 text-slate-50 bg-green-600">
+  <div style="padding:15px 0 15px 0;" class="sticky top-0 z-40 text-slate-50 bg-green-600">    
     <div class="w-4/5 m-auto flex justify-between	items-center">
       <div>
         <h1 class="font-bold uppercase text-2xl">
@@ -126,28 +150,14 @@ error_reporting(E_ALL);
       </div>
       <!-- End of Criteria modal -->
       <!-- End of Search Section -->
-      <!-- Login and Sign in -->
-      <div class="flex">
-
-        
-        <?php
-            if(isset($_SESSION["userid"])){
-              ?>
-          <button id="menu-calendar" data-user="" class="mr-4 cursor-pointer"><img class="w-8 h-auto" src="./images/calendar-icon.png" alt=""></button>
-        <ul id="menu-connexion" class="flex items-center text-lg font-bold">
-          <li class="mr-4 cursor-default"><?php echo $_SESSION["useruid"];?></li>
-          <li class="cursor-pointer"><a href="includes/logout.inc.php">Logout</a></li>
-          <?php
-            } else {
-              ?>
-        <ul id="menu-connexion" class="flex items-center text-lg font-bold">
-          <li id="user-sign-up" data-user="sign-up" class="mr-4 cursor-pointer">Sign up</li>
-          <li id="user-login" data-user="login" class="cursor-pointer">Login</li>
-          <?php
-            }
-            ?>
-        </ul>
-      </div><!-- End of Login and Sign in -->
+      <!-- Hamburger menu -->  
+      <div class="relative flex flex-col">
+        <div id="hamburger-menu" class="flex flex-col items-center justify-center w-8 h-8 cursor-pointer">
+          <div class="w-8 h-1.5 bg-white rounded-full"></div>
+          <div class="w-8 h-1.5 bg-white rounded-full my-1"></div>
+          <div class="w-8 h-1.5 bg-white rounded-full"></div>
+        </div>
+      </div><!-- end hamburger menu -->
     </div>
   </div><!-- End of header -->
 
