@@ -1,26 +1,9 @@
-// window.addEventListener("load", function() {
-// 	fetch('./script.php')
-// 	.then(function(response){
-// 		return response.json();
-// 	})
-// 	.then(function(json){
-// 		console.log(json);
-// 	})
-// 	.catch(function(err){
-// 		console.log(err);
-// 	})
-// })
-
-
-  
-
-
 //Content container variable
 let contentContainer = document.getElementById('content-container');
  
 //Search form variables
+const searchForm = document.getElementById('search-form');
 const searchInput = document.getElementById('search-input');
-const searchButton = document.getElementById('btn');
 
 //Food search variables
 let foodSearch = '';
@@ -32,67 +15,9 @@ const searchRecapContainer = document.getElementById('search-recap-container');
 const searchRecapCriteria = document.querySelectorAll('.search-criteria');
 let searchCriteriaArray = [];
 
-
-//Event listener for search criteria
-searchRecapCriteria.forEach(criterion => criterion.addEventListener('click', (event)=>{
-	checkSearchCriteriaArray(searchCriteriaArray, event.target.name)
-}))
-
-//Event listener for search recap container
-searchRecapContainer.addEventListener('click', event => {
-	//Unselect checkbox related to clicked icon
-	const iconClicked = event.target.name;
-	document.getElementById(iconClicked).checked = false;
-	//Send array to check function alongside with event target name
-	checkSearchCriteriaArray(searchCriteriaArray, event.target.name);
-})
-
-//Function to check if value already in array or not
-function checkSearchCriteriaArray(searchCriteriaArray, criterion) {
-	//If index === -1 : absent -> push in array
-    if (searchCriteriaArray.indexOf(criterion) === -1) {
-        searchCriteriaArray.push(criterion);
-    } else if (searchCriteriaArray.indexOf(criterion) > -1) {
-		//If index > -1 : present -> splice item
-		for( let i = 0; i < searchCriteriaArray.length; i++){
-			if ( searchCriteriaArray[i] === criterion) {
-				searchCriteriaArray.splice(i, 1);
-			}
-    	}
-	}
-	//Send array to its render function
-	renderSearchCriteriaArray(searchCriteriaArray);
-}
-
-//Function to render array
-function renderSearchCriteriaArray(searchCriteriaArray){
-	//Reset container html
-	searchRecapContainer.innerHTML = '';
-	//Take each item in array
-	searchCriteriaArray.forEach(function (i) {
-		//Create an image
-		const healthLabelIcon = document.createElement("img");
-		//Gives alt of event target name
-		healthLabelIcon.alt = i
-		//SRC is set to event target name
-		healthLabelIcon.src = `./images/criteria-icons/${i}.png`;
-		//Same for name
-		healthLabelIcon.setAttribute('name', i);
-		//Add styling classes
-		healthLabelIcon.classList.add("cursor-pointer", "shadow-lg", "mr-2");
-		//Append newly created image to container
-		searchRecapContainer.append(healthLabelIcon);
-	})
-}
-
-
 //Menu variables
 const menu = document.getElementById('menu');
 const menuSearch = document.getElementById('menu-search');
-
-//Calendar variables
-// const menuCalendar = document.getElementById('menu-calendar');
-// const recipeCalendar = document.getElementById('recipe-calendar');
 
 //User variables
 const menuConnexion = document.getElementById('menu-connexion');
@@ -109,6 +34,26 @@ const criteria = document.getElementById('criteria');
 const moreCriteria = document.getElementById('more-criteria');
 const revealCriteria = document.getElementById('reveal-criteria');
 
+//Event listener for reveal button for more criteria
+moreCriteria.addEventListener('click', ()=>{
+	if(criteriaModal.classList.contains('hidden')){
+		criteriaModal.classList.remove('hidden');
+	} else{
+		criteriaModal.classList.add('hidden');
+	}
+})
+
+document.addEventListener('click', (event) => {
+	if (!criteriaModal.contains(event.target) && !moreCriteria.contains(event.target)) {
+		criteriaModal.classList.add('hidden');
+	}
+  });
+
+
+const criteriaModal = document.getElementById('criteria-modal-window');
+const magnifyingGlassSearchButton = document.getElementById('magnifying-glass-search-button');
+const searchButton = document.getElementById('search-button');
+
 //Modal window variable
 const openRecipe = document.querySelectorAll('.open-recipe');
 
@@ -116,69 +61,31 @@ const openRecipe = document.querySelectorAll('.open-recipe');
 const app_id = '&app_id=1ab55c64';
 const api_key = '&app_key=c86872049aff2debad57830e690d77c8';
 
+//TO BE REVIEWED, QUICK FIX !!!
+menuCalendar = document.getElementById('menu-calendar');
 //Add event listener to MENU ul with event delegation
-if(menu!==null){
-	menu.addEventListener('click', event => { 
-		if (event.target.id === 'menu-search') {
-			calendarSection.style.display = 'none';
-			searchSection.style.display = 'block';
-		} else {
-			searchSection.style.display = 'none';
-			calendarSection.style.display = 'block';
-		}
-	})
-};
-
-window.addEventListener('load', (event) => {
-	renderCalendar(calendarSection);
-	calendarSection.style.display = 'none';
-});
-//ONLOAD charge calendar into calendarSection, show section when clicked
-
-//Add event listener to Menu connexion ul with event delegation
-menuConnexion.addEventListener('click', event => {
-	const menuLoginSignIn = event.target.id;
-	loginSignInFunction(menuLoginSignIn);
-});
-
-function loginSignInFunction(menuLoginSignIn, recipeLoginSignIn){
-	modalWindow.style.display = "block";
-	modalContentContainer.style.width = "50%";
-	if (menuLoginSignIn === 'user-sign-up' || recipeLoginSignIn === 'user-sign-up') {
-		modalSignUp();
-	} else {
-		modalContent.innerHTML = `
-		<p>Don't have an account yet ? <span id="sign-up-span" class="cursor-pointer font-bold text-green-600">Sign up here</span></p>
-		<form style="margin:20px;" action="./includes/login.inc.php" method="post">
-		  <input type="text" name="uid" placeholder="Username">
-		  <input type="password" name="password" placeholder="Password">
-		  <br>
-		  <button type="submit" name="submit">LOGIN</button>
-		</form>
-		`;
-		const signUpSpan = document.getElementById('sign-up-span');
-		signUpSpan.addEventListener('click', event => {
-			modalSignUp();
-		})
-	}
-}
-function modalSignUp(){
-	modalContent.innerHTML = `
-	<h4>Sign up</h4>
-	<form action="./includes/signup.inc.php" method="post">
-	  <input type="text" name="uid" placeholder="Username">
-	  <input type="password" name="password" placeholder="Password">
-	  <input type="password" name="passwordrepeat" placeholder="Repeat password">
-	  <input type="text" name="email" placeholder="E-mail">
-	  <br>
-	  <button type="submit" name="submit">SIGN UP</button>
-	</form>
-	`;
+if(menuCalendar!==null){
+menuCalendar.addEventListener('click', event => { 
+		calendarSection.style.display = '';
+		searchSection.style.display = 'none';
+	});
 }
 
 //Event listener for submit button
-searchButton.addEventListener('click', (e)=>{
+searchForm.addEventListener('submit', (e)=>{
 	e.preventDefault();
+	searchForRecipe();
+})
+searchButton.addEventListener('click', ()=>{
+	searchForRecipe();
+})
+magnifyingGlassSearchButton.addEventListener('click', ()=>{
+	searchForRecipe();
+})
+
+let searchUrl = '';
+
+function searchForRecipe() {
 	//Health labels
 	labelValues = [];
 	//Get all selected health labels checkboxes
@@ -213,12 +120,14 @@ searchButton.addEventListener('click', (e)=>{
 		//If it is empty, foodQuery without it, check necessary because labels come before cuisine types
 		foodQuery(foodSearch);
 	}
-})
-
-//Event listener for reveal button for more criteria
-moreCriteria.addEventListener('click', ()=>{
-	revealCriteria.style.display = revealCriteria.style.display === '' ? 'none' : '';
-})
+	if(!criteriaModal.classList.contains('hidden')){
+		criteriaModal.classList.add('hidden');
+	};
+	calendarSection.style.display = 'none';
+	searchSection.style.display = '';
+	searchUrl = `https://api.edamam.com/api/recipes/v2?type=public&q=${foodSearch}${app_id}${api_key}${labelValues}${cuisineValues}`;
+	console.log(searchUrl);
+}
 
 //Event listener on search input to remove red box if focus
 searchInput.addEventListener('focus', ()=>{
@@ -235,7 +144,7 @@ async function foodQuery(){await fetch(`https://api.edamam.com/api/recipes/v2?ty
 
 //Function that handles the answer from API
 function useApiResponse(response){
-	console.log(response);
+	console.log(searchUrl);
 	//Create array that will contain the different recipes from answer
 	let recipes = [];
 	//Create array that will contain the different recipes info from answer
@@ -297,14 +206,20 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex, trimmedTitle){
 	cuisineType = arrayOfRecipesInfo[recipeIndex].cuisineType.toString();
 	//Calc that determines calories per serving
 	let calPerServing = arrayOfRecipesInfo[recipeIndex].calories / arrayOfRecipesInfo[recipeIndex].servings;
+	let serving = arrayOfRecipesInfo[recipeIndex].servings;
+	//Variables of recipe info
+	console.log(arrayOfRecipesInfo[recipeIndex].title);
+	let mealTitle = arrayOfRecipesInfo[recipeIndex].title.replace(/ /g,"_");
+	console.log(mealTitle);
+	let mealURL = arrayOfRecipesInfo[recipeIndex].url;
 	//HTML structure and values of the modal window
 	modalContent.innerHTML = `
 		<h3 class="font-bold uppercase text-xl text-green-600 text-center">${arrayOfRecipesInfo[recipeIndex].title}</h3>
-        <div class="flex justify-between pt-12 pb-6">
-			<img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="arrayOfRecipesInfo[recipeIndex].title" class="w-4/12">
+        <div id="recipe-calendar-container" class="flex justify-between pt-12 pb-6">
+			<img src="${arrayOfRecipesInfo[recipeIndex].image}" alt="${arrayOfRecipesInfo[recipeIndex].title}" class="w-4/12">
 			<div class="w-7/12 modal-info-container">
 				<h4 class="font-bold uppercase text-green-600">Nutritional information</h4>
-				<p>${arrayOfRecipesInfo[recipeIndex].servings} Servings</p>
+				<div class="flex"><span class="mr-4">${serving} Serving.s</span></div>
 				<p>Per serving :</p>
 				<p>Calories: ${Math.trunc(calPerServing)}</p>
 				<p>Fat: ${Math.trunc(arrayOfRecipesInfo[recipeIndex].fat / arrayOfRecipesInfo[recipeIndex].servings)} grams</p>
@@ -313,9 +228,9 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex, trimmedTitle){
 				<p id="cuisine-type">Cuisine type: ${cuisineType.charAt(0).toUpperCase() + cuisineType.slice(1)}</p>
 				
 				<div class="link-calendar-container">
-					<a href="${arrayOfRecipesInfo[recipeIndex].url}" target="_blank" class="cursor-pointer font-bold text-green-600"><button>See the recipe</button></a>
+					<a href="${mealURL}" target="_blank" class="cursor-pointer text-green-600"><button>See the recipe</button></a>
 					
-					${document.body.textContent.includes("Sign up") ? '<p>Sign up or log in to add a meal to the calendar</p><div id="recipe-connexion" class="flex"><a id="user-sign-up" data-user="sign-up" class="mb-2 cursor-pointer font-bold text-green-600">Sign up</a></br><a id="user-login" data-user="login" class="mb-2 ml-4 cursor-pointer font-bold text-green-600">Login</a></div>' : '<bouton id="recipe-calendar-button" class="border-2 border-green-600 bg-green-600 rounded px-2 text-slate-50" id="btn" type="submit" value="Add">Add</bouton>'}
+					${document.body.textContent.includes("Sign up") ? '<p>Sign up or log in to add a meal to the calendar</p><div id="recipe-connexion" class="flex"><a id="user-sign-up" data-user="sign-up" class="mb-2 cursor-pointer font-bold text-green-600">Sign up</a></br><a id="user-login" data-user="login" class="mb-2 ml-4 cursor-pointer font-bold text-green-600">Login</a></div>' : '<bouton id="recipe-calendar-button" class="cursor-pointer border-2 border-green-600 bg-green-600 rounded px-2 text-slate-50" id="btn" type="submit" value="Add">Add</bouton>'}
 				</div>
 			</div>
 		</div>
@@ -334,16 +249,15 @@ function modalForRecipe(arrayOfRecipesInfo, recipeIndex, trimmedTitle){
 
 	//Modal info container variable
 	const modalInfoContainer = document.querySelector(".modal-info-container");
+	const recipeCalendarContainer = document.getElementById("recipe-calendar-container");
 
-	//Variables of recipe info
-	let mealTitle = trimmedTitle.replace(/ /g,"_");;
-	let mealURL = arrayOfRecipesInfo[recipeIndex].url;
+
 	//Add to calendar button variable and event listener
 	const recipeCalendarButton = document.getElementById("recipe-calendar-button");
 	if(recipeCalendarButton !== null){
 	recipeCalendarButton.addEventListener('click', ()=>{
-		console.log(mealTitle, mealURL)
-		renderCalendar(modalInfoContainer, mealTitle, mealURL);
+		console.log(mealTitle, mealURL);
+		renderCalendar(recipeCalendarContainer, mealTitle, mealURL);
 	})};
 
 	//The API does not always return a cooking total time, this checks if it is the case and acts accordingly
@@ -390,6 +304,100 @@ closeSpan.addEventListener('click', ()=>{
 })
 
 
+window.addEventListener('load', (event) => {
+	renderCalendar(calendarSection);
+	calendarSection.style.display = 'none';
+});
+//ONLOAD charge calendar into calendarSection, show section when clicked
+
+//Add event listener to Menu connexion ul with event delegation
+menuConnexion.addEventListener('click', event => {
+	const menuLoginSignIn = event.target.id;
+	if(menuLoginSignIn == "user-sign-up" || menuLoginSignIn == "user-login"){
+		loginSignInFunction(menuLoginSignIn);
+	}
+});
+
+function loginSignInFunction(menuLoginSignIn, recipeLoginSignIn){
+	modalWindow.style.display = "block";
+	modalContentContainer.style.width = "50%";
+	if (menuLoginSignIn === 'user-sign-up' || recipeLoginSignIn === 'user-sign-up') {
+		modalSignUp();
+	} else {
+		modalContent.innerHTML = `
+		<p>Don't have an account yet ? <span id="sign-up-span" class="cursor-pointer font-bold text-green-600">Sign up here</span></p>
+		<form style="margin:20px;" action="./includes/login.inc.php" method="post">
+		  <input type="text" name="uid" placeholder="Username">
+		  <input type="password" name="password" placeholder="Password">
+		  <br>
+		  <button type="submit" name="submit">LOGIN</button>
+		</form>
+		`;
+		const signUpSpan = document.getElementById('sign-up-span');
+		signUpSpan.addEventListener('click', event => {
+			modalSignUp();
+		})
+	}
+}
+
+function modalSignUp(){
+	modalContent.innerHTML = `
+	<h4>Sign up</h4>
+	<form action="./includes/signup.inc.php" method="post">
+	  <input type="text" name="uid" placeholder="Username">
+	  <input type="password" name="password" placeholder="Password">
+	  <input type="password" name="passwordrepeat" placeholder="Repeat password">
+	  <input type="text" name="email" placeholder="E-mail">
+	  <br>
+	  <button type="submit" name="submit">SIGN UP</button>
+	</form>
+	`;
+}
+
+function debounce(func, delay) {
+	let timeoutId;
+	return function(...args) {
+	  if (timeoutId) {
+		clearTimeout(timeoutId);
+	  }
+	  return new Promise((resolve) => {
+		timeoutId = setTimeout(() => {
+		  resolve(func.apply(null, args));
+		}, delay);
+	});
+}}
+
+function fetchData(formatedDate) {
+return fetch("includes/check-calendar.inc.php", {
+	method: "POST",
+	body: JSON.stringify({ date: formatedDate }),
+	headers: {
+	"Content-Type": "application/json"
+	}
+})
+.then(response => response.json())
+.then(data => {
+	let lunchName = data.lunch_name;
+	if(lunchName){
+	lunchName = lunchName.replace(/_/g, ' ');
+	}
+	let lunchURL = data.lunch_url;
+	let dinnerName = data.dinner_name;
+	if(dinnerName){
+	dinnerName = dinnerName.replace(/_/g, ' ');
+	}
+	let dinnerURL = data.dinner_url;
+	console.log(lunchName, typeof lunchName)
+	// return relevant values
+	return {
+	lunchName,
+	lunchURL,
+	dinnerName,
+	dinnerURL
+	};
+});
+}
+
 //Calendar code
 const date = new Date();
 
@@ -398,25 +406,25 @@ const renderCalendar = (section, mealTitle, mealURL) => {
 	//Injects the HTML in the proper section
 	section.innerHTML = `
 	<!-- Calendar container -->
-		<div class="calendar bg-zinc-900 shadow-lg">
-			<div class="month w-full h-48 bg-green-700 flex justify-between	items-center py-0 px-8 text-center shadow-lg">
+		<div class="calendar bg-zinc-800 shadow-lg">
+			<div class="month w-full h-24 bg-green-700 flex justify-between	items-center py-0 px-8 text-center shadow-lg">
 			<i class="fas fa-angle-left prev cursor-pointer text-4xl"><</i>
-			<div class="date">
-				<h3  class="text-5xl uppercase tracking-wide	mb-4"></h3>
+			<div class="date flex items-center">
+				<h3  class="text-4xl uppercase tracking-wide mr-6"></h3>
 				<p class="text-2xl"></p>
 			</div>
-			<i class="fas fa-angle-right next cursor-pointer text-4x	">></i>
+			<i class="fas fa-angle-right next cursor-pointer text-4xl">></i>
 			</div>
-			<div class="weekdays text-2xl h-20	py-0 px-1.5	flex items-center">
-			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Sun</div>
-			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Mon</div>
-			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Tue</div>
-			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Wed</div>
-			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Thu</div>
-			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Fri</div>
-			<div class="text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Sat</div>
+			<div class="weekdays text-slate-300 text-2xl h-20 py-0 px-1.5 flex items-center  gap-x-2">
+			<div class="w-[calc(100%/7)] text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Sun</div>
+			<div class="w-[calc(100%/7)] text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Mon</div>
+			<div class="w-[calc(100%/7)] text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Tue</div>
+			<div class="w-[calc(100%/7)] text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Wed</div>
+			<div class="w-[calc(100%/7)] text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Thu</div>
+			<div class="w-[calc(100%/7)] text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Fri</div>
+			<div class="w-[calc(100%/7)] text-2xl tracking-wide	flex justify-center items-center shadow-lg days-width">Sat</div>
 			</div>
-			<div class="days w-full flex flex-wrap	p-1"></div>
+			<div class="days w-full flex flex-wrap justify-around p-1"></div>
 		</div>
 	<!-- End of calendar container -->	
 	`
@@ -485,33 +493,33 @@ const renderCalendar = (section, mealTitle, mealURL) => {
 
   for (let x = firstDayIndex; x > 0; x--) {
 	if(prevLastDay - x + 1 < 10){
-		days += `<div data-currentDayNumber="0${prevLastDay - x + 1}"  class="days-calendar prev-date text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800 hover:border-gray-300 hover:cursor-pointer opacity-50">${prevLastDay - x + 1}</div>`;
+		days += `<div data-currentDayNumber="0${prevLastDay - x + 1}"  class="w-[13.333%] mb-[1.6675%] text-slate-300 prev-date text-2xl h-20 flex justify-center items-center shadow-lg hover:bg-gray-800 bg-zinc-800 hover:cursor-pointer opacity-50">${prevLastDay - x + 1}</div>`;
 	} else {
-		days += `<div data-currentDayNumber="${prevLastDay - x + 1}"  class="prev-date text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800 hover:border-gray-300 hover:cursor-pointer opacity-50">${prevLastDay - x + 1}</div>`;
+		days += `<div data-currentDayNumber="${prevLastDay - x + 1}"  class="w-[13.333%] mb-[1.6675%] prev-date days-calendar text-slate-300 text-2xl h-20	flex justify-center items-center shadow-lg hover:bg-gray-800 bg-zinc-800 hover:cursor-pointer opacity-50">${prevLastDay - x + 1}</div>`;
 	}
   }
 
   for (let i = 1; i <= lastDay; i++) {
     if (i === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
 		if(i < 10){
-			days += `<div data-currentDayNumber="0${i}" class="days-calendar today text-2xl m-1 days-div-width h-20	flex justify-center items-center shadow-lg bg-green-700 hover:cursor-pointer">${i}</div>`;
+			days += `<div data-currentDayNumber="0${i}" class="w-[13.333%] mb-[1.6675%] days-calendar text-slate-300 today text-2xl h-20	flex justify-center items-center shadow-lg bg-green-700 hover:cursor-pointer">${i}</div>`;
 		} else {
-			days += `<div data-currentDayNumber="${i}" class="days-calendar today text-2xl m-1 days-div-width h-20	flex justify-center items-center shadow-lg bg-green-700 hover:cursor-pointer">${i}</div>`;
+			days += `<div data-currentDayNumber="${i}" class="w-[13.333%] mb-[1.6675%] days-calendar text-slate-300 today text-2xl h-20	flex justify-center items-center shadow-lg bg-green-700 hover:cursor-pointer">${i}</div>`;
 		}
     }else{
 		if(i < 10){
-			days += `<div data-currentDayNumber="0${i}"  class="days-calendar text-2xl m-1 days-div-width h-20 flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer">${i}</div>`;
+			days += `<div data-currentDayNumber="0${i}"  class="w-[13.333%] mb-[1.6675%] days-calendar text-slate-300 text-2xl h-20 flex justify-center items-center shadow-lg hover:bg-gray-800 bg-zinc-800  hover:cursor-pointer">${i}</div>`;
 		} else {
-			days += `<div data-currentDayNumber="${i}" class="days-calendar text-2xl m-1 days-div-width h-20 flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer">${i}</div>`;
+			days += `<div data-currentDayNumber="${i}" class="w-[13.333%] mb-[1.6675%] days-calendar text-slate-300 text-2xl h-20 flex justify-center items-center shadow-lg hover:bg-gray-800 bg-zinc-800  hover:cursor-pointer">${i}</div>`;
 		}
     }
   }
 
   for (let j = 1; j <= nextDays; j++) {
 	if(j < 10){
-		days += `<div data-currentDayNumber="0${j}" class="days-calendar next-date text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer  opacity-50">${j}</div>`;
+		days += `<div data-currentDayNumber="0${j}" class="w-[13.333%] mb-[1.6675%] days-calendar next-date text-2xl h-20	flex justify-center items-center shadow-lg hover:bg-gray-800 bg-zinc-800 hover:cursor-pointer  opacity-50">${j}</div>`;
 	} else {
-		days += `<div data-currentDayNumber="${j}" class="days-calendar next-date text-2xl	m-1	days-div-width h-20	flex justify-center items-center shadow-lg hover:border-solid hover:border-2 hover:bg-gray-800	 hover:border-gray-300 hover:cursor-pointer  opacity-50">${j}</div>`;
+		days += `<div data-currentDayNumber="${j}" class="w-[13.333%] mb-[1.6675%] days-calendar next-date text-2xl h-20 flex justify-center items-center shadow-lg  hover:bg-gray-800 bg-zinc-800  hover:cursor-pointer  opacity-50">${j}</div>`;
 	}
     monthDays.innerHTML = days;
   }
@@ -524,53 +532,171 @@ const renderCalendar = (section, mealTitle, mealURL) => {
 	date.setMonth(date.getMonth() + 1);
 	renderCalendar(section);
   });
-  
+
+	//Small Modal
+	const smallModal = document.getElementById('small-modal');
+	const daysCalendar = document.querySelectorAll('.days-calendar');
+ 
+	const debouncedFetchData = debounce(fetchData, 500); // delay of 500ms
 
 	//Event listener for days in the calendar
-	monthDays.addEventListener('click', event =>{
-		let formatedDate = dateP.dataset.currentYearNumber+dateH3.dataset.currentMonthNumber+event.target.getAttribute('data-currentDayNumber');
-		console.log(formatedDate, mealTitle, mealURL)
-		modalWindow.style.display = "block";
-		//Switch to check last number and date it accordingly
-		let dateNumber = event.target.innerHTML;
-		switch (dateNumber.slice(-1)) {
-			case '1':
-				dateNumber += 'st ';
-			break;
-			case '2':
-				dateNumber += 'nd ';
-			break;
-			case '3':
-				dateNumber += 'rd ';
-				break;
-			default:
+	daysCalendar.forEach(day => {
+		day.addEventListener('click', event =>{
+			let formatedDate = dateP.dataset.currentYearNumber+dateH3.dataset.currentMonthNumber+event.target.getAttribute('data-currentDayNumber');
+			console.log(formatedDate, mealTitle, mealURL);
+			modalContentContainer.classList.add("w-4/5");
+		
+			modalWindow.style.display = "block";
+			//Switch to check last number and date it accordingly
+			let dateNumber = event.target.innerHTML;
+			if(dateNumber === 11){
 				dateNumber += 'th ';
-			break;
-		}
-		let dateAddToCalendar = '';
-		if(event.target.classList.contains('prev-date')){
-			dateAddToCalendar = dateNumber + 'of ' + previousMonth;
-		} else if (event.target.classList.contains('next-date')){
-			dateAddToCalendar = dateNumber + 'of ' + nextMonth;
-		} else {
-			dateAddToCalendar = dateNumber + 'of ' + dateH3.dataset.currentMonth;
-		};
-		//Workaround to check if a user is logged in, to show the rights buttons (Add or log in). If no user is logged in, Sign in appears on the page, if someone is logged in, Sign in is replaced by user's name.
-		modalContent.innerHTML = `
-		<h3>${dateAddToCalendar}<h3>
-		<h4>Lunch</h4>
-		<p>Contains recipe link</p>
-		<a href="https://axelbroeglin.dev/projects/a-table/public//includes/add-to-calendar.inc.php?date=${formatedDate}&title=${mealTitle}&url=${mealURL}&type=lunch"><button class="add-to-calendar-button cursor-pointer font-bold text-green-600">Add for Lunch</button></a>
-		</br>
-		<h4>Diner</h4>
-		<p>Contains recipe link</p>
-		<a href="https://axelbroeglin.dev/projects/a-table/public//includes/add-to-calendar.inc.php?date=${formatedDate}&title=${mealTitle}&url=${mealURL}&type=diner"><button class="add-to-calendar-button cursor-pointer font-bold text-green-600">Add for Diner</button></a>
-		`
+			}else{
+				switch (dateNumber.slice(-1)) {
+					case '1':
+						dateNumber += 'st ';
+					break;
+					case '2':
+						dateNumber += 'nd ';
+					break;
+					case '3':
+						dateNumber += 'rd ';
+						break;
+					default:
+						dateNumber += 'th ';
+					break;
+				}
+			}
+			let dateAddToCalendar = '';
+			if(event.target.classList.contains('prev-date')){
+				dateAddToCalendar = dateNumber + 'of ' + previousMonth;
+			} else if (event.target.classList.contains('next-date')){
+				dateAddToCalendar = dateNumber + 'of ' + nextMonth;
+			} else {
+				dateAddToCalendar = dateNumber + 'of ' + dateH3.dataset.currentMonth;
+			};
+
+			fetchData(formatedDate)
+				.then(data => {
+				console.log(data);
+				console.log("mealTitle : " + mealTitle + ", Lunch name : " + data.lunchName + ", Dinner name :" + data.dinnerName);
+				console.log(searchUrl);
+				//Display Lunch
+				let displayLunch;
+				if(data.lunchName){
+					let formatedLunchName = data.lunchName.replace(/ /g, '_');
+					displayLunch = `
+					<p>${data.lunchName}</p>
+					<a class="text-green-600 block" href="${data.lunchURL}">Link to the recipe</a>
+					${//Condition to check if selected meal is the same as saved meal -> Update
+					mealTitle == data.lunchName || mealTitle == undefined ? `` : 
+					`<a href="https://axelbroeglin.dev/projects/a-table/public/includes/add-to-calendar.inc.php?date=${formatedDate}&title=${mealTitle}&url=${mealURL}&type=lunch&searchurl=${searchUrl}">
+						<button class="border-solid border-2 border-green-600 text-green-600 rounded-lg font-bold mr-2 px-2">Update</button>
+					</a>`}
+					<a href="https://axelbroeglin.dev/projects/a-table/public/includes/delete-from-calendar.inc.php?date=${formatedDate}&title=${formatedLunchName}&url=${data.lunchURL}&type=lunch">
+						<button class="border-solid border-2 border-green-600 text-green-600 rounded-lg font-bold px-2 mt-2">Delete</button>
+					</a>
+					`;
+				} else if (typeof data.lunchName == 'undefined' && mealTitle || data.lunchName == '' && mealTitle ){
+					displayLunch = `
+					<a href="https://axelbroeglin.dev/projects/a-table/public/includes/add-to-calendar.inc.php?date=${formatedDate}&title=${mealTitle}&url=${mealURL}&type=lunch&searchurl=${searchUrl}">
+						<button class="add-to-calendar-button border-2 border-green-600 bg-green-600 rounded px-2 text-slate-50">Add for Lunch</button>
+					</a>
+					`;
+				} else if (typeof data.lunchName == 'undefined' && !mealTitle || data.lunchName == '' && !mealTitle){
+					displayLunch = `
+					<p>No lunch saved.</p>
+					`;
+				}
+
+				let displayDinner;
+				if(data.dinnerName){
+					console.log('dislay dinner')
+					console.log(mealTitle)
+					let formatedDinnerName = data.dinnerName.replace(/ /g, '_');
+					displayDinner = `
+					<p>${data.dinnerName}</p>
+					<a class="text-green-600 block" href="${data.dinnerURL}">Link to the recipe</a>
+					${//Condition to check if selected meal is the same as saved meal -> Update
+					mealTitle == data.dinnerName || mealTitle == undefined ? `` :
+					`<a href="https://axelbroeglin.dev/projects/a-table/public/includes/add-to-calendar.inc.php?date=${formatedDate}&title=${mealTitle}&url=${mealURL}&type=dinner&searchurl=${searchUrl}">
+						<button class="border-solid border-2 border-green-600 text-green-600 rounded-lg font-bold mr-2 px-2">Update</button>
+					</a>`}
+					<a href="https://axelbroeglin.dev/projects/a-table/public/includes/delete-from-calendar.inc.php?date=${formatedDate}&title=${formatedDinnerName}&url=${data.dinnerURL}&type=dinner">
+						<button class="border-solid border-2 border-green-600 text-green-600 rounded-lg font-bold px-2 mt-2">Delete</button>
+					</a>
+					`;
+				} else if (typeof data.dinnerName == 'undefined' && mealTitle || data.dinnerName == '' && mealTitle ){
+					console.log('add dinner')
+					displayDinner = `
+					<a href="https://axelbroeglin.dev/projects/a-table/public/includes/add-to-calendar.inc.php?date=${formatedDate}&title=${mealTitle}&url=${mealURL}&type=dinner&searchurl=${searchUrl}">
+					<button class="add-to-calendar-button border-2 border-green-600 bg-green-600 rounded px-2 text-slate-50">Add for Dinner</button>
+				</a>
+				`;
+				} else if (typeof data.dinnerName == 'undefined' && !mealTitle || data.dinnerName == '' && !mealTitle){
+					console.log('no dinner')
+					displayDinner = `
+					<p>No dinner saved.</p>
+					`;
+				}
+
+				
+				modalContent.innerHTML = `
+				<h3 class="mb-4 uppercase">${dateAddToCalendar}</h3>
+				<h4 class="font-bold mb-2">Lunch</h4>
+				<div id="div-lunch" class="mb-2">
+
+				</div>
+				<h4 class="font-bold mb-2">Dinner</h4>
+				<div id="div-dinner">
+					
+				</div>
+				`
+						
+				let divLunch = document.getElementById('div-lunch');
+				divLunch.innerHTML = displayLunch;
+				let divDinner = document.getElementById('div-dinner');
+				divDinner.innerHTML = displayDinner;		
+			})
+		});
+		day.addEventListener('mouseover', () => {
+			let formatedDate = dateP.dataset.currentYearNumber+dateH3.dataset.currentMonthNumber+event.target.getAttribute('data-currentDayNumber');
+			console.log(formatedDate);
+			debouncedFetchData(formatedDate)
+				.then(data => {
+					const smallModalLunch = document.getElementById('small-modal-lunch');
+					if(typeof data.lunchName == 'undefined' || data.lunchName == '' || data.lunchName == 'undefined'){
+						smallModalLunch.innerHTML = 'Nothing yet';
+					} else {
+						smallModalLunch.innerHTML = data.lunchName;
+					}
+					const smallModalDinner = document.getElementById('small-modal-dinner');
+					if(typeof data.dinnerName == 'undefined' || data.dinnerName == '' || data.dinnerName == 'undefined'){
+						smallModalDinner.innerHTML = 'Nothing yet';
+					} else {
+						smallModalDinner.innerHTML = data.dinnerName;
+					}
+				})
+				.catch(error => {
+					console.log('Error updating small modal:', error);
+				});
+			smallModal.style.display = 'block';
+			smallModal.classList.remove('hidden');
+		});
+
+		day.addEventListener('mousemove', (event) => {
+			smallModal.style.left = event.clientX + 10 + 'px';
+			smallModal.style.top = event.clientY + 10 + 'px';
+		});
+	
+		day.addEventListener('mouseout', () => {
+			smallModal.classList.add('hidden');
+			smallModal.style.display = 'none';
+		});
 	});
 };
 
-//MENU REWORK
-//See paper
+
 
 //CALENDAR
 //11th, change rule for 11
@@ -582,8 +708,6 @@ const renderCalendar = (section, mealTitle, mealURL) => {
 
 //PHP
 //Show on calendar if menu already selected
-//Add possibility to add to calendar
-//Add possibility to delete from calendar
 
 //STYLING
 //Change menu on the left, put icons, make calendar available only if connected

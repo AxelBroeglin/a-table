@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-css" : "tailwindcss build -i src/styles.css -o public/styles.css",
-    "watch-css" : "tailwindcss build -i src/styles.css -o public/styles.css --watch"
-    },
+    "build-css": "tailwindcss build -i src/styles.css -o public/styles.css",
+    "watch-css": "tailwindcss build -i src/styles.css -o public/styles.css --watch"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AxelBroeglin/a-table.git"
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/AxelBroeglin/a-table#readme",
   "dependencies": {
+    "mysql": "^2.18.1",
     "tailwindcss": "^3.1.8"
   }
 }
