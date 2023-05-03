@@ -1,6 +1,6 @@
 # A table
 > Thanks to A table, no need to think every evening : "What should I cook tomorrow ?" You can plan the meals for the whole week, choosing among thousands of recipes and saving it in the calendar.
-> Live demo [_here_](https://axelbroeglin.dev/a-table/public/). 
+> Live demo [_here_](https://axelbroeglin.dev/projects/a-table/public/). 
 
 ## Table of Contents
 * [General Info](#general-information)
