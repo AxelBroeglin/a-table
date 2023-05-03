@@ -30,16 +30,14 @@
 
 
 ## Project Status
-Project is: _incomplete_
+Project is: _complete_
 
 Search with API is : _complete_
 Filters is : _complete_
 Sign in is : _complete_
-Login is _complete_!
+Login is _complete_ !
+Add meal to calendar is : _complete_
 
-Add meal to calendar is : _incomplete_
-Send recipe calendar for the week is : _incomplete_
-Grocery list is : _incomplete_
 
 ## Room for Improvement
 Room for improvement:
