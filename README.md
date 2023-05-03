@@ -41,12 +41,10 @@ Add meal to calendar is : _complete_
 
 ## Room for Improvement
 Room for improvement:
-- Finish project
 - Responsive
 - Incorporate Typescript
 
 To do:
-- Finish the project
 - Responsive
 - Make work on design and logo 
 
